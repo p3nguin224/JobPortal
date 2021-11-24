@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jobportal.user.dao.RoleDAO;
 import com.jobportal.user.dao.UserDAO;
 import com.jobportal.user.domain.User;
-import com.jobportal.user.domain.security.Role;
+import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.UserService;
 
 @Service
@@ -47,15 +47,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User createUser(User user, Role role) {
+	public User createUser(User user, UserRole userRole) {
 		// TODO Auto-generated method stub
 		User localUser = userDAO.findByEmail(user.getEmail());
 		
 		if (localUser!= null) {
 			LOG.info("user {} already exists. Nothing will be done", user.getEmail());
 		} else {
-			roleDAO.save(role);
-			user.setRole(role);
+			roleDAO.save(userRole.getRole());
+			user.setUserRole(userRole);
 			localUser = userDAO.save(user);
 		}
 		return localUser;

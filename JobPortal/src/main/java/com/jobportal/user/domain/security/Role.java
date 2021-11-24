@@ -1,10 +1,15 @@
 package com.jobportal.user.domain.security;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.jobportal.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Role {
@@ -14,8 +19,9 @@ public class Role {
 	
 	private String name;
 	
-	@OneToMany(mappedBy = "role")
-	private User user;
+	@OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<UserRole> userRoles = new HashSet<>();
 	
 	public Role() {
 		
@@ -35,6 +41,14 @@ public class Role {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 	
 	

@@ -1,16 +1,17 @@
 package com.jobportal.user.domain;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-import com.jobportal.user.domain.security.Role;
+import javax.persistence.OneToOne;
+
+import com.jobportal.user.domain.security.UserRole;
 
 @Entity
 public class User {
@@ -28,9 +29,8 @@ public class User {
 	private String registeredDate;
 	private String status;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="role_fk")
-	private Role role;
+	@OneToOne(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private UserRole userRole;
 	
 	public User() {
 		
@@ -100,13 +100,15 @@ public class User {
 		this.status = status;
 	}
 
-	public Role getRole() {
-		return role;
+	public UserRole getUserRole() {
+		return userRole;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
+
+	
 	
 	
 	

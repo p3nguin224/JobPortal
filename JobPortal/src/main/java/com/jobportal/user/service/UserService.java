@@ -1,7 +1,7 @@
 package com.jobportal.user.service;
 
 import com.jobportal.user.domain.User;
-import com.jobportal.user.domain.security.Role;
+import com.jobportal.user.domain.security.UserRole;
 
 public interface UserService {
 	
@@ -13,6 +13,6 @@ public interface UserService {
 	
 	User save(User user);
 	
-	User createUser(User user, Role role);
+	User createUser(User user, UserRole userRole);
 
 }
