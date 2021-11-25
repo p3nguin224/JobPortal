@@ -40,7 +40,7 @@ public class User implements UserDetails {
 	private String gender;
 	private String email;
 	private String registeredDate;
-	private String status;
+	
 	private Boolean isEnable = true;
 	
 	@OneToOne(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -133,14 +133,6 @@ public class User implements UserDetails {
 
 	public void setRegisteredDate(String registeredDate) {
 		this.registeredDate = registeredDate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public Boolean getIsEnable() {

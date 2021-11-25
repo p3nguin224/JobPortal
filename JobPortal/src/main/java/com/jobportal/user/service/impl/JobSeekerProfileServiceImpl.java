@@ -1,5 +1,7 @@
 package com.jobportal.user.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,21 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 		// TODO Auto-generated method stub
 		return jobSeekerDAO.findById(id).get();
 	}
+
+	@Override
+	public List<JobSeekerProfile> findAll() {
+		// TODO Auto-generated method stub
+		List<JobSeekerProfile> jobSeekerList = (List<JobSeekerProfile>) jobSeekerDAO.findAll();
+		
+		return jobSeekerList;
+	}
+
+	@Override
+	public List<JobSeekerProfile> findByCategory(String category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

@@ -34,14 +34,13 @@ public class JobPortalApplication implements CommandLineRunner{
 		user1.setGender("male");
 		user1.setPassword(SecurityUtility.passwordEncoder().encode("1234"));
 		user1.setRegisteredDate("2020");
-		user1.setStatus("avaliable");
 		user1.setUsername("cap");
 		
 		UserRole userRoles1 = new UserRole();
 		
 		Role role1 = new Role();
-		role1.setRoleId(1);
-		role1.setName("ROLE_USER");
+		role1.setRoleId(2);
+		role1.setName("ROLE_COMPANY");
 		
 		userRoles1.setUser(user1);
 		userRoles1.setRole(role1);

@@ -21,7 +21,8 @@ public class JobSeekerProfile {
 	
 	private String firstName;
 	private String lastName;
-	private String categroy;
+	private String category;
+	private String status;
 	
 	@Transient
 	private MultipartFile profileImage;
@@ -61,12 +62,12 @@ public class JobSeekerProfile {
 		this.lastName = lastName;
 	}
 
-	public String getCategroy() {
-		return categroy;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCategroy(String categroy) {
-		this.categroy = categroy;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public MultipartFile getProfileImage() {
@@ -91,6 +92,14 @@ public class JobSeekerProfile {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	
