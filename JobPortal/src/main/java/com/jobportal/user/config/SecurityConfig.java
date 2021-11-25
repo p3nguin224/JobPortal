@@ -3,6 +3,7 @@ package com.jobportal.user.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +15,7 @@ import com.jobportal.user.utility.SecurityUtility;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -49,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.csrf().disable().cors().disable()
 		.formLogin()                  // Log in Form configuration start
 		.failureUrl("/login?error")   // landing page after unsuccessful login
+		.defaultSuccessUrl("/success")
 		.loginPage("/login").permitAll()  // Custom login page and permit it to all users
 		.and()     // login config end
 		.logout()                     // Log out Form configuration start
