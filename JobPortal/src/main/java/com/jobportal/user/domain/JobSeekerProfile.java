@@ -1,5 +1,6 @@
 package com.jobportal.user.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class JobSeekerProfile {
 	@Column(columnDefinition = "text")
 	private String description;
 	
-	@OneToOne(targetEntity = User.class,fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = User.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false, name="userIdFk")
 	private User user;
 	
