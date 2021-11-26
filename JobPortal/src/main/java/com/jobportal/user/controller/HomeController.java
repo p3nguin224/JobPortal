@@ -1,5 +1,7 @@
 package com.jobportal.user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +27,16 @@ public class HomeController {
 		model.addAttribute("classActiveLogin", true);
 		return "myAccount";	
 	}
+	
+	// Change success page according to role
+	@RequestMapping("/success")
+	private String seekerHome(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_COMPANY")) {
+			return "hours"; // change here to companyHomePage
+		}
+		return "faq"; // change here to seekerHomePage
+	}
+	
+	
 
 }
