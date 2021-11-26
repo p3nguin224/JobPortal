@@ -1,7 +1,6 @@
 package com.jobportal.user.controller;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -120,6 +119,8 @@ public class HomeController {
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
 	}
+	
+	
 	
 	
 
