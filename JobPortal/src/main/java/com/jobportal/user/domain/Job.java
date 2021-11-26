@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Job {
 	
@@ -33,7 +35,7 @@ public class Job {
 	private String description;
 	
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
-	@JoinColumn
+	@JsonIgnore
 	private List<JobSkill> jobSkillList;
 	
 	public Job() {
