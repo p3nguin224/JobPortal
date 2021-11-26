@@ -45,6 +45,7 @@ public class User implements UserDetails {
 	
 	@OneToOne(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private UserRole userRole;
+
 	
 	public User() {
 		

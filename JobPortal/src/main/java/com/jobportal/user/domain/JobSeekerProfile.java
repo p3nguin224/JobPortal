@@ -44,6 +44,10 @@ public class JobSeekerProfile {
 	@JsonIgnore
 	private List<EducationProfile> educationProfileList;
 	
+	@OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<ExperienceProfile> experienceProfileList;
+	
 	public JobSeekerProfile() {
 		
 	}

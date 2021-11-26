@@ -11,4 +11,8 @@ public interface EducationProfileService {
 	EducationProfile saveEductationProfile(EducationProfile educationProfile);
 	
 	void removeEducationProfile(EducationProfile educationProfile);
+	
+	EducationProfile findById(Long id);
+	
+	void removeById(Long id);
 }
