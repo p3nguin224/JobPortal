@@ -1,5 +1,8 @@
 package com.jobportal.user.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class JobSeekerProfile {
@@ -30,9 +36,13 @@ public class JobSeekerProfile {
 	@Column(columnDefinition = "text")
 	private String description;
 	
-	@OneToOne(targetEntity = User.class,fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = User.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false, name="userIdFk")
 	private User user;
+	
+	@OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<EducationProfile> educationProfileList;
 	
 	public JobSeekerProfile() {
 		
@@ -100,6 +110,14 @@ public class JobSeekerProfile {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<EducationProfile> getEducationProfileList() {
+		return educationProfileList;
+	}
+
+	public void setEducationProfileList(List<EducationProfile> educationProfileList) {
+		this.educationProfileList = educationProfileList;
 	}
 	
 	
