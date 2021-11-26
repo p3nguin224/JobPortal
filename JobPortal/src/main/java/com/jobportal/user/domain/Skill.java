@@ -19,9 +19,13 @@ public class Skill {
 	
 	private String skillName;
 	
-	@OneToMany(mappedBy = "jobSeekerProfile")
+	@OneToMany(mappedBy = "skill")
 	@JsonIgnore
 	private List<JobSeekerSkill> jobSeekerSkillList;
+	
+	@OneToMany(mappedBy = "skill")
+	@JsonIgnore
+	private List<JobSkill> jobSkillList;
 	
 	public Skill() {
 		
@@ -49,6 +53,14 @@ public class Skill {
 
 	public void setJobSeekerSkillList(List<JobSeekerSkill> jobSeekerSkillList) {
 		this.jobSeekerSkillList = jobSeekerSkillList;
+	}
+
+	public List<JobSkill> getJobSkillList() {
+		return jobSkillList;
+	}
+
+	public void setJobSkillList(List<JobSkill> jobSkillList) {
+		this.jobSkillList = jobSkillList;
 	}
 	
 	
