@@ -44,6 +44,14 @@ public class JobSeekerProfile {
 	@JsonIgnore
 	private List<EducationProfile> educationProfileList;
 	
+	@OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<ExperienceProfile> experienceProfileList;
+	
+	@OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<JobSeekerSkill> jobSeekerSkillList;
+	
 	public JobSeekerProfile() {
 		
 	}
@@ -118,6 +126,22 @@ public class JobSeekerProfile {
 
 	public void setEducationProfileList(List<EducationProfile> educationProfileList) {
 		this.educationProfileList = educationProfileList;
+	}
+
+	public List<ExperienceProfile> getExperienceProfileList() {
+		return experienceProfileList;
+	}
+
+	public void setExperienceProfileList(List<ExperienceProfile> experienceProfileList) {
+		this.experienceProfileList = experienceProfileList;
+	}
+
+	public List<JobSeekerSkill> getJobSeekerSkillList() {
+		return jobSeekerSkillList;
+	}
+
+	public void setJobSeekerSkillList(List<JobSeekerSkill> jobSeekerSkillList) {
+		this.jobSeekerSkillList = jobSeekerSkillList;
 	}
 	
 	

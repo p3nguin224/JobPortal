@@ -119,9 +119,5 @@ public class HomeController {
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
 	}
-	
-	
-	
-	
 
 }
