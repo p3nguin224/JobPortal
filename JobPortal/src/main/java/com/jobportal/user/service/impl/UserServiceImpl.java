@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jobportal.user.dao.PasswordResetTokenDAO;
 import com.jobportal.user.dao.RoleDAO;
 import com.jobportal.user.dao.UserDAO;
 import com.jobportal.user.domain.User;
+import com.jobportal.user.domain.security.PasswordResetToken;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.UserService;
 
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private RoleDAO roleDAO;
+	
+	private PasswordResetTokenDAO passwordResetTokenDAO;
 
 	@Override
 	public User findByUsername(String username) {
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User save(User user) {
 		// TODO Auto-generated method stub
-		return user;
+		return userDAO.save(user);
 	}
 
 	@Override
@@ -59,6 +63,19 @@ public class UserServiceImpl implements UserService{
 			localUser = userDAO.save(user);
 		}
 		return localUser;
+	}
+
+	@Override
+	public PasswordResetToken getPasswordResetToken(String token) {
+		// TODO Auto-generated method stub
+		return passwordResetTokenDAO.findByToken(token);
+	}
+
+	@Override
+	public void createPasswordResetTokenForUser(User user, String token) {
+		// TODO Auto-generated method stub
+		final PasswordResetToken myToken = new PasswordResetToken(token, user);
+		passwordResetTokenDAO.save(myToken);
 	}
 
 }
