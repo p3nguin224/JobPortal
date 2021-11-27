@@ -1,22 +1,32 @@
 package com.jobportal.user.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.JobSeekerProfileService;
+import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.UserService;
+import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
 
 @Controller
@@ -27,6 +37,18 @@ public class HomeController {
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
+	
+	@Autowired
+	private JobService jobService;
+	
+	
+	@Autowired
+	private MailConstructor mailConstructor;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping("/")
 	private String homePage() {
@@ -58,6 +80,9 @@ public class HomeController {
 	// Model object is used to pass data to UI... Same as request.setParameter from javaEE
 	@RequestMapping("/login")
 	private String login(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		
 		model.addAttribute("classActiveLogin", true);
 		return "createNewSeeker";	
 	}
@@ -65,12 +90,29 @@ public class HomeController {
 	
 	// Change success page according to role
 	@RequestMapping("/success")
-	private String seekerHome(HttpServletRequest request) {
+	private String seekerHome(HttpServletRequest request, Principal principal, Model model) {
 		if (request.isUserInRole("ROLE_COMPANY")) {
+//			User user = userService.findByUsername(principal.getName());
+//			JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
+//			
+//			model.addAttribute("user", user);                       // <- model ui var
+//			model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 			
-			return "hours"; // change here to companyHomePage
+			return "employerProfile"; // change here to companyHomePage
 		}
-		return "faq"; // change here to seekerHomePage
+		
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
+		
+		model.addAttribute("user", user);                       // <- model ui var
+		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
+		
+		List<Job> jobList = jobService.findAllJobs();
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+		}
+		model.addAttribute("jobList", jobList);
+		return "jobListing"; // change here to seekerHomePage
 	}
 	
 	// Go to account creating page
@@ -80,12 +122,24 @@ public class HomeController {
 		User user = new User();
 		JobSeekerProfile seekerProfile = new JobSeekerProfile();
 		
-		model.addAttribute("classActiveNewAccount", true);		// create user acc page
-		
+
+		model.addAttribute("classActiveNewAccount", true);
+
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 		return "createNewSeeker";  // will reach to createNewSeeker.html
 	}
+	
+//	@RequestMapping("/newCompany")
+//	private String goToNewCompany(Model model) {
+//		User user = new User();
+//		CompanyProfile companyProfile = new CompanyProfile();
+//		
+//		model.addAttribute("classActiveNewAccount", true);
+//		model.addAttribute("user", user);                       // <- model ui var
+//		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+//		return "createNewSeeker";  // will reach to createNewSeeker.html
+//	}
 	
 	// Creating new job seeker account
 	@PostMapping("/newSeeker")
@@ -94,18 +148,22 @@ public class HomeController {
 			Model model) {
 		
 		if (userService.findByUsername(user.getUsername()) != null) {
-			model.addAttribute("usernameExist", true);  		// <- model ui var
+			model.addAttribute("usernameExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
 			return "createNewSeeker";
 		}
 		
 		if (userService.findByEmail(user.getEmail()) != null) {
-			model.addAttribute("emailExist", true);  		// <- model ui var
+			model.addAttribute("emailExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
 			return "createNewSeeker";
 		}
 		
 		if (user.getPassword().isEmpty() || user.getDob().isEmpty() || user.getGender().isEmpty()
 			|| user.getUsername().isEmpty() || user.getEmail().isEmpty()) {
 			model.addAttribute("missingRequiredField", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
+
 			return "createNewSeeker";
 		}
 		
@@ -129,14 +187,40 @@ public class HomeController {
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
 		jobSeekerService.save(seekerProfile);
-		
-		
-		
+
 		// Still required to make token and send mail
 		
-		model.addAttribute("classActiveLoginForm", true);  		// <- model ui var // assume both login and create page in same file
+		model.addAttribute("classActiveLogin", true);  		// <- model ui var // assume both login and create page in same file
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
+	}
+	
+	
+	public String forgetPassword(HttpServletRequest request,
+			@ModelAttribute("email") String userEmail, Model model) {
+		User user = userService.findByEmail(userEmail);
+		
+		if (user==null) {
+			model.addAttribute("emailNotExist",true);        // <- model ui
+			return "myAccount";    // return page when no account is found
+		}
+		
+		String password = SecurityUtility.randomPassword();
+		String encodedPassword = SecurityUtility.passwordEncoder().encode(password);
+		
+		user.setPassword(encodedPassword);
+		userService.save(user);
+		
+		String token = UUID.randomUUID().toString();
+		userService.createPasswordResetTokenForUser(user, token);
+		
+		String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+		SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+		
+		mailSender.send(email);
+		model.addAttribute("forgetPasswordEmailSent",true); // <- model ui
+		
+		return "";
 	}
 
 	

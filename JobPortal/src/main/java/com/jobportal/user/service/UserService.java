@@ -1,8 +1,7 @@
 package com.jobportal.user.service;
 
-import java.util.List;
-
 import com.jobportal.user.domain.User;
+import com.jobportal.user.domain.security.PasswordResetToken;
 import com.jobportal.user.domain.security.UserRole;
 
 public interface UserService {
@@ -16,6 +15,10 @@ public interface UserService {
 	User save(User user);
 	
 	User createUser(User user, UserRole userRole);
+	
+	PasswordResetToken getPasswordResetToken(final String token);
+	
+	void createPasswordResetTokenForUser(final User user, final String token);
 	
 
 }

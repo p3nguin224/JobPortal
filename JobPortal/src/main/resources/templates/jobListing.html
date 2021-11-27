@@ -52,15 +52,15 @@
                                 <!-- Select job items start --> <!-- Paing hypertext -->
                                 <div class="list-group" id="category">
                                     
-                                        <a th:href="${/jobListing(category='All')}" th:classappend="${activeAll}? 'active'" class="list-group-item">All Category</option>
-                                        <a th:href="${/jobListing(category='DesignAndCreative')}">Design & Creative</a>
-                                        <a th:href="${/jobListing(category='DesignAndDevelopment')}">Design & Development</a>
-                                        <a th:href="${/jobListing(category='SalesAndMarketing')}">Sales & Marketing</a>
-                                        <a th:href="${/jobListing(category='MobileApplication')}">Mobile Application</a>
-                                        <a th:href="${/jobListing(category='Construction')}">Construction</a>
-                                        <a th:href="${/jobListing(category='InformationTechnology')}">Information Technology</a>
-                                        <a th:href="${/jobListing(category='RealEstate')}">Real Estate</a>
-                                       <a th:href="${/jobListing(category='ContentWriter')}">Content Writer</a>
+                                        <a th:href="@{/jobListing(category='All')}" th:classappend="${activeAll}? 'active'" class="list-group-item">All Category</option>
+                                        <a th:href="@{/jobListing(category='DesignAndCreative')}">Design & Creative</a>
+                                        <a th:href="@{/jobListing(category='DesignAndDevelopment')}">Design & Development</a>
+                                        <a th:href="@{/jobListing(category='SalesAndMarketing')}">Sales & Marketing</a>
+                                        <a th:href="@{/jobListing(category='MobileApplication')}">Mobile Application</a>
+                                        <a th:href="@{/jobListing(category='Construction')}">Construction</a>
+                                        <a th:href="@{/jobListing(category='InformationTechnology')}">Information Technology</a>
+                                        <a th:href="@{/jobListing(category='RealEstate')}">Real Estate</a>
+                                       <a th:href="@{/jobListing(category='ContentWriter')}">Content Writer</a>
                                         
                                     
                                 </div>
@@ -165,28 +165,28 @@
 								<div th:if="${job != null}">
 									<div class="row" style="margin-bottom: 50px;">
 										<div class="col-xs-3">
-											<a th:href="@{/jobDetail?id=}+${job.id}"><img 
+											<a th:href="@{/jobDetail?id=}+${job.jobId}"><img 
 												class="img-responsive shelf-job"
-												th:src="#{companyPath}+@{/image/job/}+${job.id}+'.png'" /></a>
+												th:src="#{companyPath}+@{/image/job/}+${job.jobId}+'.png'" /></a>
 										</div>
 										<div class="col-xs-9" >
-											<a th:href="@{/jobDetail?id=}+${job.id}"><h4
-													th:text="${job.title}"></h4></a> <span
-												th:text="${job.Category}"></span>
-												<a th:href="@{/jobDetail?id=}+${job.id}"><h4
+											<a th:href="@{/jobDetail?id=}+${job.jobId}"><h4
+													th:text="${job.jobTitle}"></h4></a> <span
+												th:text="${job.category}"></span>
+												<a th:href="@{/jobDetail?id=}+${job.jobId}"><h4
 													th:text="${job.location}"></h4></a> <span
 												th:text="${job.requiredLanguage}"></span>
 											
-											<a th:href="@{/jobDetail?id=}+${job.id}"><span
-												th:text="${#strings.capitalize(job.format)}"></span></a> <span
-												th:text="${job.number_required}"><span> number of required</span></span><br />
+											<a th:href="@{/jobDetail?id=}+${job.jobId}"><span
+												th:text="${#strings.capitalize(job.status)}"></span></a> <span
+												th:text="${job.requiredMember}"><span> number of required</span></span><br />
 
-											<a th:href="@{/bookDetail?id=}+${book.id}"><span
+											<a th:href="@{/jobDetail?id=}+${job.jobId}"><span
 												style="font-size: x-large; color: #db3208;">$<span
-													th:text="${#numbers.formatDecimal(book.budget, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
+													th:text="${#numbers.formatDecimal(job.budget, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
 											
-											<a th:href="@{/jobDetail?id=}+${job.id}"><h4
-													th:text="${job.duration}"></h4></a> <span
+											<a th:href="@{/jobDetail?id=}+${job.jobId}"><h4
+													th:text="${job.deadlineDate}"></h4></a> <span
 												th:text="${job.lastAppliedDate}"></span>
 
 											<p th:utext="${#strings.abbreviate(job.description, 1000)}"></p>
