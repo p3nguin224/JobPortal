@@ -25,6 +25,11 @@ public class JobSkill {
 	public JobSkill() {
 		
 	}
+	
+	public JobSkill(Job job, Skill skill) {
+		this.job = job;
+		this.skill = skill;
+	}
 
 	public Long getJobSkillId() {
 		return jobSkillId;

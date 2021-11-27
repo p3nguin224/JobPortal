@@ -1,5 +1,6 @@
 package com.jobportal.user.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -75,12 +76,24 @@ public class HomeController {
 	
 	// Change success page according to role
 	@RequestMapping("/success")
-	private String seekerHome(HttpServletRequest request) {
+	private String seekerHome(HttpServletRequest request, Principal principal, Model model) {
 		if (request.isUserInRole("ROLE_COMPANY")) {
+//			User user = userService.findByUsername(principal.getName());
+//			JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
+//			
+//			model.addAttribute("user", user);                       // <- model ui var
+//			model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 			
-			return "hours"; // change here to companyHomePage
+			return "employerProfile"; // change here to companyHomePage
 		}
-		return "faq"; // change here to seekerHomePage
+		
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
+		
+		model.addAttribute("user", user);                       // <- model ui var
+		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
+		
+		return "single-blog"; // change here to seekerHomePage
 	}
 	
 	// Go to account creating page
@@ -89,10 +102,22 @@ public class HomeController {
 		User user = new User();
 		JobSeekerProfile seekerProfile = new JobSeekerProfile();
 		
+		model.addAttribute("classActiveNewAccount", true);
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 		return "createNewSeeker";  // will reach to createNewSeeker.html
 	}
+	
+//	@RequestMapping("/newCompany")
+//	private String goToNewCompany(Model model) {
+//		User user = new User();
+//		CompanyProfile companyProfile = new CompanyProfile();
+//		
+//		model.addAttribute("classActiveNewAccount", true);
+//		model.addAttribute("user", user);                       // <- model ui var
+//		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+//		return "createNewSeeker";  // will reach to createNewSeeker.html
+//	}
 	
 	// Creating new job seeker account
 	@PostMapping("/newSeeker")
