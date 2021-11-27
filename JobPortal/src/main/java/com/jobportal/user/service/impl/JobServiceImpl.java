@@ -41,6 +41,12 @@ public class JobServiceImpl implements JobService{
 		return jobDAO.save(job);
 	}
 
+	@Override
+	public List<Job> findAllJobs() {
+		// TODO Auto-generated method stub
+		return (List<Job>) jobDAO.findAll();
+	}
+
 	
 
 }

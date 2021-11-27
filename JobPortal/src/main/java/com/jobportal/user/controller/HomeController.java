@@ -2,6 +2,7 @@ package com.jobportal.user.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.JobSeekerProfileService;
+import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.UserService;
 import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
@@ -34,6 +37,9 @@ public class HomeController {
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
+	
+	@Autowired
+	private JobService jobService;
 	
 	
 	@Autowired
@@ -101,7 +107,12 @@ public class HomeController {
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 		
-		return "single-blog"; // change here to seekerHomePage
+		List<Job> jobList = jobService.findAllJobs();
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+		}
+		model.addAttribute("jobList", jobList);
+		return "jobListing"; // change here to seekerHomePage
 	}
 	
 	// Go to account creating page
