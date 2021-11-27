@@ -49,13 +49,28 @@ public class HomeController {
 		return "redirect:/";  // redirect to home page if it comes with index
 	}
 	
+	@RequestMapping("/job_listing")
+	private String jobList() {
+		return "job_listing";
+	}
+	
+	@RequestMapping("/about")
+	private String about() {
+		return "about";
+	}
+	
+	@RequestMapping("/contact")
+	private String contact() {
+		return "contact";
+	}
+	
 	// method name is not important as Controller works with mapping
 	// RequestMapping will be PostMapping if client HTTP Request is differrnt
 	// Model object is used to pass data to UI... Same as request.setParameter from javaEE
 	@RequestMapping("/login")
 	private String login(Model model) {
 		model.addAttribute("classActiveLogin", true);
-		return "myAccount";	
+		return "createNewSeeker";	
 	}
 	
 	// Change success page according to role
