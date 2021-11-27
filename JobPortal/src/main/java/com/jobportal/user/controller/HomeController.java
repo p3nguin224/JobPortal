@@ -62,6 +62,7 @@ public class HomeController {
 		return "createNewSeeker";	
 	}
 	
+	
 	// Change success page according to role
 	@RequestMapping("/success")
 	private String seekerHome(HttpServletRequest request) {
@@ -75,8 +76,11 @@ public class HomeController {
 	// Go to account creating page
 	@RequestMapping("/newSeeker")
 	private String goToNewSeeker(Model model) {
+		
 		User user = new User();
 		JobSeekerProfile seekerProfile = new JobSeekerProfile();
+		
+		model.addAttribute("classActiveNewAccount", true);		// create user acc page
 		
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
@@ -135,4 +139,19 @@ public class HomeController {
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
 	}
 
+	
+	
+	// Go to account creating page
+		@RequestMapping("/newCompany")
+		private String goToNewCompany(Model model) {
+			
+			User user = new User();
+			JobSeekerProfile seekerProfile = new JobSeekerProfile();
+			
+			model.addAttribute("classActiveNewAccount", true);		// create user acc page
+			
+			model.addAttribute("user", user);                       // <- model ui var
+//			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+			return "createNewSeeker";  // will reach to createNewSeeker.html
+		}
 }
