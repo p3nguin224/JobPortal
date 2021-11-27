@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+
+
+<!-- 
+	
+	
+	user, jobSeekerProfile is needed 
+	
+	
+	
+-->
+
+
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="common-header">
@@ -23,6 +35,7 @@
 
 <link rel="icon" href="/image/applie-touch-icon.png" />
 </head>
+
 
 <body>
 	<div class="page-top"
@@ -83,7 +96,7 @@
 									</div>
 
 									<form th:action="@{/updateSeekerInfo}" method="post">
-										<input type="hidden" name="id" th:value="${jobseekerprofile.id}" />
+										<input type="hidden" name="id" th:value="${jobSeekerProfile.id}" />
 
 										<div class="bg-info" th:if="${updateSeekerInfo}">Seeker info
 											updated.</div>
@@ -93,12 +106,12 @@
 												<div class="col-xs-6">
 													<label for="firstName">First Name</label> <input
 														type="text" class="form-control" id="firstName"
-														name="firstName" th:value="${job_seeker_profile.firstName}" />
+														name="firstName" th:value="${jobSeekerProfile.firstName}" />
 												</div>
 												<div class="col-xs-6">
 													<label for="lastName">Last Name</label> <input type="text"
 														class="form-control" id="lastName" name="lastName"
-														th:value="${job_seeker_profile.lastName}" />
+														th:value="${jobSeekerProfile.lastName}" />
 												</div>
 											</div>
 										</div>
@@ -139,7 +152,7 @@
 										
 										<div class="form-group">
 											<textarea name="description" rows="5" class="form-control"
-												id="description" th:value="${job_seeker_profile.description}"
+												id="description" th:value="${jobSeekerProfile.description}"
 												placeholder="Description" ></textarea>
 												<span class="help-block">Descripe about you</span>
 										</div>
@@ -148,7 +161,7 @@
 												<label for="bookImage">Upload Your image</label>
 											<div class="col-md-8">
 												<input id="image" type="file" name="seekerImage"
-													th:value="${job_seeker_profile.image}" />
+													th:value="${jobSeekerProfile.image}" />
 											</div>
 										</div>
 

@@ -38,3 +38,7 @@ $(document).ready(function(){
 	$("#txtConfirmPassword").keyup(checkPasswordMatch);
 	$("#txtNewPassword").keyup(checkPasswordMatch);
 });
+
+
+// Data Picker Initialization
+$('.datepicker').datepicker();
