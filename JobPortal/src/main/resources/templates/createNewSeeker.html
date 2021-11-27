@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
@@ -87,10 +86,10 @@
 									<form th:action="@{/newSeeker}" method="post">
 										<div class="form-group">
 											<label for="newUsername">* Username: </label>&nbsp;<span
-												style="color: red;" th:if="${usernameExists}">Username
+												style="color: red;" th:if="${usernameExists}" >Username
 												already exists. Choose a different one.</span> <input
 												required="required" type="text" class="form-control"
-												id="newUsername" name="username" />
+												id="newUsername" name="username" th:value="${user.username}"  />
 											<p style="color: #828282">Enter your username here.</p>
 										</div>
 
@@ -99,7 +98,7 @@
 												style="color: red;" th:if="${emailExists}">Email
 												already exists. Choose a different one.</span> <input
 												required="required" type="text" class="form-control"
-												id="email" name="email" />
+												id="email" name="email" th:value="${user.email}" />
 											<p style="color: #828282">A valid email address. All
 												emails from the system withll be sent to this address. The
 												email address is not made public and will only be used if
@@ -110,23 +109,38 @@
 										<div class="form-group">
 											<label for="password">* Password: </label>&nbsp;<input
 												required="required" type="text" class="form-control"
-												id="dob" name="password" />
+												id="dob" name="password" th:value="${user.password}"/>
 											<p style="color: #828282">Enter Password.</p>
 										</div>
 										
 										<div class="form-group">
-											<label for="dob">* Date of Birth: </label>&nbsp;<input
-												required="required" type="text" class="form-control"
-												id="dob" name="dob" />
-											<p style="color: #828282">Enter Date of Birth.</p>
+											<label for="dob">* Date of Birth: </label>&nbsp;
+												<input type="date" class="form-control" id="publicationDate"
+												name="publicationDate" th:value="${user.dob}"
+												placeholder="Select your Date of Birth" /> 
 										</div>
 										
 										<div class="form-group">
-											<label for="gender">* Gender </label>&nbsp;<input
-												required="required" type="text" class="form-control"
-												id="dob" name="gender" />
-											<p style="color: #828282">Enter your Gender.</p>
+											<label for="gender">* Gender </label>&nbsp;
+												<div class="form-check">
+  										<input class="form-check-input" required="required" type="radio" id="gender" name="gender" th:value="${user.gender}">
+  											<label class="form-check-label" for="flexRadioDefault1">
+  												  Male
+ 											 </label>
 										</div>
+										<div class="form-check">
+  											<input class="form-check-input" required="required" type="radio" id="gender" name="gender" th:value="${user.gender}" checked>
+  											<label class="form-check-label" for="flexRadioDefault2">
+   												Female
+ 											 </label>
+ 											 
+									
+										</div>
+											<!--
+											<p style="color: #828282">Enter your Gender.</p>
+												-->
+										</div>
+									
 
 										<button type="submit" class="btn btn-primary">Create
 											new account</button>
@@ -196,10 +210,13 @@
 		</div>
 	</div>
 	<!-- end of container -->
+	
+
 <script th:src="@{/js/jquery.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 
 		<script th:src="@{/js/scripts.js}"></script>
+		
 
 		<!-- data table -->
 		<script th:src="@{/js/jquery.dataTables.min.js}"></script>

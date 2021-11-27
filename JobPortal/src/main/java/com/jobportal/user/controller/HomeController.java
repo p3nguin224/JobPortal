@@ -70,9 +70,13 @@ public class HomeController {
 	// Model object is used to pass data to UI... Same as request.setParameter from javaEE
 	@RequestMapping("/login")
 	private String login(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		
 		model.addAttribute("classActiveLogin", true);
 		return "createNewSeeker";	
 	}
+	
 	
 	// Change success page according to role
 	@RequestMapping("/success")
@@ -99,10 +103,13 @@ public class HomeController {
 	// Go to account creating page
 	@RequestMapping("/newSeeker")
 	private String goToNewSeeker(Model model) {
+		
 		User user = new User();
 		JobSeekerProfile seekerProfile = new JobSeekerProfile();
 		
+
 		model.addAttribute("classActiveNewAccount", true);
+
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
 		return "createNewSeeker";  // will reach to createNewSeeker.html
@@ -199,4 +206,19 @@ public class HomeController {
 		return "";
 	}
 
+	
+	
+	// Go to account creating page
+		@RequestMapping("/newCompany")
+		private String goToNewCompany(Model model) {
+			
+			User user = new User();
+			JobSeekerProfile seekerProfile = new JobSeekerProfile();
+			
+			model.addAttribute("classActiveNewAccount", true);		// create user acc page
+			
+			model.addAttribute("user", user);                       // <- model ui var
+//			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+			return "createNewSeeker";  // will reach to createNewSeeker.html
+		}
 }
