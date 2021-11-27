@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,6 +41,8 @@ public class HomeController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping("/")
 	private String homePage() {
@@ -133,18 +137,22 @@ public class HomeController {
 			Model model) {
 		
 		if (userService.findByUsername(user.getUsername()) != null) {
-			model.addAttribute("usernameExist", true);  		// <- model ui var
+			model.addAttribute("usernameExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
 			return "createNewSeeker";
 		}
 		
 		if (userService.findByEmail(user.getEmail()) != null) {
-			model.addAttribute("emailExist", true);  		// <- model ui var
+			model.addAttribute("emailExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
 			return "createNewSeeker";
 		}
 		
 		if (user.getPassword().isEmpty() || user.getDob().isEmpty() || user.getGender().isEmpty()
 			|| user.getUsername().isEmpty() || user.getEmail().isEmpty()) {
 			model.addAttribute("missingRequiredField", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
+
 			return "createNewSeeker";
 		}
 		
@@ -168,12 +176,10 @@ public class HomeController {
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
 		jobSeekerService.save(seekerProfile);
-		
-		
-		
+
 		// Still required to make token and send mail
 		
-		model.addAttribute("classActiveLoginForm", true);  		// <- model ui var // assume both login and create page in same file
+		model.addAttribute("classActiveLogin", true);  		// <- model ui var // assume both login and create page in same file
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
 	}
