@@ -1,10 +1,13 @@
 package com.jobportal.user.controller;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +20,7 @@ import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.UserService;
+import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
 
 @Controller
@@ -27,6 +31,13 @@ public class HomeController {
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
+	
+	
+	@Autowired
+	private MailConstructor mailConstructor;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@RequestMapping("/")
 	private String homePage() {
@@ -118,6 +129,34 @@ public class HomeController {
 		model.addAttribute("classActiveLoginForm", true);  		// <- model ui var // assume both login and create page in same file
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
+	}
+	
+	
+	public String forgetPassword(HttpServletRequest request,
+			@ModelAttribute("email") String userEmail, Model model) {
+		User user = userService.findByEmail(userEmail);
+		
+		if (user==null) {
+			model.addAttribute("emailNotExist",true);        // <- model ui
+			return "myAccount";    // return page when no account is found
+		}
+		
+		String password = SecurityUtility.randomPassword();
+		String encodedPassword = SecurityUtility.passwordEncoder().encode(password);
+		
+		user.setPassword(encodedPassword);
+		userService.save(user);
+		
+		String token = UUID.randomUUID().toString();
+		userService.createPasswordResetTokenForUser(user, token);
+		
+		String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+		SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+		
+		mailSender.send(email);
+		model.addAttribute("forgetPasswordEmailSent",true); // <- model ui
+		
+		return "";
 	}
 
 }
