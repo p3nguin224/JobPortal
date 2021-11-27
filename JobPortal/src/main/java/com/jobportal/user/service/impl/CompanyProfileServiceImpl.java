@@ -1,12 +1,14 @@
 package com.jobportal.user.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jobportal.user.dao.CompanyProfileDAO;
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
 
+@Service
 public class CompanyProfileServiceImpl implements CompanyProfileService{
 	
 	@Autowired

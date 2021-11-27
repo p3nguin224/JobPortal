@@ -44,7 +44,7 @@ public class CompanyProfile {
 	@JoinColumn(nullable = false, name="userIdFk")
 	private User user;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "companyProfile",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Job> jobList;
 	
