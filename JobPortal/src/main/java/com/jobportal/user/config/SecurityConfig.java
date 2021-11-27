@@ -38,7 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/fonts/**",
 			"/bookshelf",
 			"/bookDetail",
-			"/hours"
+			"/hours",
+			"/assets/**",
+			"/Doc/**",
+			"/job_listing",
+			"/about",
+			"/contact"
 	};
 	
 	@Override
