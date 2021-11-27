@@ -96,7 +96,7 @@
 									</div>
 
 									<form th:action="@{/updateSeekerInfo}" method="post">
-										<input type="hidden" name="id" th:value="${jobSeekerProfile.id}" />
+										<input type="hidden" name="id" th:value="${jobSeekerProfile.seekerProfileId}" />
 
 										<div class="bg-info" th:if="${updateSeekerInfo}">Seeker info
 											updated.</div>
@@ -161,7 +161,7 @@
 												<label for="bookImage">Upload Your image</label>
 											<div class="col-md-8">
 												<input id="image" type="file" name="seekerImage"
-													th:value="${jobSeekerProfile.image}" />
+													th:value="${jobSeekerProfile.profileImage}" />
 											</div>
 										</div>
 

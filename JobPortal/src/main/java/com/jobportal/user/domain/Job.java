@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,6 +38,10 @@ public class Job {
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<JobSkill> jobSkillList;
+	
+	@ManyToOne
+	@JoinColumn(name = "companyProfileId")
+	private CompanyProfile companyProfile;
 	
 	public Job() {
 		
@@ -145,6 +150,15 @@ public class Job {
 	public void setJobSkillList(List<JobSkill> jobSkillList) {
 		this.jobSkillList = jobSkillList;
 	}
+
+	public CompanyProfile getCompanyProfile() {
+		return companyProfile;
+	}
+
+	public void setCompanyProfile(CompanyProfile companyProfile) {
+		this.companyProfile = companyProfile;
+	}
+	
 	
 	
 
