@@ -52,19 +52,13 @@ public class CompanyProfile {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public Long getCompanyId() {
 		return companyId;
 	}
 
-
-
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-
-
 
 	public String getCompanyName() {
 		return companyName;
