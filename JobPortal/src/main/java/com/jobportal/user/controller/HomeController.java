@@ -58,6 +58,9 @@ public class HomeController {
 	// Model object is used to pass data to UI... Same as request.setParameter from javaEE
 	@RequestMapping("/login")
 	private String login(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		
 		model.addAttribute("classActiveLogin", true);
 		return "createNewSeeker";	
 	}
