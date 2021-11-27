@@ -187,3 +187,17 @@ footer {
     color: #FFF;
     font-size: 12px;
 }
+
+.topnav {
+  background-color: rgb(192, 192, 192);
+  overflow: hidden;
+}
+
+.topnav a {
+  float: left;
+  color: rgb(64, 0, 0);
+
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 20px;
+}

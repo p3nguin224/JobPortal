@@ -1,9 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
-<head th:replace="common/header :: common-header" />
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>Job Seeker</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<link href="/css/non-responsive.css" rel="stylesheet" />
+
+<!-- data table -->
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+
+<link rel="icon" href="/image/applie-touch-icon.png" />
+</head>
 
 <body>
-	<div th:replace="common/header :: navbar" />
+	<div class="page-top"
+			style="width: 100%; height: 20px; background-color: #f46b42;"></div>
+		<!-- Static navbar -->
+		<div class="topnav">
+		 <a th:href="@{/index}"><img src="assets/img/logo/logo.png" alt=""></a>
+		 <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a>  <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> 
+  <a class="active" th:href="@{/index}">Home</a>
+  <a th:href="@{/job_listing}">Find a Jobs </a>
+  <a th:href="@{/about}">About</a>
+  <a th:href="@{/contact}">Contact</a>
+</div>
 
 	<div class="container">
 		<div class="row" style="margin-bottom: -100px;">
@@ -46,14 +78,14 @@
 										password for the current user.
 									</div>
 
-									<div class="alert alert-succss" th:if="${updateSuccess}">
-										<strong>Update Success!</strong>
+									<div class="alert alert-succss" th:if="${seekerProfileSuccess}">
+										<strong>Seeker profile Update Success!</strong>
 									</div>
 
-									<form th:action="@{/updateUserInfo}" method="post">
-										<input type="hidden" name="id" th:value="${user.id}" />
+									<form th:action="@{/updateSeekerInfo}" method="post">
+										<input type="hidden" name="id" th:value="${jobseekerprofile.id}" />
 
-										<div class="bg-info" th:if="${updateUserInfo}">User info
+										<div class="bg-info" th:if="${updateSeekerInfo}">Seeker info
 											updated.</div>
 
 										<div class="form-group">
@@ -61,21 +93,17 @@
 												<div class="col-xs-6">
 													<label for="firstName">First Name</label> <input
 														type="text" class="form-control" id="firstName"
-														name="firstName" th:value="${user.firstName}" />
+														name="firstName" th:value="${job_seeker_profile.firstName}" />
 												</div>
 												<div class="col-xs-6">
 													<label for="lastName">Last Name</label> <input type="text"
 														class="form-control" id="lastName" name="lastName"
-														th:value="${user.lastName}" />
+														th:value="${job_seeker_profile.lastName}" />
 												</div>
 											</div>
 										</div>
 
-										<div class="form-group">
-											<label for="userName">Username</label> ' <input type="text"
-												class="form-control" id="userName" name="username"
-												th:value="${user.username}" />
-										</div>
+										
 										<div class="form-group">
 											<label for="currentPassword">Current Password</label> ' <input
 												type="password" class="form-control" id="currentPassword"
@@ -108,8 +136,23 @@
 										</div>
 										<p style="color: #828282">To change the current user
 											password, enter the new password in both fields.</p>
+										
+										<div class="form-group">
+											<textarea name="description" rows="5" class="form-control"
+												id="description" th:value="${job_seeker_profile.description}"
+												placeholder="Description" ></textarea>
+												<span class="help-block">Descripe about you</span>
+										</div>
+											<!-- upload image -->
+										<div class="form-group">
+												<label for="bookImage">Upload Your image</label>
+											<div class="col-md-8">
+												<input id="image" type="file" name="seekerImage"
+													th:value="${job_seeker_profile.image}" />
+											</div>
+										</div>
 
-										<button id="updateUserInfoButton" type="submit"
+										<button id="updateSeekerInfoButton" type="submit"
 											class="btn btn-primary">Save All</button>
 									</form>
 								</div>
@@ -121,8 +164,13 @@
 		</div>
 	</div>
 	<!-- end of container -->
-<div th:replace="common/header :: footer"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
 
-	<div th:replace="common/header :: body-bottom-scripts" />
+		<script th:src="@{/js/scripts.js}"></script>
+
+		<!-- data table -->
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 </body>
 </html>
