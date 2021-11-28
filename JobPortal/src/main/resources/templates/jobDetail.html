@@ -71,19 +71,7 @@
                                    
                                </ul>
                             </div>
-                            <div class="post-details2  mb-50" data-th-each="educationProfile : ${educationProfileList}">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Education + Experience</h4>
-                                </div>
-                               <ul>
-                                   <li>CertificateName :<span th:text="${educationProfile.certificateName}"> </span></li>
-                                   <li>major :<span th:text="${educationProfile.major}"> </span></li>
-                                   <li>universityName :<span th:text="${educationProfile.universityName}"> </span></li>
-                                   <li>startDate :<span th:text="${educationProfile.startDate}"> </span></li>
-                                   <li>completeDate :<span th:text="${educationProfile.completeDate}"> </span></li>
-                               </ul>
-                            </div>
+                           
                         </div>
 
                     </div>
@@ -97,7 +85,7 @@
                             <a href="#" class="btn">Apply Now</a>
                          </div>
                        </div>
-                        <div class="post-details4  mb-50" >
+                        <div class="post-details4  mb-50" data-th-each="company : ${company}">
                             <!-- Small Section Tittle -->
                            <div class="small-section-tittle">
                                <h4>Company Information</h4>
