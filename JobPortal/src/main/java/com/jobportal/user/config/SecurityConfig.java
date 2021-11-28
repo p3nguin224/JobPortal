@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/css/**",
 			"/js/**",
 			"/image/**",
+			"/js/**",
 			"/", 
 			"/index",
 			"/newSeeker",
@@ -42,9 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/Doc/**",
 			"/job_listing",
 			"/about",
-			"/contact",
-			"/newSeeker",
-			"/newCompany"
+			"/contact"
 	};
 	
 	@Override

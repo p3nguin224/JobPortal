@@ -111,20 +111,21 @@ public class HomeController {
 		User user = userService.findByUsername(principal.getName());
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
-		model.addAttribute("user", user);                       // <- model ui var
-		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		// <- model ui var
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		
 		//////////////////////////////////////////
 		
 //		model.addAttribute("classActiveEdit", true);
 //		return "bbbootstrap";
 		//////////////////////////////////////////
 		// JobListing Test
+		
 		List<Job> jobList = jobService.findAllJobs();
 		if(jobList.size() == 0 ) {
 			model.addAttribute("emptyList", true);
 		}
 		model.addAttribute("jobList", jobList);
-		return "jobListing"; // change here to seekerHomePage
+		return "jobListing"; 
 	}
 	
 	// Go to account creating page

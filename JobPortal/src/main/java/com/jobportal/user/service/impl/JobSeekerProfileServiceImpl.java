@@ -38,7 +38,7 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 	@Override
 	public List<JobSeekerProfile> findAll() {
 		// TODO Auto-generated method stub
-		List<JobSeekerProfile> jobSeekerList = ((List<JobSeekerProfile>) jobSeekerDAO.findAll()).stream().filter(jobSeeker -> jobSeeker.getStatus()=="avaliable").collect(Collectors.toList());
+		List<JobSeekerProfile> jobSeekerList = ((List<JobSeekerProfile>) jobSeekerDAO.findAll()).stream().filter(jobSeeker -> jobSeeker.getStatus().equals("avaliable")).collect(Collectors.toList());
 		
 		return jobSeekerList;
 	}
