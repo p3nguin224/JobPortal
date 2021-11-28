@@ -100,7 +100,12 @@ public class HomeController {
 			model.addAttribute("user", user);                       // <- model ui var
 			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
 			
-			return "companyProfile"; // change here to companyHomePage
+			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
+			if(jobSeekerList.size() == 0 ) {
+				model.addAttribute("emptyList", true);
+			}
+			model.addAttribute("jobSeekerListing", jobSeekerList);		
+			return "jobSeekerListing"; // change here to companyHomePage
 		}
 		
 		User user = userService.findByUsername(principal.getName());
@@ -146,9 +151,7 @@ public class HomeController {
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
 		
-		Job job = new Job();
-		model.addAttribute("job", job);
-		return "newJob";  
+		return "createNewCompany";  
 	}
 	
 	// Creating new job seeker account
@@ -196,6 +199,7 @@ public class HomeController {
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
+		seekerProfile.setStatus("unavaliable");
 		jobSeekerService.save(seekerProfile);
 
 		// Still required to make token and send mail

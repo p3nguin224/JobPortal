@@ -61,7 +61,7 @@ public class JobPortalApplication implements CommandLineRunner{
 		
 		userService.createUser(user1, userRoles1);
 		
-		////////////// Make test job
+		//////////// Make test job
 //		Job job1 = new Job();
 //		job1.setJobTitle("TestingJob");
 //		job1.setCategory("IT");
@@ -89,7 +89,7 @@ public class JobPortalApplication implements CommandLineRunner{
 //		List<JobSkill> jobskillList = Arrays.asList(jobskill1,jobskill2);
 //		
 //		jobService.createJob(job1, jobskillList);
-//		
+		
 		
 	}
 
