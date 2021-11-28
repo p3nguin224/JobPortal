@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
+import com.jobportal.user.service.CompanyProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.UserService;
@@ -42,6 +44,9 @@ public class HomeController {
 	
 	@Autowired
 	private JobService jobService;
+	
+	@Autowired
+	private CompanyProfileService companyService;
 	
 	
 	@Autowired
@@ -86,9 +91,6 @@ public class HomeController {
 		return "contact";
 	}
 	
-	// method name is not important as Controller works with mapping
-	// RequestMapping will be PostMapping if client HTTP Request is differrnt
-	// Model object is used to pass data to UI... Same as request.setParameter from javaEE
 	@RequestMapping("/login")
 	private String login(Model model) {
 		User user = new User();
@@ -103,21 +105,26 @@ public class HomeController {
 	@RequestMapping("/success")
 	private String seekerHome(HttpServletRequest request, Principal principal, Model model) {
 		if (request.isUserInRole("ROLE_COMPANY")) {
-//			User user = userService.findByUsername(principal.getName());
-//			JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
-//			
-//			model.addAttribute("user", user);                       // <- model ui var
-//			model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
+			User user = userService.findByUsername(principal.getName());
+			CompanyProfile companyProfile = companyService.findByUser(user);
 			
-			return "employerProfile"; // change here to companyHomePage
+			model.addAttribute("user", user);                       // <- model ui var
+			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+			
+			return "companyProfile"; // change here to companyHomePage
 		}
 		
 		User user = userService.findByUsername(principal.getName());
-		JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		model.addAttribute("user", user);                       // <- model ui var
-		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		// <- model ui var
+		//////////////////////////////////////////
 		
+//		model.addAttribute("classActiveEdit", true);
+//		return "bbbootstrap";
+		//////////////////////////////////////////
+		// JobListing Test
 		List<Job> jobList = jobService.findAllJobs();
 		if(jobList.size() == 0 ) {
 			model.addAttribute("emptyList", true);
@@ -138,19 +145,19 @@ public class HomeController {
 
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("seekerProfile", seekerProfile);		// <- model ui var
-		return "createNewSeeker";  // will reach to createNewSeeker.html
+		return "createNewSeeker";  
 	}
 	
-//	@RequestMapping("/newCompany")
-//	private String goToNewCompany(Model model) {
-//		User user = new User();
-//		CompanyProfile companyProfile = new CompanyProfile();
-//		
-//		model.addAttribute("classActiveNewAccount", true);
-//		model.addAttribute("user", user);                       // <- model ui var
-//		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-//		return "createNewSeeker";  // will reach to createNewSeeker.html
-//	}
+	@RequestMapping("/newCompany")
+	private String goToNewCompany(Model model) {
+		User user = new User();
+		CompanyProfile companyProfile = new CompanyProfile();
+		
+		model.addAttribute("classActiveNewAccount", true);
+		model.addAttribute("user", user);                       // <- model ui var
+		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+		return "createNewCompany";  
+	}
 	
 	// Creating new job seeker account
 	@PostMapping("/newSeeker")
@@ -204,6 +211,61 @@ public class HomeController {
 		model.addAttribute("classActiveLogin", true);  		// <- model ui var // assume both login and create page in same file
 		
 		return "createNewSeeker";  // will reach to createNewSeeker.html 
+	}
+	
+	
+	// Creating new job seeker account
+	@PostMapping("/newCompany")
+	private String newCompany(@ModelAttribute("user") User user,
+			@ModelAttribute("companyProfile") CompanyProfile companyProfile,
+			Model model) {
+			
+		if (userService.findByUsername(user.getUsername()) != null) {
+			model.addAttribute("usernameExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
+			return "createNewCompany";
+		}
+			
+		if (userService.findByEmail(user.getEmail()) != null) {
+			model.addAttribute("emailExists", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
+			return "createNewCompany";
+		}
+			
+		if (user.getPassword().isEmpty() || user.getDob().isEmpty() || user.getGender().isEmpty()
+			|| user.getUsername().isEmpty() || user.getEmail().isEmpty()) {
+			model.addAttribute("missingRequiredField", true);  		// <- model ui var
+			model.addAttribute("classActiveNewAccount", true);
+
+			return "createNewCompany";
+		}
+			
+		String encryptedPassword = SecurityUtility.passwordEncoder().encode(user.getPassword());
+		user.setPassword(encryptedPassword);
+			
+		String todayDate = LocalDate.now().toString();  // Registerd date will be added manually
+		user.setRegisteredDate(todayDate);
+			
+		Role role = new Role();
+		role.setRoleId(2);
+		role.setName("ROLE_COMPANY");
+			
+		UserRole userRole = new UserRole();
+		userRole.setUser(user);
+		userRole.setRole(role);
+			
+		userService.createUser(user, userRole);
+			
+		// add job seeker profile but it's still empty
+		// let user edit jobSeeker profile in his profile page
+		companyProfile.setUser(user);   				// OneToOne connect
+		companyService.save(companyProfile);
+
+		// Still required to make token and send mail
+			
+		model.addAttribute("classActiveLogin", true);  		// <- model ui var // assume both login and create page in same file
+			
+		return "createNewCompany";  // will reach to createNewSeeker.html 
 	}
 	
 	
@@ -278,6 +340,7 @@ public class HomeController {
 			return "jobDetail";
 			
 		}
+
 }
 
 
