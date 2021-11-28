@@ -59,7 +59,7 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a th:href="@{/index}">Home</a></li>
-                                            <li><a th:href="@{/job_listing}">Find a Jobs </a></li>
+                                            <li><a th:href="@{/jobListing}">Find a Jobs </a></li>
                                             <li><a th:href="@{/about}">About</a></li>
                                              <!-- 'page' remove -->
                                             <li><a th:href="@{/contact}">Contact</a></li>
@@ -68,9 +68,12 @@
                                 </div>          
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a th:href="@{/newSeeker}" class="btn head-btn1">NewSeeker</a>
-                                    <a th:href="@{/newCompany}" class="btn head-btn1">Company</a>
-                                    <a th:href="@{/login}" class="btn head-btn2">Login</a>
+                                    <a sec:authorize="isAnonymous()" th:href="@{/newSeeker}" class="btn head-btn1">JobSeeker</a>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/jobSeekerProfile}" class="btn head-btn1">JobSeeker</a>
+                                    <a sec:authorize="isAnonymous()" th:href="@{/newCompany}" class="btn head-btn1">Company</a>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/companyProfile}" class="btn head-btn1">Company</a>
+                                    <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn head-btn2">Login</a>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn head-btn2">Logout</a>
                                 </div>
                             </div>
                         </div>
