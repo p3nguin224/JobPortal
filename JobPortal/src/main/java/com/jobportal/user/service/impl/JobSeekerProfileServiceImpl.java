@@ -1,6 +1,7 @@
 package com.jobportal.user.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 	@Override
 	public List<JobSeekerProfile> findAll() {
 		// TODO Auto-generated method stub
-		List<JobSeekerProfile> jobSeekerList = (List<JobSeekerProfile>) jobSeekerDAO.findAll();
+		List<JobSeekerProfile> jobSeekerList = ((List<JobSeekerProfile>) jobSeekerDAO.findAll()).stream().filter(jobSeeker -> jobSeeker.getStatus().equals("avaliable")).collect(Collectors.toList());
 		
 		return jobSeekerList;
 	}

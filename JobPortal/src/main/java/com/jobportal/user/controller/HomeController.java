@@ -111,26 +111,32 @@ public class HomeController {
 			model.addAttribute("user", user);                       // <- model ui var
 			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
 			
-			return "companyProfile"; // change here to companyHomePage
+			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
+			if(jobSeekerList.size() == 0 ) {
+				model.addAttribute("emptyList", true);
+			}
+			model.addAttribute("jobSeekerListing", jobSeekerList);		
+			return "jobSeekerListing"; // change here to companyHomePage
 		}
 		
 		User user = userService.findByUsername(principal.getName());
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
-		model.addAttribute("user", user);                       // <- model ui var
-		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		// <- model ui var
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		
 		//////////////////////////////////////////
 		
 //		model.addAttribute("classActiveEdit", true);
 //		return "bbbootstrap";
 		//////////////////////////////////////////
 		// JobListing Test
+		
 		List<Job> jobList = jobService.findAllJobs();
 		if(jobList.size() == 0 ) {
 			model.addAttribute("emptyList", true);
 		}
 		model.addAttribute("jobList", jobList);
-		return "jobListing"; // change here to seekerHomePage
+		return "jobListing"; 
 	}
 	
 	// Go to account creating page
@@ -156,6 +162,7 @@ public class HomeController {
 		model.addAttribute("classActiveNewAccount", true);
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+		
 		return "createNewCompany";  
 	}
 	
@@ -204,6 +211,7 @@ public class HomeController {
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
+		seekerProfile.setStatus("unavaliable");
 		jobSeekerService.save(seekerProfile);
 
 		// Still required to make token and send mail
