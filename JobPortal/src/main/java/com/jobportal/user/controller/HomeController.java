@@ -166,6 +166,8 @@ public class HomeController {
 		return "createNewCompany";  
 	}
 	
+	
+	
 	// Creating new job seeker account
 	@PostMapping("/newSeeker")
 	private String newSeeker(@ModelAttribute("user") User user,
@@ -306,23 +308,11 @@ public class HomeController {
 
 	
 	
-	// Go to account creating page
-		@RequestMapping("/newCompany")
-		private String goToNewCompany(Model model) {
-			
-			User user = new User();
-			JobSeekerProfile seekerProfile = new JobSeekerProfile();
-			
-			model.addAttribute("classActiveNewAccount", true);		// create user acc page
-			
-			model.addAttribute("user", user);                       // <- model ui var
-//			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-			return "createNewSeeker";  // will reach to createNewSeeker.html
-		}
+
 		
 		
 		@RequestMapping("/jobDetail")
-		public String jobDetail(@RequestParam("jobId") Long id,Model model,Principal principal) {
+		public String jobDetail(@RequestParam("id") Long jobId,Model model,Principal principal) {
 			if (principal != null) {
 
 				String username = principal.getName();
@@ -333,7 +323,7 @@ public class HomeController {
 
 			}
 			
-			Job job = jobService.findById(id);
+			Job job = jobService.findById(jobId);
 			
 			model.addAttribute("job", job);
 			
