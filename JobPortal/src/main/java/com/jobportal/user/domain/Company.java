@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 
@@ -11,33 +14,35 @@ public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long companyId;
-	
+
 	private String companyName;
 	private String companyPhone;
 	private String companyEmail;
 	private String companyAddress;
 	private String companyUrl;
-	
+
 	private String image1;
 	private String image2;
-	
+
+	@ManyToMany
+	@JoinColumn(name = "userId")
+	private User user;
+
+	@ManyToOne
+	@JoinColumn(name = "jobId")
+	private Job job;
+
 	public Company() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	public Long getCompanyId() {
 		return companyId;
 	}
 
-
-
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-
-
 
 	public String getCompanyName() {
 		return companyName;
@@ -95,15 +100,27 @@ public class Company {
 		this.image2 = image2;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
 	@Override
 	public String toString() {
 		return "Company [companyId=" + companyId + ", companyName=" + companyName + ", companyPhone=" + companyPhone
 				+ ", companyEmail=" + companyEmail + ", companyAddress=" + companyAddress + ", companyUrl=" + companyUrl
-				+ ", image1=" + image1 + ", image2=" + image2 + "]";
+				+ ", image1=" + image1 + ", image2=" + image2 + ", job=" + job + "]";
 	}
-	
-	
-	
-	
-	
+
 }
