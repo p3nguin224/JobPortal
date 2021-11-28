@@ -65,7 +65,8 @@ public class JobPortalApplication implements CommandLineRunner{
 //		Job job1 = new Job();
 //		job1.setJobTitle("TestingJob");
 //		job1.setCategory("IT");
-//		job1.setBudget(300);
+//		job1.setMinBudget(300);
+//		job1.setMaxBudget(500);
 //		job1.setDeadlineDate("2010-12-02");
 //		job1.setDescription("testing123");
 //		job1.setRequiredMember(5);

@@ -23,7 +23,8 @@ public class Job {
 	
 	private String jobTitle;
 	private String category;
-	private Integer budget;
+	private Integer minBudget;
+	private Integer maxBudget;
 	private Integer requiredMember;
 	private String location;
 	private String lastAppliedDate;
@@ -71,12 +72,21 @@ public class Job {
 		this.category = category;
 	}
 
-	public Integer getBudget() {
-		return budget;
+
+	public Integer getMinBudget() {
+		return minBudget;
 	}
 
-	public void setBudget(Integer budget) {
-		this.budget = budget;
+	public void setMinBudget(Integer minBudget) {
+		this.minBudget = minBudget;
+	}
+
+	public Integer getMaxBudget() {
+		return maxBudget;
+	}
+
+	public void setMaxBudget(Integer maxBudget) {
+		this.maxBudget = maxBudget;
 	}
 
 	public Integer getRequiredMember() {

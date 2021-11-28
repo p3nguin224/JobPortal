@@ -145,7 +145,10 @@ public class HomeController {
 		model.addAttribute("classActiveNewAccount", true);
 		model.addAttribute("user", user);                       // <- model ui var
 		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-		return "createNewCompany";  
+		
+		Job job = new Job();
+		model.addAttribute("job", job);
+		return "newJob";  
 	}
 	
 	// Creating new job seeker account

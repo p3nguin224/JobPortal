@@ -183,7 +183,7 @@
 
 											<a th:href="@{/jobDetail?id=}+${job.jobId}"><span
 												style="font-size: x-large; color: #db3208;">$<span
-													th:text="${#numbers.formatDecimal(job.budget, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
+													th:text="${#numbers.formatDecimal(job.minBudget, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
 											
 											<a th:href="@{/jobDetail?id=}+${job.jobId}"><h4
 													th:text="${job.deadlineDate}"></h4></a> <span
