@@ -1,7 +1,11 @@
 <!doctype html>
-<!doctype html>
+
+
 <html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="common/header :: common-header" />
+
+   <body>
+    <div th:replace="common/header :: navbar" />
     <main>
 
         <!-- Hero Area Start-->
@@ -11,7 +15,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>UI/UX Designer</h2>
+                            <h2>Job Detail</h2>
                         </div>
                     </div>
                 </div>
@@ -29,19 +33,20 @@
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                 <div class="company-img company-img-details">
-                                   <img class="img-responsive shelf-job" th:src="#{companyPath}+@{/image/job/}+${job.id}+'.png'" />
+                                   <img class="img-responsive shelf-job" src="assets/img/icon/job-list1.png" />
                                 </div>
                                 <div class="job-tittle">
                                    
-                                    <h5><strong>Title: </strong><span th:text="${job.title}"></span></h5>
-    					<p><strong>Number of Required: </strong><span th:text="${job.number_required}"></span></p>
+                                    <h5><strong>Title: </strong><span th:text="${job.jobTitle}"></span></h5>
+    					<p><strong>Number of Required: </strong><span th:text="${job.requiredMember}"></span></p>
     					<p><strong>Last Applied Date: </strong><span th:text="${job.lastAppliedDate}"></span></p>
-    					<p><strong>Language: </strong><span th:text="${book.requiedLanguage}"></span></p>
+    					<p><strong>Language: </strong><span th:text="${job.requiredLanguage}"></span></p>
     					<p><strong>Category: </strong><span th:text="${job.category}"></span></p>
     					<p><strong>Location: </strong><span th:text="${job.location}"></span></p>
-    					<p><strong>Budget: </strong><span th:text="${job.budget}"></span></p>
-    					<p><strong>Duration: </strong><span th:text="${job.duration}"></span></p>
-    					<p><strong>Company: </strong><span th:text="${job.company}"></span></p>
+    					<p><strong>Minimum Budget: </strong><span th:text="${job.minBudget}"></span></p>
+    					<p><strong>Maximum Budget: </strong><span th:text="${job.maxBudget}"></span></p>
+    					<p><strong>Status: </strong><span th:text="${job.status}"></span></p>
+    				<!--	<p><strong>Company: </strong><span th:text="${job.company}"></span></p> -->
                                 </div>
                             </div>
                         </div>
@@ -54,30 +59,27 @@
                                     <h4>Job Description</h4>
                                 </div>
 							<p><span th:text="${job.description}"></span></p>                            </div>
-                            <div class="post-details2  mb-50">
+                            <div class="post-details2  mb-50" data-th-each="skill : ${skillList}">
                                  <!-- Small Section Tittle -->
                                 <div class="small-section-tittle">
                                     <h4>Required Knowledge, Skills, and Abilities</h4>
                                 </div>
                                <ul>
-                                   <li>System Software Development</li>
-                                   <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
-                                   <li>Research and code , libraries, APIs and frameworks</li>
-                                   <li>Strong knowledge on software development life cycle</li>
-                                   <li>Strong problem solving and debugging skills</li>
+                                   <li th:text="${skill.skillName}"></li>
+                                   
                                </ul>
                             </div>
-                            <div class="post-details2  mb-50">
+                            <div class="post-details2  mb-50" data-th-each="educationProfile : ${educationProfileList}">
                                  <!-- Small Section Tittle -->
                                 <div class="small-section-tittle">
                                     <h4>Education + Experience</h4>
                                 </div>
                                <ul>
-                                   <li>3 or more years of professional design experience</li>
-                                   <li>Direct response email experience</li>
-                                   <li>Ecommerce website design experience</li>
-                                   <li>Familiarity with mobile and web apps preferred</li>
-                                   <li>Experience using Invision a plus</li>
+                                   <li>CertificateName :<span th:text="${educationProfile.certificateName}"> </span></li>
+                                   <li>major :<span th:text="${educationProfile.major}"> </span></li>
+                                   <li>universityName :<span th:text="${educationProfile.universityName}"> </span></li>
+                                   <li>startDate :<span th:text="${educationProfile.startDate}"> </span></li>
+                                   <li>completeDate :<span th:text="${educationProfile.completeDate}"> </span></li>
                                </ul>
                             </div>
                         </div>
@@ -93,7 +95,7 @@
                             <a href="#" class="btn">Apply Now</a>
                          </div>
                        </div>
-                        <div class="post-details4  mb-50">
+                        <div class="post-details4  mb-50" >
                             <!-- Small Section Tittle -->
                            <div class="small-section-tittle">
                                <h4>Company Information</h4>
@@ -101,9 +103,11 @@
                               <span>Colorlib</span>
                               <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                             <ul>
-                                <li>Name: <span>Colorlib </span></li>
-                                <li>Web : <span> colorlib.com</span></li>
-                                <li>Email: <span>carrier.colorlib@gmail.com</span></li>
+                                <li>Name: <span th:text="${company.companyName}"></span></li>
+                                <li>Web : <span th:text="${company.companyUrl}"></span></li>
+                                <li>Email: <span th:text="${company.companyEmail}"></span></li>
+                                <li>Phone: <span th:text="${company.companyPhone}"></span></li>
+                                <li>Address: <span th:text="${company.companyAddress}"></span></li>
                             </ul>
                        </div>
                     </div>

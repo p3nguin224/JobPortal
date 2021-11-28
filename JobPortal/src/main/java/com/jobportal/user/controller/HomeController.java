@@ -2,6 +2,7 @@ package com.jobportal.user.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
@@ -65,10 +67,19 @@ public class HomeController {
 		return "redirect:/";  // redirect to home page if it comes with index
 	}
 	
-	@RequestMapping("/job_listing")
-	private String jobList() {
-		return "job_listing";
+	@RequestMapping("/jobListing")
+	private String jobList(Model model,@ModelAttribute("job") Job job) {
+		List<Job> jobList = jobService.findAllJobs();
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+			model.addAttribute("activeAll", true);  //
+		}
+		model.addAttribute("jobList", jobList);
+		return "jobListing";
 	}
+	
+	
+	
 	
 	@RequestMapping("/about")
 	private String about() {
@@ -288,16 +299,48 @@ public class HomeController {
 	
 	
 	// Go to account creating page
-//		@RequestMapping("/newCompany")
-//		private String goToNewCompany(Model model) {
-//			
-//			User user = new User();
-//			JobSeekerProfile seekerProfile = new JobSeekerProfile();
-//			
-//			model.addAttribute("classActiveNewAccount", true);		// create user acc page
-//			
-//			model.addAttribute("user", user);                       // <- model ui var
-////			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-//			return "createNewSeeker";  // will reach to createNewSeeker.html
-//		}
+		@RequestMapping("/newCompany")
+		private String goToNewCompany(Model model) {
+			
+			User user = new User();
+			JobSeekerProfile seekerProfile = new JobSeekerProfile();
+			
+			model.addAttribute("classActiveNewAccount", true);		// create user acc page
+			
+			model.addAttribute("user", user);                       // <- model ui var
+//			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+			return "createNewSeeker";  // will reach to createNewSeeker.html
+		}
+		
+		
+		@RequestMapping("/jobDetail")
+		public String jobDetail(@RequestParam("jobId") Long id,Model model,Principal principal) {
+			if (principal != null) {
+
+				String username = principal.getName();
+
+				User user = userService.findByUsername(username);
+
+				model.addAttribute("user", user);
+
+			}
+			
+			Job job = jobService.findById(id);
+			
+			model.addAttribute("job", job);
+			
+			
+			
+			List<Integer> qtyList = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+			
+			model.addAttribute("qtyList", qtyList);
+			
+			model.addAttribute("qty", 1);
+			
+			return "jobDetail";
+			
+		}
+
 }
+
+
