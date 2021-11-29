@@ -1,183 +1,283 @@
-<!DOCTYPE html>
+<!doctype html>
 
-
-<!-- 
+<!--
 	
 	
-	user, jobSeekerProfile is needed 
-	
-	
-	
--->
-
-
+	-->
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:fragment="common-header">
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+         <title>Job board HTML-5 Template </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
-<title>Job Seeker</title>
-
-<!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet" />
-
-<link href="/css/non-responsive.css" rel="stylesheet" />
-
-<!-- data table -->
-<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
-<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
-
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
-
-<!-- Custom styles for this template -->
-<link href="/css/style.css" rel="stylesheet" />
-
-<link rel="icon" href="/image/applie-touch-icon.png" />
-</head>
+		<!-- CSS here -->
+            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+            <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+            <link rel="stylesheet" href="assets/css/flaticon.css">
+            <link rel="stylesheet" href="assets/css/price_rangs.css">
+            <link rel="stylesheet" href="assets/css/slicknav.css">
+            <link rel="stylesheet" href="assets/css/animate.min.css">
+            <link rel="stylesheet" href="assets/css/magnific-popup.css">
+            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+            <link rel="stylesheet" href="assets/css/themify-icons.css">
+            <link rel="stylesheet" href="assets/css/slick.css">
+            <link rel="stylesheet" href="assets/css/nice-select.css">
+            <link rel="stylesheet" href="assets/css/style.css">
+            
+            <style>
+            
+            body{
+    color: #8e9194;
+    background-color: #f4f6f9;
+}
+.avatar-xl img {
+    width: 110px;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+.text-muted {
+    color: #aeb0b4 !important;
+}
+.text-muted {
+    font-weight: 300;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4d5154;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #eef0f3;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+            
+            </style>
+   </head>
 
 
 <body>
-	<div class="page-top"
-			style="width: 100%; height: 20px; background-color: #f46b42;"></div>
-		<!-- Static navbar -->
-		<div class="topnav">
-		 <a th:href="@{/index}"><img src="assets/img/logo/logo.png" alt=""></a>
-		 <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a>  <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> <a></a> 
-  <a class="active" th:href="@{/index}">Home</a>
-  <a th:href="@{/job_listing}">Find a Jobs </a>
-  <a th:href="@{/about}">About</a>
-  <a th:href="@{/contact}">Contact</a>
-</div>
+<div th:replace="common/header :: navbar" />
 
-	<div class="container">
-		<div class="row" style="margin-bottom: -100px;">
-			<div class="col-xs-8">
-				<h2 class="section-headline">
-					<h2 class="section-headline">
-						<span th:text="${#strings.toUpperCase(user.username)}"></span>
-					</h2>
-				</h2>
-			</div>
-			<div class="col-xs-4">
-				<img src="/image/logo.png" class="img-responsive" />
-			</div>
-		</div>
-		
 
-		<div class="row" style="margin-top: 60px;">
-			<div class="col-xs-9 col-xs-offset-3">
-
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs">
-					<li th:classappend="${classActiveEdit}? 'active'"><a
-						href="#tab-1" data-toggle="tab"><span style="color: red;">Edit</span></a></li>
-					
-				</ul>
-
-				<!-- Tab panels -->
-				<div class="tab-content">
-
-					<!-- Edit user information -->
-					<div class="tab-pane fade" id="tab-1"
-						th:classappend="${classActiveEdit}? 'in active'">
-						<div class="panel-group">
-							<div class="panel panel-default" style="border: none;">
-								<div class="panel-body"
-									style="background-color: #ededed; margin-top: 20px;">
-
-									<div class="alert alert-danger" th:if="${incorrectPassword}">
+<div class="container">
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+        <h2 class="h3 mb-4 page-title">Settings</h2>
+        <div class="my-4">
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <li class="nav-item" th:classappend="${classActiveProfile}? 'active'" >
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" ><span style="color: rgb(255, 0, 128);">Profile</span></a>
+                </li>
+                <li class="nav-item" th:classappend="${classActiveEducation}? 'active'" >
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#education" role="tab" aria-controls="home" aria-selected="false"><span style="color: red;">Education</span></a>
+                </li>
+                <li class="nav-item" th:classappend="${classActiveProfilExperience}? 'active'" >
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#experience" role="tab" aria-controls="home" aria-selected="false"><span style="color: red;">Experience</span></a>
+                </li>
+            </ul>
+            
+            <!-- password @p -->
+            <div class="alert alert-danger" th:if="${incorrectPassword}">
 										<strong>Incorrect Password!</strong> Pleae enter the correct
 										password for the current user.
 									</div>
 
-									<div class="alert alert-succss" th:if="${seekerProfileSuccess}">
-										<strong>Seeker profile Update Success!</strong>
+									<div class="alert alert-succss" th:if="${updateSuccess}">
+										<strong>Update Success!</strong>
 									</div>
+            <!-- password @p -->
+            
+            
+         <div class="tab-pane fade" id="home"
+						th:classappend="${classActiveProfile}? 'in active'"> 
+            <form th:action="@{/updateUserInfo}" method="post" >
+             <!-- updateinfo @p -->
+            <input type="hidden" name="id" th:value="${user.userId}" />
+          
 
-									<form th:action="@{/updateSeekerInfo}" method="post">
-										<input type="hidden" name="id" th:value="${jobSeekerProfile.seekerProfileId}" />
-
-										<div class="bg-info" th:if="${updateSeekerInfo}">Seeker info
+			<div class="bg-info" th:if="${updateUserInfo}">User info
 											updated.</div>
+			 <!-- updateinfo @p -->				
+											
+           
+                <div class="row mt-5 align-items-center">
+                    <div class="col-md-3 text-center mb-5">
+                        <div class="avatar avatar-xl">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..." class="avatar-img rounded-circle" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-7">
+                                <h4 class="mb-1" th:text="${jobSeekerProfile.firstName  +  jobSeekerProfile.LastName}"></h4>
+                                <p class="small mb-3"><span class="badge badge-dark" th:text="${jobSeekerProfile.status}"></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-7" >
+                                <p class="text-muted" th:text="${jobSeekerProfile.description}">
+                                    
+                                </p>
+                            </div>
+                            <div class="col">
+                                <!-- right pane -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                                  
+                             
+                <div class="form-row">                	
+                    <div class="form-group col-md-6">
+                        <label for="firstname">Firstname</label>
+                        <input type="text" id="firstname" class="form-control" th:placeholder="${jobSeekerProfile.firstName}" th:value="${jobSeekerProfile.firstName}"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastname">Lastname</label>
+                        <input type="text" id="lastname" class="form-control" th:placeholder="${jobSeekerProfile.lastName}" th:value="${jobSeekerProfile.lastName}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" th:placeholder="${user.email}" th:value="${user.email}"/>
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label for="inputCompany5" >User Name</label>
+                    <input type="text" class="form-control" id="inputCompany5" th:placeholder="${user.username}" th:value="${user.username}"/>
+                </div>
+                <div class="form-group col-md-2">
+                        <label for="inputZip5">gender</label>
+                        <div class="form-check">
+                       <input class="form-check-input" required="required" type="radio" id="gender" name="gender"  value="male">
+  											<label class="form-check-label" for="flexRadioDefault1">
+  												  Male
+ 											 </label>
+                        </div>
+                        <div class="form-check">
+ 						<input class="form-check-input" required="required" type="radio" id="gender" name="gender"  value="female" >
+  											<label class="form-check-label" for="flexRadioDefault2">
+   												Female
+ 											 </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip5">Status</label>
+                        <div class="form-check">
+                       <input class="form-check-input" required="required" type="radio" id="gender" name="status"  value="busy">
+  											<label class="form-check-label" for="flexRadioDefault1">
+  												  Busy
+ 											 </label>
+                        </div>
+                        <div class="form-check">
+ 						<input class="form-check-input" required="required" type="radio" id="gender" name="status"  value="available" >
+  											<label class="form-check-label" for="flexRadioDefault2">
+   												Available
+ 											 </label>
+                        </div>
+                    </div>
+                </div>
+             <!--   <div class="form-group">
+                    <label for="inputAddress5">Date of Birth</label>
+                    <input type="text" class="form-control" id="inputAddress5" placeholder="P.O. Box 464, 5975 Eget Avenue" />
+                </div> -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCompany5">Date of Birth</label>
+                        <input type="date" class="form-control" id="firstname" th:placeholder="${user.dob}" th:value="${user.dob}"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputState5">Category</label>
+                        <select id="firstname" class="form-control" th:value="${jobSeekerProfile.category}">
+                            <option th:text="${jobSeekerProfile.category}"></option>                
+                                        <option value="DesignAndCreative">Design & Creative</option>
+                                        <option value="DesignAndDevelopment">Design & Development</option>
+                                        <option value="SalesAndMarketing">Sales & Marketing</option>
+                                        <option value="MobileApplication">Mobile Application</option>
+                                        <option value="InformationTechnology">Information Technology</option>
+                                        <option value="ContentWriter">Content Writer</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <hr class="my-4" />
+                
+                    
+                        <div class="form-group">
+                            <label for="inputPassword4">Old Password</label>
+                            <input type="password" class="form-control" id="inputPassword5" th:value="${currentPassword}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword5">New Password</label>&nbsp;<span
+												id="checkPasswordMatch" style="color: red;"></span>
+                            <input type="password" class="form-control" id="txtNewPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword6">Confirm Password</label>
+                            <input type="password" class="form-control"  id="txtConfirmPassword" />
+                        </div>
+                   
+                   
+                
+                
+                <!-- Skill & Education -->
+                
+                 <hr class="my-4" />
+                <div class="row mb-4">
+                	
+                    <div class="col-md-6">
+                    <p class="mb-2">Skill</p>
+                        <div class="form-group">    
+                        	                   
+                            <input type="checkbox" class="form-control" th:each="skill : ${allSkills}" 
+                            th:text="${skill.name}" th:value="${skill.name}" th:checked="${#lists.contains(jskillNameList, skill.name)}"/>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail4" >Description</label>
+						<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${jobSeekerProfile.description}"
+								th:placeholder="${jobSeekerProfile.description}" ></textarea>                </div>
+                <button type="submit" id="updateUserInfoButton" class="btn btn-primary">Save Change</button>
+                <a class="btn btn-danger" th:href="@{/}">Cancel</a>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
 
-										<div class="form-group">
-											<div class="row">
-												<div class="col-xs-6">
-													<label for="firstName">First Name</label> <input
-														type="text" class="form-control" id="firstName"
-														name="firstName" th:value="${jobSeekerProfile.firstName}" />
-												</div>
-												<div class="col-xs-6">
-													<label for="lastName">Last Name</label> <input type="text"
-														class="form-control" id="lastName" name="lastName"
-														th:value="${jobSeekerProfile.lastName}" />
-												</div>
-											</div>
-										</div>
+</div>
 
-										
-										<div class="form-group">
-											<label for="currentPassword">Current Password</label> ' <input
-												type="password" class="form-control" id="currentPassword"
-												name="password" th:value="${currentPassword}" />
-										</div>
-										<p style="color: #828282">Enter your current password to
-											change the email address or password.</p>
 
-										<div class="form-group">
-											<label for="email">* Email Address</label> ' <input
-												type="text" class="form-control" id="email" name="email"
-												th:value="${user.email}" />
-										</div>
-										<p style="color: #828282">A valid email address. All
-											emails from the system withll be sent to this address. The
-											email address is not made public and will only be used if you
-											wish to receive a new password or wish to receive certain
-											notification.</p>
 
-										<div class="form-group">
-											<label for="txtNewPassword">Password</label>&nbsp;<span
-												id="checkPasswordMatch" style="color: red;"></span> <input
-												type="password" class="form-control" id="txtNewPassword"
-												name="newPassword" />
-										</div>
+<div th:replace="common/header :: footer"/>
 
-										<div class="form-group">
-											<label for="txtConfirmPassword">Confirm Password</label> ' <input
-												type="password" class="form-control" id="txtConfirmPassword" />
-										</div>
-										<p style="color: #828282">To change the current user
-											password, enter the new password in both fields.</p>
-										
-										<div class="form-group">
-											<textarea name="description" rows="5" class="form-control"
-												id="description" th:value="${jobSeekerProfile.description}"
-												placeholder="Description" ></textarea>
-												<span class="help-block">Descripe about you</span>
-										</div>
-											<!-- upload image -->
-										<div class="form-group">
-												<label for="bookImage">Upload Your image</label>
-											<div class="col-md-8">
-												<input id="image" type="file" name="seekerImage"
-													th:value="${jobSeekerProfile.profileImage}" />
-											</div>
-										</div>
-
-										<button id="updateSeekerInfoButton" type="submit"
-											class="btn btn-primary">Save All</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end of container -->
-<script th:src="@{/js/jquery.min.js}"></script>
+  <div th:replace="common/header :: body-bottom-scripts" />
+  
+  <script th:src="@{/js/jquery.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 
 		<script th:src="@{/js/scripts.js}"></script>
@@ -185,5 +285,8 @@
 		<!-- data table -->
 		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
 		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-</body>
-</html>
+  
+  
+    </body>
+    
+    </html>

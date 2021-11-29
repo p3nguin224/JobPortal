@@ -350,6 +350,21 @@ public class HomeController {
 			
 		}
 
+		
+		// Go to job creating page
+		@RequestMapping("/newJob")
+		private String goToNewJob(Model model) {
+			
+			Job job = new Job();
+			
+			
+
+			model.addAttribute("classActiveNewAccount", true);
+
+			model.addAttribute("job", job);                       // <- model ui var
+				// <- model ui var
+			return "newJob";  
+		}
 }
 
 

@@ -1,4 +1,10 @@
 <!doctype html>
+
+<!--
+	jobSeekerListing (line 237)
+	skillList (line 249)
+	
+	-->
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
@@ -220,7 +226,7 @@ small, time, .small {
 
 
 <body>
-<div th:replace="common/header :: navbar" />
+<div th:replace="common/companyHeader :: navbar" />
 
 
 <br>
@@ -236,18 +242,19 @@ small, time, .small {
             <div class="media-body">
                 <div class="mb-2">
                     <span class="fs-20 pr-16" th:text="${jobSeeker.firstName}"></span>
+                    <span class="fs-20 pr-16" th:text="${jobSeeker.lastName}"></span>
                 </div>
-                <small class="fs-16 fw-300 ls-1" th:text="${jobSeeker.category}">Front-end developer</small>
+                <small class="fs-16 fw-300 ls-1" th:text="${jobSeeker.category}"></small>
             </div>
-            <div class="media-right text-right d-none d-md-block">
-                <p class="fs-14 text-fade mb-12" th:text="${jobSeeker.category}"><i class="fa fa-map-marker pr-1"></i> Menlo Park, CA</p>
-                <span class="text-fade"><i class="fa fa-money pr-1"></i> $60 per hour</span>
+            <div class="media-right text-right d-none d-md-block" data-th-each="skill : ${skillList}">
+                <p class="fs-14 text-fade mb-12" ><i class="fa fa-map-marker pr-1" th:text="${skill.skillName}"></i></p>
+                <span class="text-fade" ><i class="fa fa-money pr-1"></i> </span>
             </div>
         </div>
         <footer class="card-footer flexbox align-items-center">
             <div>
-                <strong>Applied on:</strong>
-                <span>21 Jan, 2017</span>
+                <strong>Status :</strong>
+                <span th:text="${jobSeeker.status}"></span>
             </div>
             <div class="card-hover-show">
                 <a class="btn btn-xs fs-10 btn-bold btn-info" href="#">Download CV</a>
@@ -318,35 +325,7 @@ small, time, .small {
         </footer>
     </div> -->
 
-    <div class="card b-1 hover-shadow mb-20">
-        <div class="media card-body">
-            <div class="media-left pr-12">
-                <img class="avatar avatar-xl no-radius" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="...">
-            </div>
-            <div class="media-body">
-                <div class="mb-2">
-                    <span class="fs-20 pr-16">Kyaw Kyaw</span>
-                </div>
-                <small class="fs-16 fw-300 ls-1">Web developer</small>
-            </div>
-            <div class="media-right text-right d-none d-md-block">
-                <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Myanmar</p>
-                <span class="text-fade"><i class="fa fa-money pr-1"></i> $55 per hour</span>
-            </div>
-        </div>
-
-        <footer class="card-footer flexbox align-items-center">
-            <div>
-                <strong>Applied on:</strong>
-                <span>11 Jan, 2017</span>
-            </div>
-            <div class="card-hover-show">
-                <a class="btn btn-xs fs-10 btn-bold btn-info" href="#">Download CV</a>
-                <a class="btn btn-xs fs-10 btn-bold btn-primary" href="#" data-toggle="modal" data-target="#modal-contact">Contact</a>
-               
-            </div>
-        </footer>
-    </div>
+   
 
     <nav>
         <ul class="pagination justify-content-center">
