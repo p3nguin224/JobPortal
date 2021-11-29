@@ -140,6 +140,7 @@ public class HomeController {
 			model.addAttribute("emptyList", true);
 		}
 		model.addAttribute("jobList", jobList);
+		model.addAttribute("activeAll",true);
 		return "jobListing"; 
 	}
 	
@@ -310,11 +311,10 @@ public class HomeController {
 		return "";
 	}
 
-	
-	
 
 		
 		
+
 		@RequestMapping("/jobDetail")
 		public String jobDetail(@RequestParam("id") Long jobId,Model model,Principal principal) {
 			if (principal != null) {
