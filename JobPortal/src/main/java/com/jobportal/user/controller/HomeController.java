@@ -325,7 +325,7 @@ public class HomeController {
 		return "createNewSeeker";
 	}
 	
-	
+	// Did not complete
 	@RequestMapping("/resetPassword")
 	public String resetPassword(@RequestParam("token") String token, Model model) {
 		PasswordResetToken passwordResetToken = userService.getPasswordResetToken(token);
