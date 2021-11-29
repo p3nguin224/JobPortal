@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private RoleDAO roleDAO;
 	
+	@Autowired
 	private PasswordResetTokenDAO passwordResetTokenDAO;
 
 	@Override
