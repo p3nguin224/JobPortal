@@ -48,6 +48,7 @@ public class CompanyController {
 		
 		// only need to save company as company cascade job, but not vise vasa
 		companyProfile.getJobList().add(job);
+		job.setCompanyProfile(companyProfile);
 		companyProfileService.save(companyProfile);
 		
 		return "redirect:/success"; // must be sent to company profile

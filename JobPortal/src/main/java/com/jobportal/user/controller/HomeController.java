@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
+import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.CompanyProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
+import com.jobportal.user.service.SkillService;
 import com.jobportal.user.service.UserService;
 import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
@@ -48,6 +50,8 @@ public class HomeController {
 	@Autowired
 	private CompanyProfileService companyService;
 	
+	@Autowired
+	private SkillService skillService;
 	
 	@Autowired
 	private MailConstructor mailConstructor;
@@ -324,15 +328,16 @@ public class HomeController {
 			}
 			
 			Job job = jobService.findById(jobId);
+			CompanyProfile company = job.getCompanyProfile();
+			List<Skill> jobSkillList = skillService.findByJob(job);
 			
 			model.addAttribute("job", job);
-			
+			model.addAttribute("company", company);
+			model.addAttribute("skillList", jobSkillList);
 			
 			
 			List<Integer> qtyList = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
-			
 			model.addAttribute("qtyList", qtyList);
-			
 			model.addAttribute("qty", 1);
 			
 			return "jobDetail";
