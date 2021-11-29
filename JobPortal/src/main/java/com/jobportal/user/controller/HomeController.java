@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +29,7 @@ import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.User;
+import com.jobportal.user.domain.security.PasswordResetToken;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.CompanyProfileService;
@@ -32,6 +37,7 @@ import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
 import com.jobportal.user.service.UserService;
+import com.jobportal.user.service.impl.UserSecurityService;
 import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
 
@@ -40,6 +46,9 @@ public class HomeController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserSecurityService userSecurityService;
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
@@ -283,14 +292,18 @@ public class HomeController {
 		return "createNewCompany";  // will reach to createNewSeeker.html 
 	}
 	
-	
+	@RequestMapping("/forgetPassword")
 	public String forgetPassword(HttpServletRequest request,
 			@ModelAttribute("email") String userEmail, Model model) {
 		User user = userService.findByEmail(userEmail);
 		
-		if (user==null) {
+		User dummyUser = new User();
+		model.addAttribute("user", dummyUser);
+		model.addAttribute("classActiveForgetPassword", true);
+		
+		if (user==null) {		
 			model.addAttribute("emailNotExist",true);        // <- model ui
-			return "myAccount";    // return page when no account is found
+			return "createNewSeeker";    // return page when no account is found
 		}
 		
 		String password = SecurityUtility.randomPassword();
@@ -307,16 +320,46 @@ public class HomeController {
 		
 		mailSender.send(email);
 		model.addAttribute("forgetPasswordEmailSent",true); // <- model ui
+	
 		
-		return "";
+		return "createNewSeeker";
+	}
+	
+	
+	@RequestMapping("/resetPassword")
+	public String resetPassword(@RequestParam("token") String token, Model model) {
+		PasswordResetToken passwordResetToken = userService.getPasswordResetToken(token);
+		
+		if (passwordResetToken == null) {
+			String message = "Invalid Token";
+			model.addAttribute("message", message);
+			return "redirect:/badRequest";
+		}
+		
+		User user = passwordResetToken.getUser();
+		
+		// user profile page is not in PUBLIC MATCHERS
+		// It will force you to login when url from verify email
+		// we need to auto-login this user by hard code 
+		
+		String username = user.getUsername();
+		
+		// auto-Login // Let authentication pass
+		UserDetails userDetails = userSecurityService.loadUserByUsername(username);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("classActiveEdit", true);
+		return "myProfile";
 	}
 
 
 		
 		
-
+		// not work yet, have to sent to user update page
 		@RequestMapping("/jobDetail")
-		public String jobDetail(@RequestParam("id") Long jobId,Model model,Principal principal) {
+		public String jobDetail(@RequestParam("jobId") Long jobId,Model model,Principal principal) {
 			if (principal != null) {
 
 				String username = principal.getName();

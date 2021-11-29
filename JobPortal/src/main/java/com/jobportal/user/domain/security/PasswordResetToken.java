@@ -3,6 +3,7 @@ package com.jobportal.user.domain.security;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.OneToOne;
 
 import com.jobportal.user.domain.User;
 
+@Entity
 public class PasswordResetToken {
 	
 private static final int EXPIRATION = 60;
