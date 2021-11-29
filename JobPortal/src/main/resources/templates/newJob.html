@@ -29,14 +29,15 @@
           <div class="form h-100">
             <h3>Get Started</h3>
             <form class="mb-5" method="post" th:action="@{/company/postJob}">
+              
               <div class="row">
-                <div class="col-md-6 form-group mb-3">
-                  <label for="title" class="col-form-label">Title</label>
-                  <input type="text" class="form-control" name="title" id="name" placeholder="jobTitle" th:value="${job.jobTitle}">
+                 <div class="col-md-6 form-group mb-3">
+                  <label for="jobTitle" class="col-form-label">jobTitle</label>
+                  <input type="text" class="form-control" name="jobTitle" id="jobTitle"  placeholder="jobTitle" th:value="${job.jobTitle}">
                 </div>
                 <div class="col-md-6 form-group mb-3">
-                  <label for="requiredMemember" class="col-form-label">Required Member</label>
-                  <input type="number" class="form-control" name="requiredMemember" id="requiredMemember"  placeholder="Required Member" th:value="${job.requiredMember}">
+                  <label for="requiredMember" class="col-form-label">Required Number</label>
+                  <input type="number" class="form-control" name="requiredMember" id="requiredMember" th:value="${job.requiredMember}" placeholder="requiredMember">
                 </div>
               </div>
               
