@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/newSeeker",
 			"/newCompany",
 			"/forgetPassword",
+			"/resetPassword",
 			"/login",
 			"/fonts/**",
 			"/hours",
