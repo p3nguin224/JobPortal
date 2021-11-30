@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import com.jobportal.user.service.UserService;
 @RequestMapping("/jobSeeker")
 public class JobSeekerController {
 	
+	private static Logger LOG = LoggerFactory.getLogger(JobSeekerController.class);
+	
 	@Autowired
 	private UserService userService;
 	
@@ -35,7 +39,10 @@ public class JobSeekerController {
 		User user = userService.findByUsername(principal.getName());
 		
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+		model.addAttribute("user", user);
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		model.addAttribute("classActiveProfile", true);
 		
 		// show experience proflie list if this profile have experience profile
 		if (jobSeekerProfile.getExperienceProfileList().size()>0) {
@@ -49,21 +56,40 @@ public class JobSeekerController {
 		return "jobSeekerProfile";
 	}
 	
-	@PostMapping("/profile")
-	private String updateJobSeekerProfile(@ModelAttribute("jobSeekerProfile") JobSeekerProfile jobSeekerProfile) throws IOException {
+	@PostMapping("/updateUserInfo")
+	private String updateJobSeekerProfile(@ModelAttribute("jobSeekerProfile") JobSeekerProfile jobSeekerProfile,
+			@ModelAttribute("user") User user) throws IOException {
+		
+		User currentUser = userService.findById(user.getUserId());
+		
+		currentUser.setUsername(user.getUsername());
+		currentUser.setDob(user.getDob());
+		currentUser.setEmail(user.getEmail());
+		currentUser.setGender(user.getGender());
+		
+		currentUser.setFirstTimeLogin(false);
+		
+		jobSeekerProfile.setUser(currentUser);
 		jobSeekerService.save(jobSeekerProfile);
+		if (jobSeekerProfile != null) {
+			LOG.info("jobSEekerProfile ID"+jobSeekerProfile.getSeekerProfileId());
+		}
 		
-		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
-		byte[] bytes = profileImage.getBytes();
 		
-		String fileName = "seekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
-		BufferedOutputStream stream = new BufferedOutputStream(
-				new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
-				);
-		stream.write(bytes);
-		stream.close();
+		
+		
+		
+//		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
+//		byte[] bytes = profileImage.getBytes();
+//		
+//		String fileName = "seekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
+//		BufferedOutputStream stream = new BufferedOutputStream(
+//				new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
+//				);
+//		stream.write(bytes);
+//		stream.close();
  		
-		return "redirect:/profile";   
+		return "redirect:/jobSeeker/profile";   
 	}
 
 }

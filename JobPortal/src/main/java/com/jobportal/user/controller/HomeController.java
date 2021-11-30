@@ -136,21 +136,27 @@ public class HomeController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		model.addAttribute("user", user);                      
-		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		
-		//////////////////////////////////////////
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
-//		model.addAttribute("classActiveEdit", true);
-//		return "bbbootstrap";
 		//////////////////////////////////////////
-		// JobListing Test
-		
-		List<Job> jobList = jobService.findAllJobs();
-		if(jobList.size() == 0 ) {
-			model.addAttribute("emptyList", true);
+		/// Test version
+		if (user.getFirstTimeLogin()) {
+			model.addAttribute("classActiveProfile", true);
+			return "jobSeekerProfile";
 		}
-		model.addAttribute("jobList", jobList);
-		model.addAttribute("activeAll",true);
-		return "jobListing"; 
+		model.addAttribute("classActiveProfile", true);
+		return "jobSeekerProfile";
+		
+		//////////////////////////////////////////
+		// JobListing working version
+		
+//		List<Job> jobList = jobService.findAllJobs();
+//		if(jobList.size() == 0 ) {
+//			model.addAttribute("emptyList", true);
+//		}
+//		model.addAttribute("jobList", jobList);
+//		model.addAttribute("activeAll",true);
+//		return "jobListing"; 
 	}
 	
 	// Go to account creating page
@@ -221,13 +227,13 @@ public class HomeController {
 		UserRole userRole = new UserRole();
 		userRole.setUser(user);
 		userRole.setRole(role);
-		
-		userService.createUser(user, userRole);
-		
+			
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
 		seekerProfile.setStatus("unavaliable");
+		
+		userService.createUser(user, userRole);	
 		jobSeekerService.save(seekerProfile);
 
 		// Still required to make token and send mail
@@ -353,6 +359,9 @@ public class HomeController {
 		model.addAttribute("classActiveEdit", true);
 		return "myProfile";
 	}
+	
+	
+	
 
 
 		
@@ -393,15 +402,15 @@ public class HomeController {
 		private String goToNewJob(Model model) {
 			
 			Job job = new Job();
-			
-			
-
 			model.addAttribute("classActiveNewAccount", true);
 
 			model.addAttribute("job", job);                       // <- model ui var
 				// <- model ui var
 			return "newJob";  
 		}
+		
+		
+		
 }
 
 

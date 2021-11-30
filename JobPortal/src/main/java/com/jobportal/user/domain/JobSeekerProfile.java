@@ -37,7 +37,7 @@ public class JobSeekerProfile {
 	private String description;
 	
 	@OneToOne(targetEntity = User.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinColumn(nullable = false, name="userIdFk")
+	@JoinColumn(name="userIdFk")
 	private User user;
 	
 	@OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
