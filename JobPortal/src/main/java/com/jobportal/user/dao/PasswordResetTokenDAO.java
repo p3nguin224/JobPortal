@@ -15,5 +15,7 @@ public interface PasswordResetTokenDAO extends CrudRepository<PasswordResetToken
 	PasswordResetToken findByUser(User user);
 	
 	Stream<PasswordResetToken> findAllByExpiryDateLessThan(Date now);
+	
+	
 
 }
