@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +41,8 @@ public class User implements UserDetails {
 	private String gender;
 	private String email;
 	private String registeredDate;
+	
+	private Boolean firstTimeLogin = true;
 	
 	private Boolean isEnable = true;
 	
@@ -158,10 +161,18 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getFirstTimeLogin() {
+		return firstTimeLogin;
+	}
+
+	public void setFirstTimeLogin(Boolean firstTimeLogin) {
+		this.firstTimeLogin = firstTimeLogin;
 	}	
 	
 	
-
+	
 	
 
 	

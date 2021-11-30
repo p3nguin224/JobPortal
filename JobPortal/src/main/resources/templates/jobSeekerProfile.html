@@ -116,9 +116,10 @@
 
 					<div class="tab-content">
 						<div  role="tabpanel" class="tab-pane" id="home" th:classappend="${classActiveProfile}? 'in active'">
-							<form th:action="@{/updateUserInfo}" method="post">
+							<form th:action="@{/jobSeeker/updateUserInfo}" method="post">
 								<!-- updateinfo @p -->
-								<input type="hidden" name="id" th:value="${user.userId}" />
+								<input type="hidden" name="userId" th:value="${user.userId}" />
+								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
 								<div class="bg-info" th:if="${updateUserInfo}">User info
@@ -134,7 +135,7 @@
 										</div>
 									</div>
 									<div class="col">
-										<div class="row align-items-center">
+										<div class="row align-items-center" th:if="${not user.firstTimeLogin}">
 											<div class="col-md-7">
 												<h4 class="mb-1"
 													th:text="${jobSeekerProfile.firstName}  +  ${jobSeekerProfile.LastName}">
@@ -160,40 +161,40 @@
 
 								<div class="form-row">
 									<div class="form-group col-md-6">
-										<label for="firstname">Firstname</label>
-										<input type="text" id="firstname" class="form-control"
+										<label for="firstName">Firstname</label>
+										<input type="text" id="firstName" class="form-control" name="firstName"
 											th:placeholder="${jobSeekerProfile.firstName}"
 											th:value="${jobSeekerProfile.firstName}" />
 									</div>
 									<div class="form-group col-md-6">
-										<label for="lastname">Lastname</label>
-										<input type="text" id="lastname" class="form-control"
+										<label for="lastName">Lastname</label>
+										<input type="text" id="lastName" class="form-control" name="lastName"
 											th:placeholder="${jobSeekerProfile.lastName}"
 											th:value="${jobSeekerProfile.lastName}" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputEmail4">Email</label>
-									<input type="email" class="form-control" id="inputEmail4"
+									<input type="email" class="form-control" id="inputEmail4" name="email"
 										th:placeholder="${user.email}" th:value="${user.email}" />
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-8">
 										<label for="inputCompany5">User Name</label>
-										<input type="text" class="form-control" id="inputCompany5"
+										<input type="text" class="form-control" id="inputCompany5" name=username
 											th:placeholder="${user.username}" th:value="${user.username}" />
 									</div>
 									<div class="form-group col-md-2">
 										<label for="inputZip5">gender</label>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender"
+											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${user.gender} == 'male')"
 												name="gender" value="male">
 											<label class="form-check-label" for="flexRadioDefault1">
 												Male
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender"
+											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${user.gender} == 'female')"
 												name="gender" value="female">
 											<label class="form-check-label" for="flexRadioDefault2">
 												Female
@@ -203,14 +204,14 @@
 									<div class="form-group col-md-2">
 										<label for="inputZip5">Status</label>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender"
+											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${jobSeekerProfile.status} == 'busy')"
 												name="status" value="busy">
 											<label class="form-check-label" for="flexRadioDefault1">
 												Busy
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender"
+											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${jobSeekerProfile.status} == 'available')"
 												name="status" value="available">
 											<label class="form-check-label" for="flexRadioDefault2">
 												Available
@@ -225,20 +226,19 @@
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="inputCompany5">Date of Birth</label>
-										<input type="date" class="form-control" id="firstname"
+										<input type="date" class="form-control" id="dob" name="dob"
 											th:placeholder="${user.dob}" th:value="${user.dob}" />
 									</div>
 									<div class="form-group col-md-6">
 										<label for="inputState5">Category</label>
-										<select id="firstname" class="form-control"
+										<select id="category" class="form-control" name="category"
 											th:value="${jobSeekerProfile.category}">
-											<option th:text="${jobSeekerProfile.category}"></option>
-											<option value="DesignAndCreative">Design & Creative</option>
-											<option value="DesignAndDevelopment">Design & Development</option>
-											<option value="SalesAndMarketing">Sales & Marketing</option>
-											<option value="MobileApplication">Mobile Application</option>
-											<option value="InformationTechnology">Information Technology</option>
-											<option value="ContentWriter">Content Writer</option>
+											<option value="DesignAndCreative" th:selected="${jobSeekerProfile.category} == 'DesignAndCreative'">Design & Creative</option>
+											<option value="DesignAndDevelopment" th:selected="${jobSeekerProfile.category} == 'DesignAndDevelopment'">Design & Development</option>
+											<option value="SalesAndMarketing" th:selected="${jobSeekerProfile.category} == 'SalesAndMarketing'">Sales & Marketing</option>
+											<option value="MobileApplication" th:selected="${jobSeekerProfile.category} == 'MobileApplication'">Mobile Application</option>
+											<option value="InformationTechnology" th:selected="${jobSeekerProfile.category} == 'InformationTechnology'">Information Technology</option>
+											<option value="ContentWriter" th:selected="${jobSeekerProfile.category} == 'ContentWriter'">Content Writer</option>
 										</select>
 									</div>
 
@@ -285,8 +285,8 @@
 								<div class="form-group">
 									<label for="inputEmail4">Description</label>
 									<textarea name="description" rows="5" class="form-control" id="description"
-										th:value="${jobSeekerProfile.description}"
-										th:placeholder="${jobSeekerProfile.description}"></textarea>
+										th:value="${jobSeekerProfile.description}" th:text="${jobSeekerProfile.description}"
+										placeholder="Description"></textarea>
 								</div>
 								<button type="submit" id="updateUserInfoButton" class="btn btn-primary">Save
 									Change</button>

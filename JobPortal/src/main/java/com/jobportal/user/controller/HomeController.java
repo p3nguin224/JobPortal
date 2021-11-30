@@ -138,15 +138,15 @@ public class HomeController {
 		model.addAttribute("user", user);                      
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
-		if (jobSeekerProfile == null) {
-			LOG.info("jobSeekerProfile is null");
-		}
-		
 		//////////////////////////////////////////
 		/// Test version
-	//	model.addAttribute("classActiveEdit", true);
+		if (user.getFirstTimeLogin()) {
+			model.addAttribute("classActiveProfile", true);
+			return "jobSeekerProfile";
+		}
 		model.addAttribute("classActiveProfile", true);
 		return "jobSeekerProfile";
+		
 		//////////////////////////////////////////
 		// JobListing working version
 		
@@ -227,13 +227,13 @@ public class HomeController {
 		UserRole userRole = new UserRole();
 		userRole.setUser(user);
 		userRole.setRole(role);
-		
-		userService.createUser(user, userRole);
-		
+			
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
 		seekerProfile.setStatus("unavaliable");
+		
+		userService.createUser(user, userRole);	
 		jobSeekerService.save(seekerProfile);
 
 		// Still required to make token and send mail
@@ -359,6 +359,9 @@ public class HomeController {
 		model.addAttribute("classActiveEdit", true);
 		return "myProfile";
 	}
+	
+	
+	
 
 
 		
@@ -399,15 +402,15 @@ public class HomeController {
 		private String goToNewJob(Model model) {
 			
 			Job job = new Job();
-			
-			
-
 			model.addAttribute("classActiveNewAccount", true);
 
 			model.addAttribute("job", job);                       // <- model ui var
 				// <- model ui var
 			return "newJob";  
 		}
+		
+		
+		
 }
 
 
