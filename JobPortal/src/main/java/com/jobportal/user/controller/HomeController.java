@@ -138,25 +138,20 @@ public class HomeController {
 		model.addAttribute("user", user);                      
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
-		//////////////////////////////////////////
-		/// Test version
+		// for firstTime login, user need to complete edit seeker profile
 		if (user.getFirstTimeLogin()) {
 			model.addAttribute("classActiveProfile", true);
 			return "jobSeekerProfile";
 		}
-		model.addAttribute("classActiveProfile", true);
-		return "jobSeekerProfile";
 		
-		//////////////////////////////////////////
-		// JobListing working version
-		
-//		List<Job> jobList = jobService.findAllJobs();
-//		if(jobList.size() == 0 ) {
-//			model.addAttribute("emptyList", true);
-//		}
-//		model.addAttribute("jobList", jobList);
-//		model.addAttribute("activeAll",true);
-//		return "jobListing"; 
+		// unless, user will see jobListing
+		List<Job> jobList = jobService.findAllJobs();
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+		}
+		model.addAttribute("jobList", jobList);
+		model.addAttribute("activeAll",true);
+		return "jobListing"; 
 	}
 	
 	// Go to account creating page
@@ -231,7 +226,7 @@ public class HomeController {
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
-		seekerProfile.setStatus("unavaliable");
+		seekerProfile.setStatus("busy");
 		
 		userService.createUser(user, userRole);	
 		jobSeekerService.save(seekerProfile);
@@ -321,10 +316,22 @@ public class HomeController {
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
 		
-		String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
-		SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+		if (request.isUserInRole("ROLE_COMPANY")) {
+			String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+			SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+			
+			mailSender.send(email);
+		} else {
+			String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+			SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+			
+			mailSender.send(email);
+		}
 		
-		mailSender.send(email);
+//		String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+//		SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
+//		
+//		mailSender.send(email);
 		model.addAttribute("forgetPasswordEmailSent",true); // <- model ui
 	
 		
