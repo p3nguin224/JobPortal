@@ -136,21 +136,27 @@ public class HomeController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		model.addAttribute("user", user);                      
-		model.addAttribute("jobSeekerProfile", jobSeekerProfile);		
-		//////////////////////////////////////////
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
-//		model.addAttribute("classActiveEdit", true);
-//		return "bbbootstrap";
-		//////////////////////////////////////////
-		// JobListing Test
-		
-		List<Job> jobList = jobService.findAllJobs();
-		if(jobList.size() == 0 ) {
-			model.addAttribute("emptyList", true);
+		if (jobSeekerProfile == null) {
+			LOG.info("jobSeekerProfile is null");
 		}
-		model.addAttribute("jobList", jobList);
-		model.addAttribute("activeAll",true);
-		return "jobListing"; 
+		
+		//////////////////////////////////////////
+		/// Test version
+	//	model.addAttribute("classActiveEdit", true);
+		model.addAttribute("classActiveProfile", true);
+		return "jobSeekerProfile";
+		//////////////////////////////////////////
+		// JobListing working version
+		
+//		List<Job> jobList = jobService.findAllJobs();
+//		if(jobList.size() == 0 ) {
+//			model.addAttribute("emptyList", true);
+//		}
+//		model.addAttribute("jobList", jobList);
+//		model.addAttribute("activeAll",true);
+//		return "jobListing"; 
 	}
 	
 	// Go to account creating page
