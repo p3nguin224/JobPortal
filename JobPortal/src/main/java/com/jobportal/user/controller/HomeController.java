@@ -138,25 +138,20 @@ public class HomeController {
 		model.addAttribute("user", user);                      
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
-		//////////////////////////////////////////
-		/// Test version
+		// for firstTime login, user need to complete edit seeker profile
 		if (user.getFirstTimeLogin()) {
 			model.addAttribute("classActiveProfile", true);
 			return "jobSeekerProfile";
 		}
-		model.addAttribute("classActiveProfile", true);
-		return "jobSeekerProfile";
 		
-		//////////////////////////////////////////
-		// JobListing working version
-		
-//		List<Job> jobList = jobService.findAllJobs();
-//		if(jobList.size() == 0 ) {
-//			model.addAttribute("emptyList", true);
-//		}
-//		model.addAttribute("jobList", jobList);
-//		model.addAttribute("activeAll",true);
-//		return "jobListing"; 
+		// unless, user will see jobListing
+		List<Job> jobList = jobService.findAllJobs();
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+		}
+		model.addAttribute("jobList", jobList);
+		model.addAttribute("activeAll",true);
+		return "jobListing"; 
 	}
 	
 	// Go to account creating page
@@ -231,7 +226,7 @@ public class HomeController {
 		// add job seeker profile but it's still empty
 		// let user edit jobSeeker profile in his profile page
 		seekerProfile.setUser(user);   				// OneToOne connect
-		seekerProfile.setStatus("unavaliable");
+		seekerProfile.setStatus("busy");
 		
 		userService.createUser(user, userRole);	
 		jobSeekerService.save(seekerProfile);
@@ -321,6 +316,7 @@ public class HomeController {
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
 		
+		
 		String resetUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
 		SimpleMailMessage email = mailConstructor.constructResetTokenEmail(resetUrl, request.getLocale(), token, user, password, "Account Password Reset");
 		
@@ -331,33 +327,36 @@ public class HomeController {
 		return "createNewSeeker";
 	}
 	
-	// Did not complete
+	
 	@RequestMapping("/resetPassword")
-	public String resetPassword(@RequestParam("token") String token, Model model) {
+	public String resetPassword(@RequestParam("token") String token, Model model, HttpServletRequest request) {
 		PasswordResetToken passwordResetToken = userService.getPasswordResetToken(token);
 		
 		if (passwordResetToken == null) {
 			String message = "Invalid Token";
 			model.addAttribute("message", message);
-			return "redirect:/badRequest";
+			return "single-blog";
 		}
 		
 		User user = passwordResetToken.getUser();
-		
-		// user profile page is not in PUBLIC MATCHERS
-		// It will force you to login when url from verify email
-		// we need to auto-login this user by hard code 
-		
 		String username = user.getUsername();
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
-		// auto-Login // Let authentication pass
+		// auto-Login 
 		UserDetails userDetails = userSecurityService.loadUserByUsername(username);
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		model.addAttribute("user", user);
-		model.addAttribute("classActiveEdit", true);
-		return "myProfile";
+		if (request.isUserInRole("ROLE_COMPANY")) {
+			model.addAttribute("user", user);
+			model.addAttribute("classActiveEdit", true);
+			return "myProfile";
+		}
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+
+		model.addAttribute("classActiveProfile", true);
+		return "jobSeekerProfile";
 	}
 	
 	
