@@ -69,9 +69,9 @@
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a sec:authorize="isAnonymous()" th:href="@{/newSeeker}" class="btn head-btn1">JobSeeker</a>
-                                    <a sec:authorize="isAuthenticated()" th:href="@{/jobSeeker/profile}" class="btn head-btn1">Seeker</a>
+                                    <a sec:authorize="hasRole('USER')" th:href="@{/jobSeeker/profile}" class="btn head-btn1">User Profile</a>
                                     <a sec:authorize="isAnonymous()" th:href="@{/newCompany}" class="btn head-btn1">Company</a>
-                                    <a sec:authorize="isAuthenticated()" th:href="@{/companyProfile}" class="btn head-btn1">Company</a>
+                                    <a sec:authorize="hasRole('COMPANY')" th:href="@{/company/profile}" class="btn head-btn1">Company Profile</a>
                                     <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn head-btn2">Login</a>
                                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn head-btn2">logout</a>
                                 </div>

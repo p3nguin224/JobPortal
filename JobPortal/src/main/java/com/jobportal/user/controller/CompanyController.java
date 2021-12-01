@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
 import com.jobportal.user.service.UserService;
+import com.jobportal.user.utility.SecurityUtility;
 
 @Controller
 @RequestMapping("/company")
@@ -38,12 +40,61 @@ public class CompanyController {
 	@Autowired
 	private CompanyProfileService companyProfileService;
 	
+	@RequestMapping("/profile")
+	private String companyProfile(Principal principal, Model model){
+		User user = userService.findByUsername(principal.getName());
+		CompanyProfile companyProfile = companyProfileService.findByUser(user);
+		model.addAttribute("user", user);                       // <- model ui var
+		model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+		
+		
+		return "companyProfile";
+	}
+	
 	
 	@PostMapping("/updateUserInfo")
 	private String updateUserInfo(@ModelAttribute("companyProfile") CompanyProfile companyProfile,
-			@ModelAttribute("user") User user, Model model) throws IOException {
+			@ModelAttribute("user") User user, @ModelAttribute("password") String currentPassword,
+			@ModelAttribute("newPassword") String newPassword, Model model) throws Exception {
 		
 		User currentUser = userService.findById(user.getUserId());
+		
+		if (currentUser == null) {
+			throw new Exception("User not Found");
+		}
+		
+		if ((userService.findByEmail(user.getEmail()))!= null ) {
+			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()) {
+				model.addAttribute("usernameExists", true);
+				return "forward:/company/profile";
+			}
+		}
+		
+		if (userService.findByUsername(user.getUsername()) != null) {
+			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()){
+				model.addAttribute("usernameExists", true);
+				return "forward:/company/profile";
+			}
+		}
+		
+		if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
+			BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
+			// encrypted Password
+			String dbPassword = currentUser.getPassword();
+			
+			// passwordEncoder.matches() checks if original password matches with encrypted password
+			// if user can type in correct password which matches encrypted password in db
+			// -let user change a new password
+
+			if (passwordEncoder.matches(currentPassword, dbPassword)) {
+				currentUser.setPassword(passwordEncoder.encode(newPassword));
+			} else {
+				LOG.info("current password : {}",currentPassword);
+				LOG.info("db password : {}",dbPassword);
+				model.addAttribute("incorrectPassword", true);
+				return "forward:/company/profile";
+			}
+		}
 		
 		
 		currentUser.setUsername(user.getUsername());
@@ -94,9 +145,11 @@ public class CompanyController {
 		}
 		
 		
+		
+		
 		model.addAttribute("updateUserInfo", true);
 		
-		return "forward:/success";  // temp return mapping 
+		return "forward:/company/profile";  // temp return mapping 
 	}
 	
 	 
