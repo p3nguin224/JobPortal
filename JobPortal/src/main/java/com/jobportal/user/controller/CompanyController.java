@@ -1,5 +1,12 @@
 package com.jobportal.user.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 
@@ -11,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
@@ -29,6 +37,68 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileService companyProfileService;
+	
+	
+	@PostMapping("/updateUserInfo")
+	private String updateUserInfo(@ModelAttribute("companyProfile") CompanyProfile companyProfile,
+			@ModelAttribute("user") User user, Model model) throws IOException {
+		
+		User currentUser = userService.findById(user.getUserId());
+		
+		
+		currentUser.setUsername(user.getUsername());
+		currentUser.setEmail(user.getEmail());
+		
+		currentUser.setFirstTimeLogin(false);
+		
+		companyProfile.setUser(currentUser);
+		companyProfileService.save(companyProfile);
+			
+		// profileImage save
+		MultipartFile profileImage = companyProfile.getImage2();
+		if (!profileImage.isEmpty()) {
+			byte[] pbytes = profileImage.getBytes();
+			String profileName = "companyProfile"+companyProfile.getCompanyId()+".png";
+			
+			try {
+				Files.delete(Paths.get("src/main/resources/static/image/company/profile/"+profileName));
+			} catch (NoSuchFileException e) {
+				// TODO: handle exception
+			}		
+			
+			BufferedOutputStream profileStream = new BufferedOutputStream(
+					new FileOutputStream(new File("src/main/resources/static/image/company/profile/"+profileName))
+					);
+			profileStream.write(pbytes);
+			profileStream.close();
+		}
+		
+		
+		// coverImage save
+		MultipartFile coverImage = companyProfile.getImage1();
+		if (!coverImage.isEmpty()) {
+			byte[] cbytes = coverImage.getBytes();
+			String coverName = "companyCover"+companyProfile.getCompanyId()+".png";
+			
+			try {
+				Files.delete(Paths.get("src/main/resources/static/image/company/cover/"+coverName));
+			} catch (NoSuchFileException e) {
+				// TODO: handle exception
+			}	
+			
+			BufferedOutputStream coverStream = new BufferedOutputStream(
+					new FileOutputStream(new File("src/main/resources/static/image/company/cover/"+coverName))
+					);
+			coverStream.write(cbytes);
+			coverStream.close();
+		}
+		
+		
+		model.addAttribute("updateUserInfo", true);
+		
+		return "forward:/success";  // temp return mapping 
+	}
+	
 	 
 	@RequestMapping("/postJob")
 	private String postJob(Model model) {

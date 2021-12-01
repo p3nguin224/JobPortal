@@ -6,483 +6,545 @@
 	jobList (posted by company)
 	
 	-->
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-	xmlns:sec="http://www.w3.org/1999/xhtml">
-	
-	<head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-         <title>Job board HTML-5 Template </title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-		<!-- CSS here -->
-            <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-            
-<style>
-        
-        body{
-    background: #eaeaea;
-    margin-top:20px;
-}
-.profile-info-list {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-.friend-list,
-.img-grid-list {
-    margin: -1px;
-    list-style-type: none;
-}
-.profile-info-list > li.title {
-    font-size: 0.625rem;
-    font-weight: 700;
-    color: #8a8a8f;
-    padding: 0 0 0.3125rem;
-}
-.profile-info-list > li + li.title {
-    padding-top: 1.5625rem;
-}
-.profile-info-list > li {
-    padding: 0.625rem 0;
-}
-.profile-info-list > li .field {
-    font-weight: 700;
-}
-.profile-info-list > li .value {
-    color: #666;
-}
-.profile-info-list > li.img-list a {
-    display: inline-block;
-}
-.profile-info-list > li.img-list a img {
-    max-width: 2.25rem;
-    -webkit-border-radius: 2.5rem;
-    -moz-border-radius: 2.5rem;
-    border-radius: 2.5rem;
-}
-.coming-soon-cover img,
-.email-detail-attachment .email-attachment .document-file img,
-.email-sender-img img,
-.friend-list .friend-img img,
-.profile-header-img img {
-    max-width: 100%;
-}
-.table.table-profile th {
-    border: none;
-    color: #000;
-    padding-bottom: 0.3125rem;
-    padding-top: 0;
-}
-.table.table-profile td {
-    border-color: #c8c7cc;
-}
-.table.table-profile tbody + thead > tr > th {
-    padding-top: 1.5625rem;
-}
-.table.table-profile .field {
-    color: #666;
-    font-weight: 600;
-    width: 25%;
-    text-align: right;
-}
-.table.table-profile .value {
-    font-weight: 500;
-}
-.profile-header {
-    position: relative;
-    overflow: hidden;
-}
-.profile-header .profile-header-cover {
-    background: url(https://bootdey.com/img/Content/bg1.jpg) center no-repeat;
-    background-size: 100% auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-.profile-header .profile-header-cover:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0, rgba(0, 0, 0, 0.85) 100%);
-}
-.profile-header .profile-header-content,
-.profile-header .profile-header-tab,
-.profile-header-img,
-body .fc-icon {
-    position: relative;
-}
-.profile-header .profile-header-tab {
-    background: #fff;
-    list-style-type: none;
-    margin: -1.25rem 0 0;
-    padding: 0 0 0 8.75rem;
-    border-bottom: 1px solid #c8c7cc;
-    white-space: nowrap;
-}
-.profile-header .profile-header-tab > li {
-    display: inline-block;
-    margin: 0;
-}
-.profile-header .profile-header-tab > li > a {
-    display: block;
-    color: #000;
-    line-height: 1.25rem;
-    padding: 0.625rem 1.25rem;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.75rem;
-    border: none;
-}
-.profile-header .profile-header-tab > li.active > a,
-.profile-header .profile-header-tab > li > a.active {
-    color: #007aff;
-}
-.profile-header .profile-header-content:after,
-.profile-header .profile-header-content:before {
-    content: "";
-    display: table;
-    clear: both;
-}
-.profile-header .profile-header-content {
-    color: #fff;
-    padding: 1.25rem;
-}
-body .fc th a,
-body .fc-ltr .fc-basic-view .fc-day-top .fc-day-number,
-body .fc-widget-header a {
-    color: #000;
-}
-.profile-header-img {
-    float: left;
-    width: 7.5rem;
-    height: 7.5rem;
-    overflow: hidden;
-    z-index: 10;
-    margin: 0 1.25rem -1.25rem 0;
-    padding: 0.1875rem;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-    background: #fff;
-}
-.profile-header-info h4 {
-    font-weight: 500;
-    margin-bottom: 0.3125rem;
-}
-.profile-container {
-    padding: 1.5625rem;
-}
-@media (max-width: 967px) {
-    .profile-header-img {
-        width: 5.625rem;
-        height: 5.625rem;
-        margin: 0;
-    }
-    .profile-header-info {
-        margin-left: 6.5625rem;
-        padding-bottom: 0.9375rem;
-    }
-    .profile-header .profile-header-tab {
-        padding-left: 0;
-    }
-}
-@media (max-width: 767px) {
-    .profile-header .profile-header-cover {
-        background-position: top;
-    }
-    .profile-header-img {
-        width: 3.75rem;
-        height: 3.75rem;
-        margin: 0;
-    }
-    .profile-header-info {
-        margin-left: 4.6875rem;
-        padding-bottom: 0.9375rem;
-    }
-    .profile-header-info h4 {
-        margin: 0 0 0.3125rem;
-    }
-    .profile-header .profile-header-tab {
-        white-space: nowrap;
-        overflow: scroll;
-        padding: 0;
-    }
-    .profile-container {
-        padding: 0.9375rem 0.9375rem 3.6875rem;
-    }
-    .friend-list > li {
-        float: none;
-        width: auto;
-    }
-}
-.profile-info-list {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-.friend-list,
-.img-grid-list {
-    margin: -1px;
-    list-style-type: none;
-}
-.profile-info-list > li.title {
-    font-size: 0.625rem;
-    font-weight: 700;
-    color: #8a8a8f;
-    padding: 0 0 0.3125rem;
-}
-.profile-info-list > li + li.title {
-    padding-top: 1.5625rem;
-}
-.profile-info-list > li {
-    padding: 0.625rem 0;
-}
-.profile-info-list > li .field {
-    font-weight: 700;
-}
-.profile-info-list > li .value {
-    color: #666;
-}
-.profile-info-list > li.img-list a {
-    display: inline-block;
-}
-.profile-info-list > li.img-list a img {
-    max-width: 2.25rem;
-    -webkit-border-radius: 2.5rem;
-    -moz-border-radius: 2.5rem;
-    border-radius: 2.5rem;
-}
-.coming-soon-cover img,
-.email-detail-attachment .email-attachment .document-file img,
-.email-sender-img img,
-.friend-list .friend-img img,
-.profile-header-img img {
-    max-width: 100%;
-}
-.table.table-profile th {
-    border: none;
-    color: #000;
-    padding-bottom: 0.3125rem;
-    padding-top: 0;
-}
-.table.table-profile td {
-    border-color: #c8c7cc;
-}
-.table.table-profile tbody + thead > tr > th {
-    padding-top: 1.5625rem;
-}
-.table.table-profile .field {
-    color: #666;
-    font-weight: 600;
-    width: 25%;
-    text-align: right;
-}
-.table.table-profile .value {
-    font-weight: 500;
-}
-.row.row-space-2 {
-    margin: 0 -1px;
-}
-.m-b-2 {
-    margin-bottom: 2px!important;
-}
-.embed-responsive {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-}
-.row.row-space-2>[class*=col-] {
-    padding: 0 1px;
-}
-    
- </style>
-            
-	</head>
-	
-	<body>
-<div th:replace="common/header :: navbar" />
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Job board HTML-5 Template </title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
 
-<div class="container">
-    <div id="content" class="content p-0">
-         
-        <div class="profile-container">
-            <div class="row row-space-20">
-                <div class="col-md-8">
-                    <div class="tab-content p-0">
-                        <div class="tab-pane active show" id="profile-videos">
-    
-    								  <div class="profile-header">
-            
-    				 						<!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" width="800px" height="140px" /> -->
-    				 						<img th:src="@{/image/}+${companyProfile.image1}+'.png'" alt=""  width="800px" height="140px" />
-    				 						<input id="coverImage" type="file" name="coverImage"
-													th:value="${companyProfile.image1}" />
-           									 <div class="profile-header-content">
-            
-            								    <div class="profile-header-img">
-             								       <!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" /> -->
-             								        <img th:src="@{/image/}+${companyProfile.image2}+'.png'" alt="" />
-        								        </div>
-    
-      								          	<div class="profile-header-info">
-                							    	<h4 class="m-t-sm" th:text="${user.username}"></h4>
-                 							   		<h7 style="color: dimgrey;">Registered Date </h7>
-                							    	<p class="m-b-sm" th:text="${user.registeredDate}"></p><br />
-                							    	
-                    								<input id="profileImage" type="file" name="profileImage"
-													th:value="${companyProfile.image2}" />
-																										
-            							   		 </div>
-         							  	 	</div>
-    
-         							 	 	<ul class="profile-header-tab nav nav-tabs">
-             							   		<li class="nav-item"></li>
-                
-        						       		</ul>
-        						       		
-        						       		<form th:action="@{updateUserInfo}" method="post">
-        						       		<!-- updateinfo @p -->
-											<input type="hidden" name="userId" th:value="${user.userId}" />
-											<input type="hidden" name="companyId" th:value="${companyProfile.companyId}" />
+	<!-- CSS here -->
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+	<style>
+		body {
+			background: #eaeaea;
+			margin-top: 20px;
+		}
+
+		.profile-info-list {
+			padding: 0;
+			margin: 0;
+			list-style-type: none;
+		}
+
+		.friend-list,
+		.img-grid-list {
+			margin: -1px;
+			list-style-type: none;
+		}
+
+		.profile-info-list>li.title {
+			font-size: 0.625rem;
+			font-weight: 700;
+			color: #8a8a8f;
+			padding: 0 0 0.3125rem;
+		}
+
+		.profile-info-list>li+li.title {
+			padding-top: 1.5625rem;
+		}
+
+		.profile-info-list>li {
+			padding: 0.625rem 0;
+		}
+
+		.profile-info-list>li .field {
+			font-weight: 700;
+		}
+
+		.profile-info-list>li .value {
+			color: #666;
+		}
+
+		.profile-info-list>li.img-list a {
+			display: inline-block;
+		}
+
+		.profile-info-list>li.img-list a img {
+			max-width: 2.25rem;
+			-webkit-border-radius: 2.5rem;
+			-moz-border-radius: 2.5rem;
+			border-radius: 2.5rem;
+		}
+
+		.coming-soon-cover img,
+		.email-detail-attachment .email-attachment .document-file img,
+		.email-sender-img img,
+		.friend-list .friend-img img,
+		.profile-header-img img {
+			max-width: 100%;
+		}
+
+		.table.table-profile th {
+			border: none;
+			color: #000;
+			padding-bottom: 0.3125rem;
+			padding-top: 0;
+		}
+
+		.table.table-profile td {
+			border-color: #c8c7cc;
+		}
+
+		.table.table-profile tbody+thead>tr>th {
+			padding-top: 1.5625rem;
+		}
+
+		.table.table-profile .field {
+			color: #666;
+			font-weight: 600;
+			width: 25%;
+			text-align: right;
+		}
+
+		.table.table-profile .value {
+			font-weight: 500;
+		}
+
+		.profile-header {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.profile-header .profile-header-cover {
+			background: url(https://bootdey.com/img/Content/bg1.jpg) center no-repeat;
+			background-size: 100% auto;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+
+		.profile-header .profile-header-cover:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0, rgba(0, 0, 0, 0.85) 100%);
+		}
+
+		.profile-header .profile-header-content,
+		.profile-header .profile-header-tab,
+		.profile-header-img,
+		body .fc-icon {
+			position: relative;
+		}
+
+		.profile-header .profile-header-tab {
+			background: #fff;
+			list-style-type: none;
+			margin: -1.25rem 0 0;
+			padding: 0 0 0 8.75rem;
+			border-bottom: 1px solid #c8c7cc;
+			white-space: nowrap;
+		}
+
+		.profile-header .profile-header-tab>li {
+			display: inline-block;
+			margin: 0;
+		}
+
+		.profile-header .profile-header-tab>li>a {
+			display: block;
+			color: #000;
+			line-height: 1.25rem;
+			padding: 0.625rem 1.25rem;
+			text-decoration: none;
+			font-weight: 700;
+			font-size: 0.75rem;
+			border: none;
+		}
+
+		.profile-header .profile-header-tab>li.active>a,
+		.profile-header .profile-header-tab>li>a.active {
+			color: #007aff;
+		}
+
+		.profile-header .profile-header-content:after,
+		.profile-header .profile-header-content:before {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		.profile-header .profile-header-content {
+			color: #fff;
+			padding: 1.25rem;
+		}
+
+		body .fc th a,
+		body .fc-ltr .fc-basic-view .fc-day-top .fc-day-number,
+		body .fc-widget-header a {
+			color: #000;
+		}
+
+		.profile-header-img {
+			float: left;
+			width: 7.5rem;
+			height: 7.5rem;
+			overflow: hidden;
+			z-index: 10;
+			margin: 0 1.25rem -1.25rem 0;
+			padding: 0.1875rem;
+			-webkit-border-radius: 0.25rem;
+			-moz-border-radius: 0.25rem;
+			border-radius: 0.25rem;
+			background: #fff;
+		}
+
+		.profile-header-info h4 {
+			font-weight: 500;
+			margin-bottom: 0.3125rem;
+		}
+
+		.profile-container {
+			padding: 1.5625rem;
+		}
+
+		@media (max-width: 967px) {
+			.profile-header-img {
+				width: 5.625rem;
+				height: 5.625rem;
+				margin: 0;
+			}
+
+			.profile-header-info {
+				margin-left: 6.5625rem;
+				padding-bottom: 0.9375rem;
+			}
+
+			.profile-header .profile-header-tab {
+				padding-left: 0;
+			}
+		}
+
+		@media (max-width: 767px) {
+			.profile-header .profile-header-cover {
+				background-position: top;
+			}
+
+			.profile-header-img {
+				width: 3.75rem;
+				height: 3.75rem;
+				margin: 0;
+			}
+
+			.profile-header-info {
+				margin-left: 4.6875rem;
+				padding-bottom: 0.9375rem;
+			}
+
+			.profile-header-info h4 {
+				margin: 0 0 0.3125rem;
+			}
+
+			.profile-header .profile-header-tab {
+				white-space: nowrap;
+				overflow: scroll;
+				padding: 0;
+			}
+
+			.profile-container {
+				padding: 0.9375rem 0.9375rem 3.6875rem;
+			}
+
+			.friend-list>li {
+				float: none;
+				width: auto;
+			}
+		}
+
+		.profile-info-list {
+			padding: 0;
+			margin: 0;
+			list-style-type: none;
+		}
+
+		.friend-list,
+		.img-grid-list {
+			margin: -1px;
+			list-style-type: none;
+		}
+
+		.profile-info-list>li.title {
+			font-size: 0.625rem;
+			font-weight: 700;
+			color: #8a8a8f;
+			padding: 0 0 0.3125rem;
+		}
+
+		.profile-info-list>li+li.title {
+			padding-top: 1.5625rem;
+		}
+
+		.profile-info-list>li {
+			padding: 0.625rem 0;
+		}
+
+		.profile-info-list>li .field {
+			font-weight: 700;
+		}
+
+		.profile-info-list>li .value {
+			color: #666;
+		}
+
+		.profile-info-list>li.img-list a {
+			display: inline-block;
+		}
+
+		.profile-info-list>li.img-list a img {
+			max-width: 2.25rem;
+			-webkit-border-radius: 2.5rem;
+			-moz-border-radius: 2.5rem;
+			border-radius: 2.5rem;
+		}
+
+		.coming-soon-cover img,
+		.email-detail-attachment .email-attachment .document-file img,
+		.email-sender-img img,
+		.friend-list .friend-img img,
+		.profile-header-img img {
+			max-width: 100%;
+		}
+
+		.table.table-profile th {
+			border: none;
+			color: #000;
+			padding-bottom: 0.3125rem;
+			padding-top: 0;
+		}
+
+		.table.table-profile td {
+			border-color: #c8c7cc;
+		}
+
+		.table.table-profile tbody+thead>tr>th {
+			padding-top: 1.5625rem;
+		}
+
+		.table.table-profile .field {
+			color: #666;
+			font-weight: 600;
+			width: 25%;
+			text-align: right;
+		}
+
+		.table.table-profile .value {
+			font-weight: 500;
+		}
+
+		.row.row-space-2 {
+			margin: 0 -1px;
+		}
+
+		.m-b-2 {
+			margin-bottom: 2px !important;
+		}
+
+		.embed-responsive {
+			position: relative;
+			display: block;
+			width: 100%;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		.row.row-space-2>[class*=col-] {
+			padding: 0 1px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div id="content" class="content p-0">
+
+			<div class="profile-container">
+				<div class="row row-space-20">
+					<div class="col-md-8">
+						<div class="tab-content p-0">
+							<div class="tab-pane active show" id="profile-videos">
+								<form th:action="@{/company/updateUserInfo}" method="post" enctype="multipart/form-data">
+								<div class="profile-header">
+
+									<!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" width="800px" height="140px" /> -->
+									<img th:src="@{/image/company/cover/}+'companyCover'+${companyProfile.companyId}+'.png'" alt="" width="800px"
+										height="140px" />
+									<input id="image1" type="file" name="image1" th:value="${companyProfile.image1}" />
+									<div class="profile-header-content">
+
+										<div class="profile-header-img">
+											<!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" /> -->
+											<img th:src="@{/image/company/profile/}+'companyProfile'+${companyProfile.companyId}+'.png'" alt="" />
+										</div>
+
+										<div class="profile-header-info">
+											<h4 class="m-t-sm" th:text="${user.username}"></h4>
+											<h7 style="color: dimgrey;">Registered Date </h7>
+											<p class="m-b-sm" th:text="${user.registeredDate}"></p><br />
+
+											<input id="image2" type="file" name="image2"
+												th:value="${companyProfile.image2}" />
+
+										</div>
+									</div>
+
+									<ul class="profile-header-tab nav nav-tabs">
+										<li class="nav-item"></li>
+
+									</ul>
+
+									
+									<div>
+										<!-- updateinfo @p -->
+										<input type="hidden" name="userId" th:value="${user.userId}" />
+										<input type="hidden" name="companyId" th:value="${companyProfile.companyId}" />
 
 
-											<div class="bg-info" th:if="${updateUserInfo}">User info
+										<div class="bg-info" th:if="${updateUserInfo}">User info
 											updated.</div>
-											<br />
-											<label for="inputEmail4">User Name</label>
-											<input type="text" class="form-control" id="inputEmail4" name="username"
+										<br />
+										<label for="inputEmail4">User Name</label>
+										<input type="text" class="form-control" id="inputEmail4" name="username"
 											th:placeholder="${user.username}" th:value="${user.username}" />
-											<label for="inputEmail4">User Email</label>
-											<input type="email" class="form-control" id="inputEmail4" name="email"
+										<label for="inputEmail4">User Email</label>
+										<input type="email" class="form-control" id="inputEmail4" name="email"
 											th:placeholder="${user.email}" th:value="${user.email}" />
-											<label for="inputEmail4">Company Name</label>
-											<input type="text" class="form-control" id="inputEmail4" name="companyName"
-											th:placeholder="${companyProfile.companyName}" th:value="${companyProfile.companyName}" />
-											<label for="inputEmail4">Company Email</label>
-											<input type="text" class="form-control" id="inputEmail4" name="companyEmail"
-											th:placeholder="${companyProfile.companyEmail}" th:value="${companyProfile.companyEmail}" />
-											<label for="inputEmail4">Phone No</label>
-											<input type="text" class="form-control" id="inputEmail4" name="companyPhone"
-											th:placeholder="${companyProfile.companyPhone}" th:value="${companyProfile.companyPhone}" />
-											<label for="inputEmail4">URL</label>
-											<input type="text" class="form-control" id="inputEmail4" name="companyUrl"
-											th:placeholder="${companyProfile.companyUrl}" th:value="${companyProfile.companyUrl}" />
-											<label for="inputEmail4">Company Address</label>
-											<textarea name="companyAddress" rows="3" class="form-control" id="companyAddress"
-											th:value="${companyProfile.companyAddress}"
-											th:placeholder="${companyProfile.companyAddress}"></textarea>
-											<label for="inputEmail4">Description</label>
-											<textarea name="description" rows="6" class="form-control" id="description"
-											th:value="${companyProfile.description}" 
-											th:placeholder="${companyProfile.description}"></textarea>
-											
-											<label for="inputPassword4">Old Password</label>
-											<input type="password" class="form-control" id="inputPassword5" name=password
+										<label for="inputEmail4">Company Name</label>
+										<input type="text" class="form-control" id="inputEmail4" name="companyName"
+											th:placeholder="${companyProfile.companyName}"
+											th:value="${companyProfile.companyName}" />
+										<label for="inputEmail4">Company Email</label>
+										<input type="text" class="form-control" id="inputEmail4" name="companyEmail"
+											th:placeholder="${companyProfile.companyEmail}"
+											th:value="${companyProfile.companyEmail}" />
+										<label for="inputEmail4">Phone No</label>
+										<input type="text" class="form-control" id="inputEmail4" name="companyPhone"
+											th:placeholder="${companyProfile.companyPhone}"
+											th:value="${companyProfile.companyPhone}" />
+										<label for="inputEmail4">URL</label>
+										<input type="text" class="form-control" id="inputEmail4" name="companyUrl"
+											th:placeholder="${companyProfile.companyUrl}"
+											th:value="${companyProfile.companyUrl}" />
+										<label for="inputEmail4">Company Address</label>
+										<textarea name="companyAddress" rows="3" class="form-control"
+											id="companyAddress" th:value="${companyProfile.companyAddress}"
+											th:text="${companyProfile.companyAddress}"></textarea>
+										<label for="inputEmail4">Description</label>
+										<textarea name="description" rows="6" class="form-control" id="description"
+											th:value="${companyProfile.description}"
+											th:text="${companyProfile.description}"></textarea>
+
+										<label for="inputPassword4">Old Password</label>
+										<input type="password" class="form-control" id="inputPassword5" name=password
 											th:value="${currentPassword}" />
-											<label for="inputPassword5">New Password</label>&nbsp;<span id="checkPasswordMatch"
-											style="color: red;"></span>
-											<input type="password" class="form-control" id="txtNewPassword" name="newPassword"/>
-											<label for="inputPassword6">Confirm Password</label>
-											<input type="password" class="form-control" id="txtConfirmPassword" />
-        						       			
-        						       		<button type="submit" id="updateUserInfoButton" class="btn btn-primary">Save
+										<label for="inputPassword5">New Password</label>&nbsp;<span
+											id="checkPasswordMatch" style="color: red;"></span>
+										<input type="password" class="form-control" id="txtNewPassword"
+											name="newPassword" />
+										<label for="inputPassword6">Confirm Password</label>
+										<input type="password" class="form-control" id="txtConfirmPassword" />
+
+										<button type="submit" id="updateUserInfoButton" class="btn btn-primary">Save
 											Change</button>
-											<a class="btn btn-danger" th:href="@{/}">Cancel</a>
-        						       		</form>
-      							  		</div>
-       
-                        </div>
-                    </div>
-                </div>
-    		
-                <div class="col-md-4 hidden-xs hidden-sm" >
-                    <ul class="profile-info-list">
-                        <li class="title">COMPANY INFORMATION</li>
-                        <li>
-                            <div class="field">Company Id:</div>
-                            <div class="value" th:text="${companyProfile.companyId}"></div>
-                        </li>
-                        <li>
-                            <div class="field">Company Name:</div>
-                            <div class="value" th:text="${companyProfile.companyName}"></div>
-                        </li>
-                        <li>
-                            <div class="field">Address</div>
-                            <div class="value" >
-                            <address class="m-b-0" th:text="${companyProfile.companyAddress}">
-                                   
-                                </address>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="field">Company Website:</div>
-                            <div class="value" th:text="${companyProfile.companyUrl}"></div>
-                        </li>
-                        <li>
-                            <div class="field">Company Email:</div>
-                            <div class="value" th:text="${companyProfile.companyEmail}">
-                                
-                            </div>
-                        </li>
-                        <li>
-                            <div class="field">Phone No.:</div>
-                            <div class="value" th:text="${companyProfile.companyPhone}">
-                                
-                            </div>
-                        </li>
-                        <li>
-                            <div class="field">Description :</div>
-                            <div class="value" th:text="${companyProfile.description}">
-                                
-                            </div>
-                        </li>
-                        <li class="title">POSTED JOB LIST </li>
-                        <li class="img-list">
-                            <a th:href="@{/jobDetail}" class="m-b-5"></a>                            
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-  
-    </body>
-    <div th:replace="common/header :: footer"/>
+										<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+									</div>
+									
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
-  <div th:replace="common/header :: body-bottom-scripts" />
-  
-  <script th:src="@{/js/jquery.min.js}"></script>
-		<script th:src="@{/js/bootstrap.min.js}"></script>
+					<div class="col-md-4 hidden-xs hidden-sm">
+						<ul class="profile-info-list">
+							<li class="title">COMPANY INFORMATION</li>
+							<li>
+								<div class="field">Company Id:</div>
+								<div class="value" th:text="${companyProfile.companyId}"></div>
+							</li>
+							<li>
+								<div class="field">Company Name:</div>
+								<div class="value" th:text="${companyProfile.companyName}"></div>
+							</li>
+							<li>
+								<div class="field">Address</div>
+								<div class="value">
+									<address class="m-b-0" th:text="${companyProfile.companyAddress}">
 
-		<script th:src="@{/js/scripts.js}"></script>
+									</address>
+								</div>
+							</li>
+							<li>
+								<div class="field">Company Website:</div>
+								<div class="value" th:text="${companyProfile.companyUrl}"></div>
+							</li>
+							<li>
+								<div class="field">Company Email:</div>
+								<div class="value" th:text="${companyProfile.companyEmail}">
 
-		<!-- data table -->
-		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
-		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-	
-  
+								</div>
+							</li>
+							<li>
+								<div class="field">Phone No.:</div>
+								<div class="value" th:text="${companyProfile.companyPhone}">
+
+								</div>
+							</li>
+							<li>
+								<div class="field">Description :</div>
+								<div class="value" th:text="${companyProfile.description}">
+
+								</div>
+							</li>
+							<li class="title">POSTED JOB LIST </li>
+							<li class="img-list">
+								<a th:href="@{/jobDetail}" class="m-b-5"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<div th:replace="common/header :: footer" />
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/scripts.js}"></script>
+
+<!-- data table -->
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+
+
 </html>
