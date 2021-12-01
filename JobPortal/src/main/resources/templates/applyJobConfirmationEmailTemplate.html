@@ -7,22 +7,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+		<link rel="shortcut icon" type="image/x-icon" th:href="@{classpath:static/assets/img/favicon.ico}">
 
 		<!-- CSS here -->
-            <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
-            <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/bootstrap-theme.min.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/owl.carousel.min.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/flaticon.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/price_rangs.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/slicknav.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/animate.min.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/magnific-popup.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/fontawesome-all.min.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/themify-icons.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/slick.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/nice-select.css}">
+            <link rel="stylesheet" th:href="@{classpath:static/assets/css/style.css}">
             
 <style>
 body{
@@ -519,7 +519,7 @@ body{
 
 
    <body>
-    <div th:replace="common/header :: navbar" />
+    <!--<div th:replace="common/header :: navbar" />-->
     
 <p>Dear <span th:text="${user.username}"></span>,</p>
 <br/>
@@ -576,7 +576,7 @@ body{
                 </div>
             </div>
         </section>
-        <section class="hk-sec-wrapper">
+        <!--<section class="hk-sec-wrapper">
             <h5 class="hk-sec-title">Education</h5>
             <p class="mb-40">We will send your information to the company that  <code>you applied job</code> .</p>
             <div class="row">
@@ -667,7 +667,7 @@ body{
                    
                 </div>
             </div>
-        </section>
+        </section>-->
         
     </div>
 </div>

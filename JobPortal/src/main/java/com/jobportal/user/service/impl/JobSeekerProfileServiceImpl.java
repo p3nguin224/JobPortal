@@ -1,5 +1,6 @@
 package com.jobportal.user.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,11 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.jobportal.user.dao.JobSeekerProfileDAO;
 import com.jobportal.user.dao.JobSeekerSkillDAO;
+import com.jobportal.user.dao.SeekerJobActivityDAO;
+import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.JobSeekerSkill;
+import com.jobportal.user.domain.SeekerJobActivity;
 import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.JobSeekerProfileService;
+import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
 
 @Service
@@ -24,6 +29,12 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 	
 	@Autowired
 	private JobSeekerSkillDAO jobSeekerSkillDAO;
+	
+	@Autowired
+	private SeekerJobActivityDAO seekerJobActivityDAO;
+	
+	@Autowired
+	private JobService jobService;
 	
 	@Autowired
 	private SkillService skillService;
@@ -97,6 +108,27 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 	public JobSeekerProfile createJobSeekerSkill(JobSeekerProfile jobSeekerProfile, Skill skill) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public JobSeekerProfile applyJob(JobSeekerProfile jobSeekerProfile, Job job) {
+		// TODO Auto-generated method stub
+		SeekerJobActivity seekerJobActivity = new SeekerJobActivity(job, jobSeekerProfile);
+		seekerJobActivity.setApplyDate(LocalDate.now().toString());
+		
+		jobSeekerProfile.getSeekerJobActivityList().add(seekerJobActivity);
+		job.getSeekerJobActivityList().add(seekerJobActivity);
+		
+		job.setRequiredMember(job.getRequiredMember()-1);
+		if (job.getRequiredMember()<=0) {
+			job.setStatus("unavailable");
+		}
+		
+		seekerJobActivityDAO.save(seekerJobActivity);
+		jobSeekerDAO.save(jobSeekerProfile);
+		jobService.saveJob(job);
+		
+		return jobSeekerProfile;
 	}
 
 

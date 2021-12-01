@@ -3,25 +3,33 @@ package com.jobportal.user.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jobportal.user.domain.CompanyProfile;
+import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.JobSeekerSkill;
 import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.SkillHolder;
 import com.jobportal.user.domain.User;
+import com.jobportal.user.service.CompanyProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
+import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
 import com.jobportal.user.service.UserService;
+import com.jobportal.user.utility.MailConstructor;
 import com.jobportal.user.utility.SecurityUtility;
 
 @Controller
@@ -31,10 +39,22 @@ public class JobSeekerController {
 	private static Logger LOG = LoggerFactory.getLogger(JobSeekerController.class);
 	
 	@Autowired
+	private MailConstructor mailConstructor;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	@Autowired
 	private UserService userService;
 	
 	@Autowired
 	private SkillService skillService;
+	
+	@Autowired
+	private JobService jobService;
+	
+	@Autowired
+	private CompanyProfileService companyService;
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
@@ -157,6 +177,24 @@ public class JobSeekerController {
 		
 		model.addAttribute("updateUserInfo", true);
 		return "forward:/jobSeeker/profile";   
+	}
+	
+	
+	@RequestMapping("/applyJobConfirmation")
+	private String applyJobConfirmation(Principal principal, Model model,
+			@RequestParam("jobId") Long jobId, @RequestParam("companyId") Long companyId) {
+		
+		String username = principal.getName();
+		User user = userService.findByUsername(username);
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		Job job = jobService.findById(jobId);
+		CompanyProfile companyProfile = companyService.findById(companyId);
+		
+		mailSender.send(mailConstructor.constructApplyJobComfirmationEmail(user, jobSeekerProfile, companyProfile, job, Locale.ENGLISH));
+		
+		jobSeekerService.applyJob(jobSeekerProfile, job);
+		
+		return "redirect:/jobListing";
 	}
 
 }
