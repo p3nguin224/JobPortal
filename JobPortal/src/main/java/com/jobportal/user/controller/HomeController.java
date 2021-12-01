@@ -149,6 +149,9 @@ public class HomeController {
 		
 		// for firstTime login, user need to complete edit seeker profile
 		if (user.getFirstTimeLogin()) {
+//			List<Skill> allSkills = skillService.findAllSkills();	
+//			model.addAttribute("allSkills", allSkills);
+//			LOG.info("all skill size : "+allSkills.size());
 			model.addAttribute("classActiveProfile", true);
 			return "jobSeekerProfile";
 		}

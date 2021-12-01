@@ -121,7 +121,7 @@
 
 					<div class="tab-content">
 						<div  role="tabpanel" class="tab-pane" id="home" th:classappend="${classActiveProfile}? 'in active'">
-							<form th:action="@{/jobSeeker/updateUserInfo}" method="post">
+							<form th:action="@{/jobSeeker/updateUserInfo}" method="post" th:object="${skillHolder}"}>
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
@@ -278,9 +278,9 @@
 										<p class="mb-2">Skill</p>
 										<div class="form-group">
 
-											<input type="checkbox" class="form-control" th:each="skill : ${allSkills}"
-												th:text="${skill.name}" th:value="${skill.name}"
-												th:checked="${#lists.contains(jskillNameList, skill.name)}" />
+											<input type="checkbox" class="form-control" th:each="skill : ${allSkills}" name="skillNameList"
+												th:text="${skill.skillName}" th:value="${skill.skillName}"th:field="*{skills}"
+												th:checked="${#lists.contains(jskillNameList, skill.skillName)}" />
 										</div>
 
 									</div>

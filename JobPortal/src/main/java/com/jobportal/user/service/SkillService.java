@@ -15,6 +15,6 @@ public interface SkillService {
 	
 	List<Skill> findByJob(Job job);
 	
-	
+	List<Skill> findAllSkills();
 
 }

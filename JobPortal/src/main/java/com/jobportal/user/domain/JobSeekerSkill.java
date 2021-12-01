@@ -26,6 +26,11 @@ public class JobSeekerSkill {
 		
 	}
 
+	public JobSeekerSkill(JobSeekerProfile jobSeekerProfile, Skill skill) {
+		this.jobSeekerProfile = jobSeekerProfile;
+		this.skill = skill;
+	}
+
 	public Long getJobSeekerSkillId() {
 		return jobSeekerSkillId;
 	}

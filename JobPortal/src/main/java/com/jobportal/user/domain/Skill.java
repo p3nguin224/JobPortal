@@ -2,6 +2,7 @@ package com.jobportal.user.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +20,11 @@ public class Skill {
 	
 	private String skillName;
 	
-	@OneToMany(mappedBy = "skill")
+	@OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<JobSeekerSkill> jobSeekerSkillList;
 	
-	@OneToMany(mappedBy = "skill")
+	@OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<JobSkill> jobSkillList;
 	
