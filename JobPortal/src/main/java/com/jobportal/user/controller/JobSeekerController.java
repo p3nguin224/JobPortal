@@ -1,5 +1,11 @@
 package com.jobportal.user.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +18,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.user.domain.CompanyProfile;
+import com.jobportal.user.domain.EducationProfile;
+import com.jobportal.user.domain.ExperienceProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.JobSeekerSkill;
@@ -84,6 +95,12 @@ public class JobSeekerController {
 		model.addAttribute("user", user);
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		model.addAttribute("classActiveProfile", true);
+		
+		EducationProfile educationProfile = new EducationProfile();
+		ExperienceProfile experienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", educationProfile);
+		model.addAttribute("experienceProfile", experienceProfile);
 		
 		// show experience proflie list if this profile have experience profile
 		if (jobSeekerProfile.getExperienceProfileList()!=null) {
@@ -163,17 +180,24 @@ public class JobSeekerController {
 		jobSeekerProfile.setUser(currentUser);
 		jobSeekerService.save(jobSeekerProfile);
 		
-
+		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
+		if (!profileImage.isEmpty()) {
+			byte[] pbytes = profileImage.getBytes();
+			String fileName = "jobSeekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
+			
+			try {
+				Files.delete(Paths.get("src/main/resources/static/image/jobSeeker/"+fileName));
+			} catch (NoSuchFileException e) {
+				// TODO: handle exception
+			}		
+			
+			BufferedOutputStream profileStream = new BufferedOutputStream(
+					new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
+					);
+			profileStream.write(pbytes);
+			profileStream.close();
+		}
 		
-//		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
-//		byte[] bytes = profileImage.getBytes();
-//		
-//		String fileName = "seekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
-//		BufferedOutputStream stream = new BufferedOutputStream(
-//				new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
-//				);
-//		stream.write(bytes);
-//		stream.close();
 		
 		model.addAttribute("updateUserInfo", true);
 		return "forward:/jobSeeker/profile";   

@@ -122,7 +122,7 @@
 					<!-- Profile -->
 					<div class="tab-content">
 						<div  role="tabpanel" class="tab-pane" id="home" th:classappend="${classActiveProfile}? 'in active'">
-							<form th:action="@{/jobSeeker/updateUserInfo}" method="post" th:object="${skillHolder}"}>
+							<form th:action="@{/jobSeeker/updateUserInfo}" method="post" th:object="${skillHolder}" enctype="multipart/form-data">
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
@@ -138,7 +138,7 @@
 										<div class="avatar avatar-xl">
 											<!--<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..."
 												class="avatar-img rounded-circle" />-->
-											<img th:src="@{/image/}+${jobSeekerProfile.seekerProfileId}+'.png'" alt="..."
+											<img th:src="@{/image/jobSeeker/}+'jobSeekerProfile'+${jobSeekerProfile.seekerProfileId}+'.png'" alt="..."
 												class="avatar-img rounded-circle" />
 											<input id="profileImage" type="file" name="profileImage"
 													th:value="${jobSeekerProfile.profileImage}" />
@@ -321,6 +321,7 @@
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="educationId" th:value="${educationProfile.educationId}" />
+								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
 								<div class="bg-info" th:if="${updateEducationInfo}">User info
