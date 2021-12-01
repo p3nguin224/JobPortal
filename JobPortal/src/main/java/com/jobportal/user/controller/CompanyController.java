@@ -29,7 +29,7 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileService companyProfileService;
-	
+	 
 	@RequestMapping("/postJob")
 	private String postJob(Model model) {
 		Job job = new Job();

@@ -1,6 +1,8 @@
 package com.jobportal.user.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jobportal.user.domain.JobSeekerProfile;
+import com.jobportal.user.domain.JobSeekerSkill;
+import com.jobportal.user.domain.Skill;
+import com.jobportal.user.domain.SkillHolder;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.JobSeekerProfileService;
+import com.jobportal.user.service.SkillService;
 import com.jobportal.user.service.UserService;
 import com.jobportal.user.utility.SecurityUtility;
 
@@ -28,6 +34,9 @@ public class JobSeekerController {
 	private UserService userService;
 	
 	@Autowired
+	private SkillService skillService;
+	
+	@Autowired
 	private JobSeekerProfileService jobSeekerService;
 	
 	// prepare and go to profile page
@@ -36,6 +45,21 @@ public class JobSeekerController {
 		User user = userService.findByUsername(principal.getName());
 		
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+		// Make skill List
+//		SkillHolder skillHolder = new SkillHolder();
+//		List<String> jobSeekerSkillNameList = new ArrayList<>();
+//		if (jobSeekerProfile.getJobSeekerSkillList() != null) {
+//			for (JobSeekerSkill jskill : jobSeekerProfile.getJobSeekerSkillList()) {
+//				jobSeekerSkillNameList.add(jskill.getSkill().getSkillName());
+//			}
+//		}
+//		
+//		List<Skill> allSkills = skillService.findAllSkills();
+//		model.addAttribute("skillHolder", skillHolder);
+//		model.addAttribute("jskillNameList", jobSeekerSkillNameList);
+//		model.addAttribute("allSkills", allSkills);
+		/////////
 		
 		model.addAttribute("user", user);
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
@@ -56,7 +80,7 @@ public class JobSeekerController {
 	@PostMapping("/updateUserInfo")
 	private String updateJobSeekerProfile(@ModelAttribute("jobSeekerProfile") JobSeekerProfile jobSeekerProfile,
 			@ModelAttribute("user") User user, @ModelAttribute("password") String currentPassword,
-			@ModelAttribute("newPassword") String newPassword,
+			@ModelAttribute("newPassword") String newPassword, @ModelAttribute("skillHolder") SkillHolder skillHolder,
 			Model model) throws Exception {
 		
 		User currentUser = userService.findById(user.getUserId());
@@ -98,6 +122,17 @@ public class JobSeekerController {
 			}
 		}
 		
+		// Take skills
+//		List<Skill> skillList = new ArrayList<>();
+//		for (String skillName : skillHolder.getSkills()) {
+//			skillList.add(skillService.findBySkillName(skillName));
+//		}
+//		
+//		if (jobSeekerProfile != null) {
+//			LOG.info("skillNameList size "+skillHolder.getSkills().size());
+//		}	
+//		jobSeekerService.createJobSeekerSkillList(jobSeekerProfile, skillList);
+		
 		currentUser.setUsername(user.getUsername());
 		currentUser.setDob(user.getDob());
 		currentUser.setEmail(user.getEmail());
@@ -108,10 +143,7 @@ public class JobSeekerController {
 		jobSeekerProfile.setUser(currentUser);
 		jobSeekerService.save(jobSeekerProfile);
 		
-		
-		if (jobSeekerProfile != null) {
-			LOG.info("jobSEekerProfile ID"+jobSeekerProfile.getSeekerProfileId());
-		}
+
 		
 //		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
 //		byte[] bytes = profileImage.getBytes();
