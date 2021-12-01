@@ -12,23 +12,23 @@
 	<title>Job board HTML-5 Template </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="manifest" href="site.webmanifest">
+	<link rel="manifest" th:href="@{/site.webmanifest}">
 	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 	<!-- CSS here -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="assets/css/flaticon.css">
-	<link rel="stylesheet" href="assets/css/price_rangs.css">
-	<link rel="stylesheet" href="assets/css/slicknav.css">
-	<link rel="stylesheet" href="assets/css/animate.min.css">
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="assets/css/themify-icons.css">
-	<link rel="stylesheet" href="assets/css/slick.css">
-	<link rel="stylesheet" href="assets/css/nice-select.css">
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/bootstrap-theme.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/owl.carousel.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/flaticon.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/price_rangs.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/slicknav.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/animate.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/magnific-popup.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/fontawesome-all.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/themify-icons.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/slick.css}">
+	<link rel="stylesheet"  th:href="@{/assets/css/nice-select.css}">
+	<link rel="stylesheet"  href="assets/css/style.css">
 
 	<style>
 		body {
@@ -135,8 +135,12 @@
 								<div class="row mt-5 align-items-center">
 									<div class="col-md-3 text-center mb-5">
 										<div class="avatar avatar-xl">
-											<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..."
+											<!--<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..."
+												class="avatar-img rounded-circle" />-->
+											<img th:src="@{/image/}+${jobSeekerProfile.seekerProfileId}+'.png'" alt="..."
 												class="avatar-img rounded-circle" />
+											<input id="profileImage" type="file" name="profileImage"
+													th:value="${jobSeekerProfile.profileImage}" />
 										</div>
 									</div>
 									<div class="col">

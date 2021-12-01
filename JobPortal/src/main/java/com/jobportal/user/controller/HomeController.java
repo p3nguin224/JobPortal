@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jobportal.user.domain.CompanyProfile;
+import com.jobportal.user.domain.EducationProfile;
+import com.jobportal.user.domain.ExperienceProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.Skill;
@@ -33,6 +36,8 @@ import com.jobportal.user.domain.security.PasswordResetToken;
 import com.jobportal.user.domain.security.Role;
 import com.jobportal.user.domain.security.UserRole;
 import com.jobportal.user.service.CompanyProfileService;
+import com.jobportal.user.service.EducationProfileService;
+import com.jobportal.user.service.ExperienceProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
@@ -67,6 +72,10 @@ public class HomeController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	
+	@Autowired
+	private CompanyProfileService companyProfileService;
 	
 	private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
@@ -408,6 +417,10 @@ public class HomeController {
 			return "newJob";  
 		}
 		
+		
+		
+		
+
 		
 		
 }
