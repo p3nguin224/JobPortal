@@ -11,19 +11,19 @@
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 		<!-- CSS here -->
-            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
-            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="assets/css/flaticon.css">
-            <link rel="stylesheet" href="assets/css/price_rangs.css">
-            <link rel="stylesheet" href="assets/css/slicknav.css">
-            <link rel="stylesheet" href="assets/css/animate.min.css">
-            <link rel="stylesheet" href="assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="assets/css/themify-icons.css">
-            <link rel="stylesheet" href="assets/css/slick.css">
-            <link rel="stylesheet" href="assets/css/nice-select.css">
-            <link rel="stylesheet" href="assets/css/style.css">
+            <link rel="stylesheet" th:href="@{./assets/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/bootstrap-theme.min.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/owl.carousel.min.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/flaticon.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/price_rangs.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/slicknav.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/animate.min.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/magnific-popup.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/fontawesome-all.min.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/themify-icons.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/slick.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/nice-select.css}">
+            <link rel="stylesheet" th:href="@{./assets/css/style.css}">
    </head>
 
    <body>
@@ -71,7 +71,7 @@
                                     <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn head-btn1">JobPost</a>
                                     <a sec:authorize="isAuthenticated()" th:href="@{/company/postJob}" class="btn head-btn1">JobPost</a>
                                     <a sec:authorize="isAnonymous()" th:href="@{/newCompany}" class="btn head-btn1">Company</a>
-                                    <a sec:authorize="isAuthenticated()" th:href="@{/companyProfile}" class="btn head-btn1">Company</a>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/company/profile}" class="btn head-btn1">Company</a>
                                     <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn head-btn2">Login</a>
                                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn head-btn2">logout</a>
                                 </div>

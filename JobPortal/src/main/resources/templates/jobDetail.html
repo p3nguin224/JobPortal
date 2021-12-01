@@ -33,7 +33,7 @@
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                 <div class="company-img company-img-details">
-                                   <img class="img-responsive shelf-job" src="assets/img/icon/job-list1.png" />
+                                   <img class="img-responsive shelf-job" th:src="@{/image/company/profile/}+'companyProfile'+${job.companyProfile.companyId}+'.png'" />
                                 </div>
                                 <div class="job-tittle">
                                    
@@ -84,7 +84,9 @@
                            
                           
                          <div class="apply-btn2">
-                            <a th:href="@{/applyJobConfirmation}" class="btn">Apply Now</a>
+
+                            <a th:href="@{/jobSeeker/applyJobConfirmation(jobId=${job.jobId}, companyId=${company.companyId})}" class="btn">Apply Now</a>
+
                          </div>
                        </div>
                         <div class="post-details4  mb-50" data-th-each="company : ${company}">
@@ -92,10 +94,10 @@
                            <div class="small-section-tittle">
                                <h4>Company Information</h4>
                            </div>
-                              <span>Colorlib</span>
-                              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                              <span th:text="${company.companyName}"></span>
+                              <p th:text="${company.description}"></p>
                             <ul>
-                                <li>Name: <span th:text="${company.companyName}"></span></li>
+                                <!--<li>Name: <span th:text="${company.companyName}"></span></li>-->
                                 <li>Web : <span th:text="${company.companyUrl}"></span></li>
                                 <li>Email: <span th:text="${company.companyEmail}"></span></li>
                                 <li>Phone: <span th:text="${company.companyPhone}"></span></li>

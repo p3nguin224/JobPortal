@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,10 +74,12 @@ public class HomeController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	
+
 	@Autowired
 	private CompanyProfileService companyProfileService;
 	
+	
+
 	private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping("/")
@@ -130,9 +133,12 @@ public class HomeController {
 			User user = userService.findByUsername(principal.getName());
 			CompanyProfile companyProfile = companyService.findByUser(user);
 			
-			model.addAttribute("user", user);                       // <- model ui var
-			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-			
+			if (user.getFirstTimeLogin()) {
+				model.addAttribute("user", user);                       // <- model ui var
+				model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+				return "companyProfile";
+			}
+			// Go to list 
 			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
 			if(jobSeekerList.size() == 0 ) {
 				model.addAttribute("emptyList", true);
@@ -149,6 +155,9 @@ public class HomeController {
 		
 		// for firstTime login, user need to complete edit seeker profile
 		if (user.getFirstTimeLogin()) {
+//			List<Skill> allSkills = skillService.findAllSkills();	
+//			model.addAttribute("allSkills", allSkills);
+//			LOG.info("all skill size : "+allSkills.size());
 			model.addAttribute("classActiveProfile", true);
 			return "jobSeekerProfile";
 		}
@@ -369,22 +378,13 @@ public class HomeController {
 	}
 	
 	
-	
-
-
-		
-		
-		// not work yet, have to sent to user update page
+		// have to move to jobSeeker Controller
 		@RequestMapping("/jobDetail")
 		public String jobDetail(@RequestParam("jobId") Long jobId,Model model,Principal principal) {
 			if (principal != null) {
-
 				String username = principal.getName();
-
 				User user = userService.findByUsername(username);
-
 				model.addAttribute("user", user);
-
 			}
 			
 			Job job = jobService.findById(jobId);
@@ -404,18 +404,21 @@ public class HomeController {
 			
 		}
 
+//		// It should be in company controller
+//		// Go to job creating page
+//		@RequestMapping("/newJob")
+//		private String goToNewJob(Model model) {
+//			
+//			Job job = new Job();
+//			model.addAttribute("classActiveNewAccount", true);
+//
+//			model.addAttribute("job", job);                       // <- model ui var
+//				// <- model ui var
+//			return "newJob";  
+//		}
 		
-		// Go to job creating page
-		@RequestMapping("/newJob")
-		private String goToNewJob(Model model) {
-			
-			Job job = new Job();
-			model.addAttribute("classActiveNewAccount", true);
 
-			model.addAttribute("job", job);                       // <- model ui var
-				// <- model ui var
-			return "newJob";  
-		}
+		
 		
 		
 		

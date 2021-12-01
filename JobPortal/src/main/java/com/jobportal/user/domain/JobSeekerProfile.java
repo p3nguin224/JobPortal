@@ -52,6 +52,10 @@ public class JobSeekerProfile {
 	@JsonIgnore
 	private List<JobSeekerSkill> jobSeekerSkillList;
 	
+	@OneToMany(mappedBy = "jobSeekerProfile")
+	@JsonIgnore
+	private List<SeekerJobActivity> seekerJobActivityList;
+	
 	public JobSeekerProfile() {
 		
 	}
@@ -142,6 +146,14 @@ public class JobSeekerProfile {
 
 	public void setJobSeekerSkillList(List<JobSeekerSkill> jobSeekerSkillList) {
 		this.jobSeekerSkillList = jobSeekerSkillList;
+	}
+
+	public List<SeekerJobActivity> getSeekerJobActivityList() {
+		return seekerJobActivityList;
+	}
+
+	public void setSeekerJobActivityList(List<SeekerJobActivity> seekerJobActivityList) {
+		this.seekerJobActivityList = seekerJobActivityList;
 	}
 	
 	

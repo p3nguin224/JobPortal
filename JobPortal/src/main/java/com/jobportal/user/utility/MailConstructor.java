@@ -2,12 +2,21 @@ package com.jobportal.user.utility;
 
 import java.util.Locale;
 
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import com.jobportal.user.domain.CompanyProfile;
+import com.jobportal.user.domain.Job;
+import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.User;
 
 @Component
@@ -41,32 +50,38 @@ public class MailConstructor {
 			return email;
 		}
 		
-		// MimeMessagePreparator is required to create Mime type mail
-		// It helps to put required data and create mail using these
-//		public MimeMessagePreparator constructOrderComfirmationEmail(User user, Order order,
-//				Locale locale) {
-//			Context context = new Context();
-//			context.setVariable("order", order);
-//			context.setVariable("user", user);
-//			context.setVariable("cartItemList", order.getCartItemList());
-//			String text = templateEngine.process("orderConfirmationEmailTemplate", context);
-//			
-//			MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
-//				
-//				@Override
-//				public void prepare(MimeMessage mimeMessage) throws Exception {
-//					// TODO Auto-generated method stub
-//					MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
-//					
-//					email.setTo(user.getEmail());
-//					email.setFrom(new InternetAddress(env.getProperty("support.email")));
-//					email.setSubject("Order Confirmation - "+order.getId());
-//					email.setText(text, true);
-//		
-//				}
-//			};
-//			return messagePreparator;
-//			
-//		}
+//		 MimeMessagePreparator is required to create Mime type mail
+//		 It helps to put required data and create mail using these
+		public MimeMessagePreparator constructApplyJobComfirmationEmail(User user, JobSeekerProfile jobSeekerProfile,
+				CompanyProfile companyProfile, Job job, Locale locale) {
+			Context context = new Context();
+			
+			context.setVariable("user", user);
+			context.setVariable("jobSeekerProfile", jobSeekerProfile);
+//			context.setVariable("educationProfile", jobSeekerProfile.getEducationProfileList().get(0));
+//			context.setVariable("experienceProfile", jobSeekerProfile.getExperienceProfileList().get(0));
+			context.setVariable("companyProfile", companyProfile);
+			context.setVariable("job", job);
+			
+			String text = templateEngine.process("applyJobConfirmationEmailTemplate", context);
+			
+			MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					// TODO Auto-generated method stub
+					MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
+					
+					email.setTo(user.getEmail());
+					email.setFrom(new InternetAddress(env.getProperty("support.email")));
+					email.setSubject("Job Apply - "+job.getJobTitle());
+					email.setText(text, true);
+				}
+				
+				
+			};
+			return messagePreparator;
+			
+		}
 
 }

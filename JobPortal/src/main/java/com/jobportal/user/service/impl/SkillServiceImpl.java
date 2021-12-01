@@ -52,6 +52,12 @@ public class SkillServiceImpl implements SkillService{
 		return skillList;
 	}
 
+	@Override
+	public List<Skill> findAllSkills() {
+		// TODO Auto-generated method stub
+		return (List<Skill>) skillDAO.findAll();
+	}
+
 	
 
 }
