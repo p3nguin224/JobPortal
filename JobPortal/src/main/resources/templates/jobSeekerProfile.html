@@ -101,6 +101,11 @@
 								aria-controls="home" aria-selected="false"><span
 									style="color: red;">Experience</span></a>
 						</li>
+						<li class="nav-item" th:classappend="${classActivePostedJob}? 'active'">
+							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#postedjob" role="tab"
+								aria-controls="home" aria-selected="false"><span
+									style="color: red;">Posted Job</span></a>
+						</li>
 					</ul>
 
 					<!-- password @p -->
@@ -307,6 +312,8 @@
 						</div>
 						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
 						</div>
+						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
+						</div>
 						
 					</div>
 					
@@ -409,6 +416,8 @@
 						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
 						</div>
 						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
+						</div>
+						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
 						</div>
 						
 					</div>
@@ -516,6 +525,50 @@
 						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
 						</div>
 						<div class="tab-pane fade" id="education" th:classappend="${classActiveEducation}? 'in active'">
+						</div>
+						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
+						</div>
+						
+					</div> 
+					
+					
+					<!-- Posted Job -->
+						<div class="tab-content">
+						<div  role="tabpanel" class="tab-pane" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
+							<div class="row mb-4">
+									<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Posted Job List</p>
+									<div class="col-md-6" data-th-each="seekerJobActivity : ${SeekerJobActivityList}">
+										
+										<div class="form-group">
+											<label for="inputEmail4">Apply Date ~~~</label>
+											<label th:text="${seekerJobActivity.applyDate}"></label>
+										</div>
+										
+										<div class="form-group">
+											<label for="inputEmail4">Job Title ~~~</label>
+											<label th:text="${job.jobTitle}"></label>
+										</div>
+										
+										<div class="form-group">
+											<label for="inputEmail4">Status ~~~</label>
+											<label th:text="${job.status}"></label>
+										</div>
+										<br />
+										<hr style="color: thistle;">
+										
+									</div>
+
+								</div>
+						</div>
+						
+					
+								
+								
+						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
+						</div>
+						<div class="tab-pane fade" id="education" th:classappend="${classActiveEducation}? 'in active'">
+						</div>
+						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
 						</div>
 						
 					</div> 

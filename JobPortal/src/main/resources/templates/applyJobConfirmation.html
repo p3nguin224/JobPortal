@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+         <title>Job board HTML-5 Template </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+
+		<!-- CSS here -->
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
+            <link rel="stylesheet" href="assets/css/style.css">
+            
+<style>
+	table {
+	border-collapse: collapse;
+	}
+	
+	table, th, td {
+	border:1px solid black;}
+</style>
+  </head>
+
+
+   <body>
+    <div th:replace="common/header :: navbar" />
+    
+<p>Dear <span th:text="${user.username}"></span>,</p>
+<br/>
+<p>Thank you for choosing our site  to seek job. We hope you had a good time with our service!</p>
+<br />
+
+
+<h5 class="hk-sec-title">About you</h5>
+<table>
+	<tr>
+		<th>Profile</th>
+		<th>Education</th>
+		<th>Experience</th>
+	</tr>
+	<tr>
+		<td>
+			<span th:text="${jobSeekerProfile.firstName}+' '+${jobSeekerProfile.lastName}"></span><br/>
+			<span th:text="$${jobSeekerProfile.category}"></span><br/>
+			<span th:text="${user.dob}"></span><br/>
+			<span th:text="${user.gender}"></span><br/>
+			<span th:text="${user.email}"></span><br/>
+		</td>
+		<td>
+			<span th:text="${educationProfile.certificateName}"></span><br/>
+			<span th:text="${educationProfile.major}"></span><br/>
+			<span th:text="${educationProfile.universityName}"></span><br/>
+			<span th:text="${educationProfile.startDate}"></span><br/>
+			<span th:text="${educationProfile.completeDate}"></span><br/>
+		</td>
+		<td>
+			<span th:text="${experienceProfile.jobTitle}"></span><br/>
+			<span th:text="${experienceProfile.companyName}"></span><br/>
+			<span th:text="${experienceProfile.jobAddress}"></span><br/>
+			<span th:text="${experienceProfile.startDate}"></span><br/>
+			<span th:text="${experienceProfile.completeDate}"></span><br/>
+		</td>
+	</tr>
+	<tr>
+	<span th:text="${experienceProfile.description}"></span>
+	</tr>
+</table>
+
+
+< <div th:replace="common/header :: footer"/>
+
+  <div th:replace="common/header :: body-bottom-scripts" />
+        
+    </body>
+</html>
