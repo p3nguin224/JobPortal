@@ -74,10 +74,12 @@ public class HomeController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+
 	@Autowired
 	private CompanyProfileService companyProfileService;
 	
 	
+
 	private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping("/")
@@ -418,6 +420,10 @@ public class HomeController {
 
 		
 		
+		
+		
+		
+
 		
 		
 }
