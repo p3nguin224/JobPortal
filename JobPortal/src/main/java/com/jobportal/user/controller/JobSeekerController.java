@@ -37,6 +37,7 @@ import com.jobportal.user.domain.SkillHolder;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
 import com.jobportal.user.service.EducationProfileService;
+import com.jobportal.user.service.ExperienceProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
@@ -60,9 +61,6 @@ public class JobSeekerController {
 	private UserService userService;
 	
 	@Autowired
-	private SkillService skillService;
-	
-	@Autowired
 	private JobService jobService;
 	
 	@Autowired
@@ -73,6 +71,9 @@ public class JobSeekerController {
 	
 	@Autowired
 	private EducationProfileService educationProfileService;
+	
+	@Autowired
+	private ExperienceProfileService experienceProfileService;
 	
 	// prepare and go to profile page
 	@RequestMapping("/profile")
@@ -253,6 +254,7 @@ public class JobSeekerController {
 		
 		model.addAttribute("educationProfile", newEducationProfile);
 		model.addAttribute("experienceProfile", newExperienceProfile);
+		model.addAttribute("updateEducationInfo", true);
 		return "jobSeekerProfile";
 	}
 	
@@ -274,6 +276,64 @@ public class JobSeekerController {
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		
 		model.addAttribute("classActiveEducation", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		
+		return "jobSeekerProfile";
+	}
+	
+	@PostMapping("/updateExperienceInfo")
+	private String updateExperienceInfo(@ModelAttribute("experienceProfile") ExperienceProfile experienceProfile,
+			 Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+	//	educationProfileService.saveEductationProfile(educationProfile);
+		if (jobSeekerProfile.getExperienceProfileList()==null) {
+			List<ExperienceProfile> tempExpList = new ArrayList<ExperienceProfile>();
+			jobSeekerProfile.setExperienceProfileList(tempExpList);
+			jobSeekerProfile.getExperienceProfileList().add(experienceProfile);
+		}else {
+			jobSeekerProfile.getExperienceProfileList().add(experienceProfile);
+		}
+		
+		experienceProfile.setJobSeekerProfile(jobSeekerProfile);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveExperience", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		model.addAttribute("updateExperienceInfo", true);
+		return "jobSeekerProfile";
+	}
+	
+	@RequestMapping("/removeExperienceProfile")
+	private String removeExperienceProfile(@RequestParam("experienceProfileId") Long experienceId,
+			Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+		for (ExperienceProfile exp : jobSeekerProfile.getExperienceProfileList()) {
+			if (exp.getExperienceId() == experienceId) {
+				exp.setJobSeekerProfile(null);
+			}
+		}
+		experienceProfileService.removeById(experienceId);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveExperience", true);
 		EducationProfile newEducationProfile = new EducationProfile();
 		ExperienceProfile newExperienceProfile = new ExperienceProfile();
 		

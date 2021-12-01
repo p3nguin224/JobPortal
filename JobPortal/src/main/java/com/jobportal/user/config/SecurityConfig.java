@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/fonts/**",
 			"/hours",
 			"/assets/**",
+			"/jobSeeker/assets/**",
+			"/company/assets/**",
 			"/Doc/**",
 			"/job_listing",
 			"/about",

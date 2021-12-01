@@ -148,7 +148,7 @@
 										</div>
 									</div>
 									<div class="col">
-										<div class="row align-items-center" th:if="${ user.firstTimeLogin}">
+										<div class="row align-items-center" th:if="${!user.firstTimeLogin}">
 											<div class="col-md-7">
 												<h4 class="mb-1"
 													th:text="${jobSeekerProfile.firstName}  +  ${jobSeekerProfile.LastName}">
@@ -333,7 +333,7 @@
 									th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
-								<div class="bg-info" th:if="${updateEducationInfo}">User info
+								<div class="bg-info" th:if="${updateEducationInfo}">User Education info
 									updated.</div>
 								<!-- updateinfo @p -->
 
@@ -462,7 +462,7 @@
 								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
-								<div class="bg-info" th:if="${updateExperienceInfo}">User info
+								<div class="bg-info" th:if="${updateExperienceInfo}">User Experience info
 									updated.</div>
 								<!-- updateinfo @p -->
 
@@ -508,7 +508,7 @@
 									<div class="form-group">
 										<label for="inputEmail4">Description</label>
 										<textarea name="description" rows="5" class="form-control" id="description"
-											th:value="${experienceProfile.description}"
+											th:value="${experienceProfile.description}" 
 											th:text="${experienceProfile.description}"
 											placeholder="Description"></textarea>
 									</div>
@@ -523,7 +523,38 @@
 							<hr class="my-4" />
 							<div class="row mb-4">
 								<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Experience List</p>
-								<div class="col-md-6" data-th-each="experience : ${experienceList}">
+								<table id="bookListTable" class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+											<th>Job Title</th>
+											<th>Company Name</th>
+											<th>Job Address</th>
+											<th>Start Date</th>
+											<th>Complete Date</th>
+											<th>Description</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-th-each="experience : ${jobSeekerProfile.experienceProfileList}">
+											
+											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
+											<td th:text="${experience.jobTitle}"></td>
+											<td th:text="${experience.companyName}"></td>
+											<td th:text="${experience.jobAddress}"></td>
+											<td th:text="${experience.startDate}"></td>
+											<td th:text="${experience.completeDate}"></td>
+											<td th:text="${experience.description}"></td>
+											<td>
+												 <a th:href="@{/jobSeeker/removeExperienceProfile?experienceProfileId=}+${experience.experienceId}">
+                                                	<span class="fa fa-times" th:text="Delete"></span>
+                                            	</a>
+											</td>
+										</tr>
+									</tbody>
+			
+								</table>
+								<!--<div class="col-md-6" data-th-each="experience : ${experienceList}">
 
 									<div class="form-group">
 										<label for="inputEmail4">Job Title ~~~</label>
@@ -548,7 +579,7 @@
 									<br />
 									<hr style="color: thistle;">
 
-								</div>
+								</div>-->
 
 							</div>
 						</div>
