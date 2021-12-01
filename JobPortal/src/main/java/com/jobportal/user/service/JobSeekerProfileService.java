@@ -2,6 +2,7 @@ package com.jobportal.user.service;
 
 import java.util.List;
 
+import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.JobSeekerSkill;
 import com.jobportal.user.domain.Skill;
@@ -22,5 +23,6 @@ public interface JobSeekerProfileService {
 	
 	JobSeekerProfile createJobSeekerSkill(JobSeekerProfile jobSeekerProfile, Skill skill);
 	
+	JobSeekerProfile applyJob(JobSeekerProfile jobSeekerProfile, Job job);
 
 }

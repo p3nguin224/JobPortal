@@ -40,6 +40,10 @@ public class Job {
 	@JsonIgnore
 	private List<JobSkill> jobSkillList;
 	
+	@OneToMany(mappedBy = "job")
+	@JsonIgnore
+	private List<SeekerJobActivity> seekerJobActivityList;
+	
 	@ManyToOne
 	@JoinColumn(name = "companyProfileId")
 	private CompanyProfile companyProfile;
@@ -167,6 +171,14 @@ public class Job {
 
 	public void setCompanyProfile(CompanyProfile companyProfile) {
 		this.companyProfile = companyProfile;
+	}
+
+	public List<SeekerJobActivity> getSeekerJobActivityList() {
+		return seekerJobActivityList;
+	}
+
+	public void setSeekerJobActivityList(List<SeekerJobActivity> seekerJobActivityList) {
+		this.seekerJobActivityList = seekerJobActivityList;
 	}
 	
 	
