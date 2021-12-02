@@ -103,8 +103,8 @@
 						</li>
 						<li class="nav-item" th:classappend="${classActivePostedJob}? 'active'">
 							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#postedjob" role="tab"
-								aria-controls="home" aria-selected="false"><span
-									style="color: red;">Posted Job</span></a>
+								aria-controls="home" aria-selected="false"><span style="color: red;">Applied
+									Job</span></a>
 						</li>
 					</ul>
 
@@ -408,7 +408,7 @@
 									</thead>
 									<tbody>
 										<tr data-th-each="education : ${jobSeekerProfile.educationProfileList}">
-											
+
 											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
 											<td th:text="${education.certificateName}"></td>
 											<td th:text="${education.major}"></td>
@@ -416,13 +416,14 @@
 											<td th:text="${education.startDate}"></td>
 											<td th:text="${education.completeDate}"></td>
 											<td>
-												 <a th:href="@{/jobSeeker/removeEducationProfile?educationProfileId=}+${education.educationId}">
-                                                	<span class="fa fa-times" th:text="Delete"></span>
-                                            	</a>
+												<a
+													th:href="@{/jobSeeker/removeEducationProfile?educationProfileId=}+${education.educationId}">
+													<span class="fa fa-times" th:text="Delete"></span>
+												</a>
 											</td>
 										</tr>
 									</tbody>
-			
+
 								</table>
 								<!--<div class="col-md-6" data-th-each="education : ${jobSeekerProfile.educationProfileList}">
 
@@ -453,31 +454,16 @@
 
 							</div>
 						</div>
-///////
-						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
-						</div>
-						
-					</div>
-					
-					
-					
-
-
-
-
-
-
 
 
 						<!-- Experience -->
-						<div class="tab-pane" id="experience"
-							th:classappend="${classActiveExperience}? 'in active'">
-////// main
+						<div class="tab-pane" id="experience" th:classappend="${classActiveExperience}? 'in active'">
 							<form th:action="@{/jobSeeker/updateExperienceInfo}" method="post">
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="experienceId" th:value="${experienceProfile.experienceId}" />
-								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
+								<input type="hidden" name="seekerProfileId"
+									th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
 								<div class="bg-info" th:if="${updateExperienceInfo}">User Experience info
@@ -526,7 +512,7 @@
 									<div class="form-group">
 										<label for="inputEmail4">Description</label>
 										<textarea name="description" rows="5" class="form-control" id="description"
-											th:value="${experienceProfile.description}" 
+											th:value="${experienceProfile.description}"
 											th:text="${experienceProfile.description}"
 											placeholder="Description"></textarea>
 									</div>
@@ -555,7 +541,7 @@
 									</thead>
 									<tbody>
 										<tr data-th-each="experience : ${jobSeekerProfile.experienceProfileList}">
-											
+
 											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
 											<td th:text="${experience.jobTitle}"></td>
 											<td th:text="${experience.companyName}"></td>
@@ -564,13 +550,14 @@
 											<td th:text="${experience.completeDate}"></td>
 											<td th:text="${experience.description}"></td>
 											<td>
-												 <a th:href="@{/jobSeeker/removeExperienceProfile?experienceProfileId=}+${experience.experienceId}">
-                                                	<span class="fa fa-times" th:text="Delete"></span>
-                                            	</a>
+												<a
+													th:href="@{/jobSeeker/removeExperienceProfile?experienceProfileId=}+${experience.experienceId}">
+													<span class="fa fa-times" th:text="Delete"></span>
+												</a>
 											</td>
 										</tr>
 									</tbody>
-			
+
 								</table>
 								<!--<div class="col-md-6" data-th-each="experience : ${experienceList}">
 
@@ -601,65 +588,80 @@
 
 							</div>
 						</div>
-/////// AungPaing
-						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
-						</div>
 						
-					</div> 
-					
-					
-					<!-- Posted Job -->
-						<div class="tab-content">
-						<div  role="tabpanel" class="tab-pane" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
+						<!-- Applied Job -->
+						<div class="tab-pane" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
 							<div class="row mb-4">
-									<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Posted Job List</p>
-									<div class="col-md-6" data-th-each="seekerJobActivity : ${SeekerJobActivityList}">
-										
-										<div class="form-group">
-											<label for="inputEmail4">Apply Date ~~~</label>
-											<label th:text="${seekerJobActivity.applyDate}"></label>
-										</div>
-										
-										<div class="form-group">
-											<label for="inputEmail4">Job Title ~~~</label>
-											<label th:text="${job.jobTitle}"></label>
-										</div>
-										
-										<div class="form-group">
-											<label for="inputEmail4">Status ~~~</label>
-											<label th:text="${job.status}"></label>
-										</div>
-										<br />
-										<hr style="color: thistle;">
-										
+								<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Applied Job List</p>
+								<table id="bookListTable" class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+											<th>Job Title</th>
+											<th>Category</th>
+											<th>Location</th>
+											<th>Applied Date</th>
+											<th>Deadline Date</th>
+											<th>Status</th>
+	
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-th-each="seekerJobActivity : ${jobSeekerProfile.seekerJobActivityList}">
+
+											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
+											<td>
+												<a th:href="@{/jobDetail?jobId=}+${seekerJobActivity.job.jobId}" th:text="${seekerJobActivity.job.jobTitle}">
+													<span ></span></a>
+											</td>
+											<td th:text="${seekerJobActivity.job.category}"></td>
+											<td th:text="${seekerJobActivity.job.location}"></td>
+											<td th:text="${seekerJobActivity.applyDate}"></td>
+											<td th:text="${seekerJobActivity.job.deadlineDate}"></td>
+											<td th:text="${seekerJobActivity.job.status}"></td>
+											
+											
+										</tr>
+									</tbody>
+
+								</table>
+								
+								
+								
+								
+								<!--<div class="col-md-6" data-th-each="seekerJobActivity : ${seekerJobActivityList}">
+
+									<div class="form-group">
+										<label for="inputEmail4">Apply Date ~~~</label>
+										<label th:text="${seekerJobActivity.applyDate}"></label>
 									</div>
 
-								</div>
+									<div class="form-group">
+										<label for="inputEmail4">Job Title ~~~</label>
+										<label th:text="${job.jobTitle}"></label>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail4">Status ~~~</label>
+										<label th:text="${job.status}"></label>
+									</div>
+									<br />
+									<hr style="color: thistle;">
+
+								</div>-->
+
+							</div>
 						</div>
-						
-					
-								
-								
-						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
-						</div>
-						<div class="tab-pane fade" id="education" th:classappend="${classActiveEducation}? 'in active'">
-						</div>
-						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
-						</div>
-						
-					</div> 
-					
-///////
+
 
 					</div>
-
-
->///////main
 				</div>
+
+		
 			</div>
 		</div>
-
 	</div>
+
+<!--	</div>-->
 
 
 
