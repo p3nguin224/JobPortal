@@ -45,7 +45,7 @@ public class JobServiceImpl implements JobService{
 	@Override
 	public List<Job> findAllJobs() {
 		// TODO Auto-generated method stub
-		return ((List<Job>) jobDAO.findAll()).stream().filter(job -> job.getStatus().equals("avaliable")).collect(Collectors.toList());
+		return ((List<Job>) jobDAO.findAll()).stream().filter(job -> job.getStatus().equals("available")).collect(Collectors.toList());
 	}
 
 	

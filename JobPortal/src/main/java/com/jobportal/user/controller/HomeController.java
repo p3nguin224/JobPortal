@@ -139,12 +139,15 @@ public class HomeController {
 				return "companyProfile";
 			}
 			// Go to list 
-			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
-			if(jobSeekerList.size() == 0 ) {
-				model.addAttribute("emptyList", true);
-			}
-			model.addAttribute("jobSeekerListing", jobSeekerList);		
-			return "jobSeekerListing"; // change here to companyHomePage
+//			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
+//			if(jobSeekerList.size() == 0 ) {
+//				model.addAttribute("emptyList", true);
+//			}
+//			model.addAttribute("jobSeekerListing", jobSeekerList);		
+//			return "jobSeekerListing"; // change here to companyHomePage
+			model.addAttribute("user", user);                       // <- model ui var
+			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
+			return "companyProfile";
 		}
 		
 		User user = userService.findByUsername(principal.getName());

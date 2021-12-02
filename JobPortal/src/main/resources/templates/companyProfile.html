@@ -525,11 +525,24 @@
 							</li>
 							<li class="title" style="font-size: large;">POSTED JOB </li>
 							<li class="img-list">
-								<div data-th-each="job : ${jobList}">
+								<!--<div data-th-each="job : ${companyProfile.jobList}">
 									<a th:href="@{/jobDetail?jobId=}+${job.jobId}" class="m-b-5">
 									<label class="m-b-0" th:text="${job.jobTitle}">
 									</label></a>
-								</div>
+								</div>-->
+								
+								<table id="bookListTable" class="table table-bordered table-hover table-striped">
+									<thead>
+									</thead>
+									<tbody>
+										<tr data-th-each="job : ${companyProfile.jobList}">
+											<td><a th:href="@{/company/updateJob?jobId=}+${job.jobId}" th:text="${job.jobTitle}" class="m-b-5">
+											</td>
+											<td th:text="${job.status}"></td>		
+										</tr>
+									</tbody>
+
+								</table>
 								
 							</li>
 						</ul>
