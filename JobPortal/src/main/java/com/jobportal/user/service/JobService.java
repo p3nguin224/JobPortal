@@ -15,5 +15,7 @@ public interface JobService {
 	Job createJob(Job job, List<JobSkill> jobSkillList);
 	
 	List<Job> findAllJobs();
+	
+	List<Job> findAllJobsByCategory(String category);
 
 }

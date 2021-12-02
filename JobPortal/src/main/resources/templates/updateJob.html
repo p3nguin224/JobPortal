@@ -28,7 +28,7 @@
         <div class="col-md-12">
           <div class="form h-100">
             <h3>Get Started</h3>
-            <form class="mb-5" method="post" th:action="@{/company/postJob}">
+            <form class="mb-5" method="post" th:action="@{/company/updateJob}">
               <input type="hidden" name="jobId" th:value="${job.jobId}" />
               <div class="row">
                  <div class="col-md-6 form-group mb-3">
@@ -67,25 +67,25 @@
                 <div class="col-md-6 form-group mb-5">
                   <label for="category" class="col-form-label">Cateogry</label>
                   <select class="custom-select" id="category" name="category" th:value="${job.category}">
-					    <option value="" selected="selected" disabled="disabled" >Choose...</option>
-					    <option value="it">IT</option>
-					    <option value="engineering">Engineering</option>
-					    <option value="contentWriter">Content Writer</option>
-					    <option value="marketing">Marketing</option>
-					    <option value="translation">Translation</option>
-					    <option value="realEstate">Real Estate</option>
+					    <option value="" disabled="disabled" >Choose...</option>
+					    <option th:selected="(${job.category}=='it')" value="it">IT</option>
+					    <option th:selected="(${job.category}=='engineering')" value="engineering">Engineering</option>
+					    <option th:selected="(${job.category}=='contentWriter')" value="contentWriter">Content Writer</option>
+					    <option th:selected="(${job.category}=='marketing')" value="marketing">Marketing</option>
+					    <option th:selected="(${job.category}=='translation')" value="translation">Translation</option>
+					    <option th:selected="(${job.category}=='realEstate')" value="realEstate">Real Estate</option>
 					</select>
                 </div>
                 
                 <div class="col-md-6 form-group mb-5">
                   <label for="requiredLanguage" class="col-form-label">Language</label>
                  	 <select class="custom-select" id="requiredLanguage" name="requiredLanguage" th:value="${job.requiredLanguage}">
-					    <option value="" selected="selected" disabled="disabled" >Choose...</option>
-					    <option value="english">English</option>
-					    <option value="myanmar">Myanmar</option>
-					    <option value="japan">Japan</option>
-					    <option value="chinese">Chinese</option>
-					    <option value="korea">Korea</option>
+					    <option value="" disabled="disabled" >Choose...</option>
+					    <option th:selected="(${job.requiredLanguage}=='english')" value="english">English</option>
+					    <option th:selected="(${job.requiredLanguage}=='myanmar')" value="myanmar">Myanmar</option>
+					    <option th:selected="(${job.requiredLanguage}=='japan')" value="japan">Japan</option>
+					    <option th:selected="(${job.requiredLanguage}=='chinese')" value="chinese">Chinese</option>
+					    <option th:selected="(${job.requiredLanguage}=='korea')" value="korea">Korea</option>
 					</select>
                 </div>
               </div>
@@ -118,7 +118,7 @@
                 <div class="col-md-12 form-group mb-3">
                   <label for="description" class="col-form-label">Description</label>
                   <textarea class="form-control" name="description" id="description" cols="30" rows="4"
-                   placeholder="Enter description" th:value="${job.description}"></textarea>
+                   placeholder="Enter description" th:value="${job.description}" th:text="${job.description}"></textarea>
                 </div>
               </div>
               

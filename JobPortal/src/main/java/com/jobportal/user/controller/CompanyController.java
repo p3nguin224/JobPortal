@@ -19,12 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
+import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.UserService;
 import com.jobportal.user.utility.SecurityUtility;
 
@@ -39,6 +41,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyProfileService companyProfileService;
+	
+	@Autowired
+	private JobService jobService;
 	
 	@RequestMapping("/profile")
 	private String companyProfile(Principal principal, Model model){
@@ -160,18 +165,51 @@ public class CompanyController {
 		return "newJob";
 	}
 	
+	@RequestMapping("/updateJob")
+	private String updateJob(Model model, @RequestParam("jobId") Long jobId) {
+		Job job = jobService.findById(jobId);
+		model.addAttribute("job", job);
+		return "updateJob";
+	}
+	
 	
 	@PostMapping("/postJob")
 	private String creatJob(Model model, @ModelAttribute("job") Job job, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
 		CompanyProfile companyProfile = companyProfileService.findByUser(user);
 		
-		job.setStatus("avaliable");
+		job.setStatus("available");
 		job.setPostedDate(LocalDate.now().toString());
 		
 		// only need to save company as company cascade job, but not vise vasa
 		companyProfile.getJobList().add(job);
 		job.setCompanyProfile(companyProfile);
+		companyProfileService.save(companyProfile);
+		
+		return "redirect:/success"; // must be sent to company profile
+	}
+	
+	
+	@PostMapping("/updateJob")
+	private String updateJobPost(@ModelAttribute("job") Job job, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		CompanyProfile companyProfile = companyProfileService.findByUser(user);
+		Job localJob = jobService.findById(job.getJobId());
+		
+		localJob.setJobTitle(job.getJobTitle());
+		localJob.setRequiredMember(job.getRequiredMember());
+		localJob.setMinBudget(job.getMinBudget());
+		localJob.setMaxBudget(job.getMaxBudget());
+		localJob.setLastAppliedDate(job.getLastAppliedDate());
+		localJob.setDeadlineDate(job.getDeadlineDate());
+		localJob.setCategory(job.getCategory());
+		localJob.setRequiredLanguage(job.getRequiredLanguage());
+		localJob.setLocation(job.getLocation());
+		localJob.setStatus(job.getStatus());
+		localJob.setDescription(job.getDescription());
+		
+		// only need to save company as company cascade job, but not vise vasa
+		jobService.saveJob(localJob);
 		companyProfileService.save(companyProfile);
 		
 		return "redirect:/success"; // must be sent to company profile

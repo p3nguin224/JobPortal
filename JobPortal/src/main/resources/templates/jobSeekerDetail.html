@@ -33,7 +33,7 @@
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                 <div class="company-img company-img-details">
-                                   <img class="img-responsive shelf-job" th:src="@{/image/company/profile/}+'jobSeekerProfile'+${job.jobSeekerProfile.seekerProfileId}+'.png'" />
+                                   <img class="img-responsive shelf-job" th:src="@{/image/jobSeeker/}+'jobSeekerProfile'+${jobSeekerProfile.seekerProfileId}+'.png'" />
                                 </div>
                                 <div class="job-tittle">
                                    
@@ -58,14 +58,16 @@
                                 </div>
 							<p><span th:text="${jobSeekerProfile.description}"></span></p>                            
 							</div>
-							<h4>Skill</h4>
+							
+							<!--skill not complete-->
+							<!--<h4>Skill</h4>
                             <div class="post-details2  mb-50" data-th-each="skill : ${skillList}">
-                                 <!-- Small Section Tittle -->
+                                 
                                <ul>
                                    <li th:text="${skill.skillName}"></li>
                                    
                                </ul>
-                            </div>
+                            </div>-->
                 
 
                         </div>
@@ -87,7 +89,7 @@
                            <div class="small-section-tittle">
                                <h4>Education </h4>
                            </div>
-                        <div class="post-details4  mb-50" data-th-each="educationProfile : ${educationList}">
+                        <div class="post-details4  mb-50" data-th-each="educationProfile : ${jobSeekerProfile.educationProfileList}">
           
                               <span th:text="${educationProfile.certificateName}"></span>
                              
@@ -102,7 +104,7 @@
                        <div class="small-section-tittle">
                                <h4>Experiecnce </h4>
                            </div>
-                        <div class="post-details4  mb-50" data-th-each="experienceProfile : ${experienceList}">
+                        <div class="post-details4  mb-50" data-th-each="experienceProfile : ${jobSeekerProfile.experienceProfileList}">
                             <!-- Small Section Tittle -->
                            
                               <span th:text="${experienceProfile.jobTitle}"></span>
