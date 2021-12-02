@@ -31,7 +31,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/slick.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+	<link rel="stylesheet" href="assets/css/style.css">
 
 	<style>
 		body {
@@ -379,7 +379,7 @@
 </head>
 
 <body>
-	<div th:replace="common/companyHeader :: navbar" />
+	<div th:replace="./common/companyHeader :: navbar" />
 
 	<div class="container">
 		<div id="content" class="content p-0">
@@ -520,12 +520,17 @@
 							<li>
 								<div class="field">Description :</div>
 								<div class="value" th:text="${companyProfile.description}">
-
+								
 								</div>
 							</li>
-							<li class="title">POSTED JOB LIST </li>
+							<li class="title" style="font-size: large;">POSTED JOB </li>
 							<li class="img-list">
-								<a th:href="@{/jobDetail}" class="m-b-5"></a>
+								<div data-th-each="job : ${jobList}">
+									<a th:href="@{/jobDetail?jobId=}+${job.jobId}" class="m-b-5">
+									<label class="m-b-0" th:text="${job.jobTitle}">
+									</label></a>
+								</div>
+								
 							</li>
 						</ul>
 					</div>

@@ -17,18 +17,18 @@
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 		<!-- CSS here -->
-            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
-            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="assets/css/flaticon.css">
-            <link rel="stylesheet" href="assets/css/price_rangs.css">
-            <link rel="stylesheet" href="assets/css/slicknav.css">
-            <link rel="stylesheet" href="assets/css/animate.min.css">
-            <link rel="stylesheet" href="assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="assets/css/themify-icons.css">
-            <link rel="stylesheet" href="assets/css/slick.css">
-            <link rel="stylesheet" href="assets/css/nice-select.css">
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
             <link rel="stylesheet" href="assets/css/style.css">
             
             <style>
@@ -258,8 +258,8 @@ small, time, .small {
                 <span th:text="${jobSeeker.status}"></span>
             </div>
             <div class="card-hover-show">
-                <a class="btn btn-xs fs-10 btn-bold btn-info" href="#">Download CV</a>
-                <a class="btn btn-xs fs-10 btn-bold btn-primary" href="#" data-toggle="modal" data-target="#modal-contact">Contact</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-info" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}">Seeker's CV</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-primary" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}" data-toggle="modal" data-target="#modal-contact">Contact</a>
                 
             </div>
         </footer>
