@@ -96,12 +96,11 @@ public class HomeController {
 	@RequestMapping("/jobListing")
 	private String jobList(Model model,@ModelAttribute("job") Job job, @RequestParam(value="category", required=false) String category) {
 		List<Job> jobList = new ArrayList<>();
-		if (!(category.equals("All")) && category!=null  ) {
-			LOG.info("not all");
-			jobList = jobService.findAllJobsByCategory(category);
+		if ((category==null || category.equals("All")) ) {
+			jobList = jobService.findAllJobs();
 		}else {
 			LOG.info("all");
-			jobList = jobService.findAllJobs();
+			jobList = jobService.findAllJobsByCategory(category);		
 		}
 		
 		if(jobList.size() == 0 ) {
