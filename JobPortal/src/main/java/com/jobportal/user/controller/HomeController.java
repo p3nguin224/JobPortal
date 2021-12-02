@@ -2,6 +2,7 @@ package com.jobportal.user.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -93,8 +94,16 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/jobListing")
-	private String jobList(Model model,@ModelAttribute("job") Job job) {
-		List<Job> jobList = jobService.findAllJobs();
+	private String jobList(Model model,@ModelAttribute("job") Job job, @RequestParam(value="category", required=false) String category) {
+		List<Job> jobList = new ArrayList<>();
+		if (!(category.equals("All")) && category!=null  ) {
+			LOG.info("not all");
+			jobList = jobService.findAllJobsByCategory(category);
+		}else {
+			LOG.info("all");
+			jobList = jobService.findAllJobs();
+		}
+		
 		if(jobList.size() == 0 ) {
 			model.addAttribute("emptyList", true);
 			model.addAttribute("activeAll", true);  //
@@ -139,15 +148,12 @@ public class HomeController {
 				return "companyProfile";
 			}
 			// Go to list 
-//			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
-//			if(jobSeekerList.size() == 0 ) {
-//				model.addAttribute("emptyList", true);
-//			}
-//			model.addAttribute("jobSeekerListing", jobSeekerList);		
-//			return "jobSeekerListing"; // change here to companyHomePage
-			model.addAttribute("user", user);                       // <- model ui var
-			model.addAttribute("companyProfile", companyProfile);		// <- model ui var
-			return "companyProfile";
+			List<JobSeekerProfile> jobSeekerList = jobSeekerService.findAll();
+			if(jobSeekerList.size() == 0 ) {
+				model.addAttribute("emptyList", true);
+			}
+			model.addAttribute("jobSeekerListing", jobSeekerList);		
+			return "jobSeekerListing"; // change here to companyHomePage
 		}
 		
 		User user = userService.findByUsername(principal.getName());

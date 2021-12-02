@@ -58,8 +58,6 @@ public class MailConstructor {
 			
 			context.setVariable("user", user);
 			context.setVariable("jobSeekerProfile", jobSeekerProfile);
-//			context.setVariable("educationProfile", jobSeekerProfile.getEducationProfileList().get(0));
-//			context.setVariable("experienceProfile", jobSeekerProfile.getExperienceProfileList().get(0));
 			context.setVariable("companyProfile", companyProfile);
 			context.setVariable("job", job);
 			
@@ -80,8 +78,35 @@ public class MailConstructor {
 				
 				
 			};
-			return messagePreparator;
+			return messagePreparator;	
+		}
+		
+		public MimeMessagePreparator constructApplyJobNotificationEmail(User user, JobSeekerProfile jobSeekerProfile,
+				CompanyProfile companyProfile, Job job, Locale locale) {
+			Context context = new Context();
 			
+			context.setVariable("user", user);
+			context.setVariable("jobSeekerProfile", jobSeekerProfile);
+			context.setVariable("companyProfile", companyProfile);
+			context.setVariable("job", job);
+			
+			String text = templateEngine.process("applyJobConfirmationEmailTemplate", context);
+			
+			MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					// TODO Auto-generated method stub
+					MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
+					
+					email.setTo(companyProfile.getCompanyEmail());
+					email.setFrom(new InternetAddress(env.getProperty("support.email")));
+					email.setSubject("Job Apply - "+job.getJobTitle());
+					email.setText(text, true);
+				}
+				
+			};
+			return messagePreparator;	
 		}
 
 }

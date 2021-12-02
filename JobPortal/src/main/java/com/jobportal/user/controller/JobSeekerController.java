@@ -219,8 +219,11 @@ public class JobSeekerController {
 		Job job = jobService.findById(jobId);
 		CompanyProfile companyProfile = companyService.findById(companyId);
 		
+		// to user
 		mailSender.send(mailConstructor.constructApplyJobComfirmationEmail(user, jobSeekerProfile, companyProfile, job, Locale.ENGLISH));
 		
+		// to comapny
+		mailSender.send(mailConstructor.constructApplyJobNotificationEmail(user, jobSeekerProfile, companyProfile, job, Locale.ENGLISH));
 		jobSeekerService.applyJob(jobSeekerProfile, job);
 		
 		return "redirect:/jobListing";
