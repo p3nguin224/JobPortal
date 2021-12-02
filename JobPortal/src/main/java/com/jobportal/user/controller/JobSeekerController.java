@@ -1,5 +1,11 @@
 package com.jobportal.user.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +18,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.user.domain.CompanyProfile;
+import com.jobportal.user.domain.EducationProfile;
+import com.jobportal.user.domain.ExperienceProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.JobSeekerSkill;
@@ -25,6 +36,8 @@ import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.SkillHolder;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
+import com.jobportal.user.service.EducationProfileService;
+import com.jobportal.user.service.ExperienceProfileService;
 import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.SkillService;
@@ -48,9 +61,6 @@ public class JobSeekerController {
 	private UserService userService;
 	
 	@Autowired
-	private SkillService skillService;
-	
-	@Autowired
 	private JobService jobService;
 	
 	@Autowired
@@ -58,6 +68,12 @@ public class JobSeekerController {
 	
 	@Autowired
 	private JobSeekerProfileService jobSeekerService;
+	
+	@Autowired
+	private EducationProfileService educationProfileService;
+	
+	@Autowired
+	private ExperienceProfileService experienceProfileService;
 	
 	// prepare and go to profile page
 	@RequestMapping("/profile")
@@ -84,6 +100,12 @@ public class JobSeekerController {
 		model.addAttribute("user", user);
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 		model.addAttribute("classActiveProfile", true);
+		
+		EducationProfile educationProfile = new EducationProfile();
+		ExperienceProfile experienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", educationProfile);
+		model.addAttribute("experienceProfile", experienceProfile);
 		
 		// show experience proflie list if this profile have experience profile
 		if (jobSeekerProfile.getExperienceProfileList()!=null) {
@@ -163,17 +185,24 @@ public class JobSeekerController {
 		jobSeekerProfile.setUser(currentUser);
 		jobSeekerService.save(jobSeekerProfile);
 		
-
+		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
+		if (!profileImage.isEmpty()) {
+			byte[] pbytes = profileImage.getBytes();
+			String fileName = "jobSeekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
+			
+			try {
+				Files.delete(Paths.get("src/main/resources/static/image/jobSeeker/"+fileName));
+			} catch (NoSuchFileException e) {
+				// TODO: handle exception
+			}		
+			
+			BufferedOutputStream profileStream = new BufferedOutputStream(
+					new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
+					);
+			profileStream.write(pbytes);
+			profileStream.close();
+		}
 		
-//		MultipartFile profileImage = jobSeekerProfile.getProfileImage();
-//		byte[] bytes = profileImage.getBytes();
-//		
-//		String fileName = "seekerProfile"+jobSeekerProfile.getSeekerProfileId()+".png";
-//		BufferedOutputStream stream = new BufferedOutputStream(
-//				new FileOutputStream(new File("src/main/resources/static/image/jobSeeker/"+fileName))
-//				);
-//		stream.write(bytes);
-//		stream.close();
 		
 		model.addAttribute("updateUserInfo", true);
 		return "forward:/jobSeeker/profile";   
@@ -195,6 +224,123 @@ public class JobSeekerController {
 		jobSeekerService.applyJob(jobSeekerProfile, job);
 		
 		return "redirect:/jobListing";
+	}
+	
+	@PostMapping("/updateEducationInfo")
+	private String addEducationProfile(@ModelAttribute("educationProfile") EducationProfile educationProfile,
+			 Model model, Principal principal) {
+		
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+	//	educationProfileService.saveEductationProfile(educationProfile);
+		if (jobSeekerProfile.getEducationProfileList()==null) {
+			List<EducationProfile> tempEduList = new ArrayList<EducationProfile>();
+			jobSeekerProfile.setEducationProfileList(tempEduList);
+			jobSeekerProfile.getEducationProfileList().add(educationProfile);
+		}else {
+			jobSeekerProfile.getEducationProfileList().add(educationProfile);
+		}
+		
+		educationProfile.setJobSeekerProfile(jobSeekerProfile);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveEducation", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		model.addAttribute("updateEducationInfo", true);
+		return "jobSeekerProfile";
+	}
+	
+	@RequestMapping("/removeEducationProfile")
+	private String removeEducationProfile(@RequestParam("educationProfileId") Long educationId,
+			Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+		for (EducationProfile edu : jobSeekerProfile.getEducationProfileList()) {
+			if (edu.getEducationId() == educationId) {
+				edu.setJobSeekerProfile(null);
+			}
+		}
+		educationProfileService.removeById(educationId);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveEducation", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		
+		return "jobSeekerProfile";
+	}
+	
+	@PostMapping("/updateExperienceInfo")
+	private String updateExperienceInfo(@ModelAttribute("experienceProfile") ExperienceProfile experienceProfile,
+			 Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+	//	educationProfileService.saveEductationProfile(educationProfile);
+		if (jobSeekerProfile.getExperienceProfileList()==null) {
+			List<ExperienceProfile> tempExpList = new ArrayList<ExperienceProfile>();
+			jobSeekerProfile.setExperienceProfileList(tempExpList);
+			jobSeekerProfile.getExperienceProfileList().add(experienceProfile);
+		}else {
+			jobSeekerProfile.getExperienceProfileList().add(experienceProfile);
+		}
+		
+		experienceProfile.setJobSeekerProfile(jobSeekerProfile);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveExperience", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		model.addAttribute("updateExperienceInfo", true);
+		return "jobSeekerProfile";
+	}
+	
+	@RequestMapping("/removeExperienceProfile")
+	private String removeExperienceProfile(@RequestParam("experienceProfileId") Long experienceId,
+			Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
+		for (ExperienceProfile exp : jobSeekerProfile.getExperienceProfileList()) {
+			if (exp.getExperienceId() == experienceId) {
+				exp.setJobSeekerProfile(null);
+			}
+		}
+		experienceProfileService.removeById(experienceId);
+		jobSeekerService.save(jobSeekerProfile);
+		
+		model.addAttribute("user", user);                      
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		
+		model.addAttribute("classActiveExperience", true);
+		EducationProfile newEducationProfile = new EducationProfile();
+		ExperienceProfile newExperienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", newEducationProfile);
+		model.addAttribute("experienceProfile", newExperienceProfile);
+		
+		return "jobSeekerProfile";
 	}
 
 }

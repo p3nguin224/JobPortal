@@ -159,10 +159,15 @@ public class HomeController {
 //			model.addAttribute("allSkills", allSkills);
 //			LOG.info("all skill size : "+allSkills.size());
 			model.addAttribute("classActiveProfile", true);
+			EducationProfile educationProfile = new EducationProfile();
+			ExperienceProfile experienceProfile = new ExperienceProfile();
+			
+			model.addAttribute("educationProfile", educationProfile);
+			model.addAttribute("experienceProfile", experienceProfile);
 			return "jobSeekerProfile";
 		}
 		
-		// unless, user will see jobListing
+	//	 unless, user will see jobListing
 		List<Job> jobList = jobService.findAllJobs();
 		if(jobList.size() == 0 ) {
 			model.addAttribute("emptyList", true);
@@ -170,6 +175,7 @@ public class HomeController {
 		model.addAttribute("jobList", jobList);
 		model.addAttribute("activeAll",true);
 		return "jobListing"; 
+
 	}
 	
 	// Go to account creating page

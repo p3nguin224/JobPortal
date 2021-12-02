@@ -17,18 +17,18 @@
 
 	<!-- CSS here -->
 	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/bootstrap-theme.min.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/owl.carousel.min.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/flaticon.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/price_rangs.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/slicknav.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/animate.min.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/magnific-popup.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/fontawesome-all.min.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/themify-icons.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/slick.css}">
-	<link rel="stylesheet"  th:href="@{/assets/css/nice-select.css}">
-	<link rel="stylesheet"  href="assets/css/style.css">
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
+	<link rel="stylesheet" href="assets/css/style.css">
 
 	<style>
 		body {
@@ -113,7 +113,7 @@
 						<strong>Incorrect Password!</strong> Pleae enter the correct
 						password for the current user.
 					</div>
-					
+
 					<div class="alert alert-danger" th:if="${incorrectPassword}">
 						<strong>Incorrect Password!</strong> Pleae enter the correct
 						password for the current user.
@@ -126,11 +126,14 @@
 
 					<!-- Profile -->
 					<div class="tab-content">
-						<div  role="tabpanel" class="tab-pane" id="home" th:classappend="${classActiveProfile}? 'in active'">
-							<form th:action="@{/jobSeeker/updateUserInfo}" method="post" th:object="${skillHolder}"}>
+						<div role="tabpanel" class="tab-pane" id="home"
+							th:classappend="${classActiveProfile}? 'in active'">
+							<form th:action="@{/jobSeeker/updateUserInfo}" method="post" th:object="${skillHolder}"
+								enctype="multipart/form-data">
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
-								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
+								<input type="hidden" name="seekerProfileId"
+									th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
 								<div class="bg-info" th:if="${updateUserInfo}">User info
@@ -143,14 +146,14 @@
 										<div class="avatar avatar-xl">
 											<!--<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..."
 												class="avatar-img rounded-circle" />-->
-											<img th:src="@{/image/}+${jobSeekerProfile.seekerProfileId}+'.png'" alt="..."
-												class="avatar-img rounded-circle" />
+											<img th:src="@{/image/jobSeeker/}+'jobSeekerProfile'+${jobSeekerProfile.seekerProfileId}+'.png'"
+												alt="..." class="avatar-img rounded-circle" />
 											<input id="profileImage" type="file" name="profileImage"
-													th:value="${jobSeekerProfile.profileImage}" />
+												th:value="${jobSeekerProfile.profileImage}" />
 										</div>
 									</div>
 									<div class="col">
-										<div class="row align-items-center" th:if="${ user.firstTimeLogin}">
+										<div class="row align-items-center" th:if="${!user.firstTimeLogin}">
 											<div class="col-md-7">
 												<h4 class="mb-1"
 													th:text="${jobSeekerProfile.firstName}  +  ${jobSeekerProfile.LastName}">
@@ -202,15 +205,15 @@
 									<div class="form-group col-md-2">
 										<label for="inputZip5">gender</label>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${user.gender} == 'male')"
-												name="gender" value="male">
+											<input class="form-check-input" required="required" type="radio" id="gender"
+												th:checked="(${user.gender} == 'male')" name="gender" value="male">
 											<label class="form-check-label" for="flexRadioDefault1">
 												Male
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${user.gender} == 'female')"
-												name="gender" value="female">
+											<input class="form-check-input" required="required" type="radio" id="gender"
+												th:checked="(${user.gender} == 'female')" name="gender" value="female">
 											<label class="form-check-label" for="flexRadioDefault2">
 												Female
 											</label>
@@ -219,15 +222,17 @@
 									<div class="form-group col-md-2">
 										<label for="inputZip5">Status</label>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${jobSeekerProfile.status} == 'busy')"
-												name="status" value="busy">
+											<input class="form-check-input" required="required" type="radio" id="gender"
+												th:checked="(${jobSeekerProfile.status} == 'busy')" name="status"
+												value="busy">
 											<label class="form-check-label" for="flexRadioDefault1">
 												Busy
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" required="required" type="radio" id="gender" th:checked="(${jobSeekerProfile.status} == 'available')"
-												name="status" value="available">
+											<input class="form-check-input" required="required" type="radio" id="gender"
+												th:checked="(${jobSeekerProfile.status} == 'available')" name="status"
+												value="available">
 											<label class="form-check-label" for="flexRadioDefault2">
 												Available
 											</label>
@@ -248,12 +253,24 @@
 										<label for="inputState5">Category</label>
 										<select id="category" class="form-control" name="category"
 											th:value="${jobSeekerProfile.category}">
-											<option value="DesignAndCreative" th:selected="${jobSeekerProfile.category} == 'DesignAndCreative'">Design & Creative</option>
-											<option value="DesignAndDevelopment" th:selected="${jobSeekerProfile.category} == 'DesignAndDevelopment'">Design & Development</option>
-											<option value="SalesAndMarketing" th:selected="${jobSeekerProfile.category} == 'SalesAndMarketing'">Sales & Marketing</option>
-											<option value="MobileApplication" th:selected="${jobSeekerProfile.category} == 'MobileApplication'">Mobile Application</option>
-											<option value="InformationTechnology" th:selected="${jobSeekerProfile.category} == 'InformationTechnology'">Information Technology</option>
-											<option value="ContentWriter" th:selected="${jobSeekerProfile.category} == 'ContentWriter'">Content Writer</option>
+											<option value="DesignAndCreative"
+												th:selected="${jobSeekerProfile.category} == 'DesignAndCreative'">Design
+												& Creative</option>
+											<option value="DesignAndDevelopment"
+												th:selected="${jobSeekerProfile.category} == 'DesignAndDevelopment'">
+												Design & Development</option>
+											<option value="SalesAndMarketing"
+												th:selected="${jobSeekerProfile.category} == 'SalesAndMarketing'">Sales
+												& Marketing</option>
+											<option value="MobileApplication"
+												th:selected="${jobSeekerProfile.category} == 'MobileApplication'">Mobile
+												Application</option>
+											<option value="InformationTechnology"
+												th:selected="${jobSeekerProfile.category} == 'InformationTechnology'">
+												Information Technology</option>
+											<option value="ContentWriter"
+												th:selected="${jobSeekerProfile.category} == 'ContentWriter'">Content
+												Writer</option>
 										</select>
 									</div>
 
@@ -269,7 +286,8 @@
 								<div class="form-group">
 									<label for="inputPassword5">New Password</label>&nbsp;<span id="checkPasswordMatch"
 										style="color: red;"></span>
-									<input type="password" class="form-control" id="txtNewPassword" name="newPassword"/>
+									<input type="password" class="form-control" id="txtNewPassword"
+										name="newPassword" />
 								</div>
 								<div class="form-group">
 									<label for="inputPassword6">Confirm Password</label>
@@ -279,7 +297,7 @@
 
 
 
-								<!-- Skill & Education -->
+								<!-- Skill  -->
 
 								<hr class="my-4" />
 								<div class="row mb-4">
@@ -288,8 +306,9 @@
 										<p class="mb-2">Skill</p>
 										<div class="form-group">
 
-											<input type="checkbox" class="form-control" th:each="skill : ${allSkills}" name="skillNameList"
-												th:text="${skill.skillName}" th:value="${skill.skillName}"th:field="*{skills}"
+											<input type="checkbox" class="form-control" th:each="skill : ${allSkills}"
+												name="skillNameList" th:text="${skill.skillName}"
+												th:value="${skill.skillName}" th:field="*{skills}"
 												th:checked="${#lists.contains(jskillNameList, skill.skillName)}" />
 										</div>
 
@@ -300,123 +319,141 @@
 								<div class="form-group">
 									<label for="inputEmail4">Description</label>
 									<textarea name="description" rows="5" class="form-control" id="description"
-										th:value="${jobSeekerProfile.description}" th:text="${jobSeekerProfile.description}"
-										placeholder="Description"></textarea>
+										th:value="${jobSeekerProfile.description}"
+										th:text="${jobSeekerProfile.description}" placeholder="Description"></textarea>
 								</div>
 								<button type="submit" id="updateUserInfoButton" class="btn btn-primary">Save
 									Change</button>
 								<a class="btn btn-danger" th:href="@{/}">Cancel</a>
 							</form>
 						</div>
-						<div class="tab-pane fade" id="education" th:classappend="${classActiveEducation}? 'in active'">
-						</div>
-						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
-						</div>
-						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
-						</div>
-						
-					</div>
-					
-					
-					
-					
-					
-					<!-- Education -->
-					<div class="tab-content">
-						<div  role="tabpanel" class="tab-pane" id="education" th:classappend="${classActiveEducation}? 'in active'">
+
+
+						<!-- Education -->
+						<div class="tab-pane" id="education" th:classappend="${classActiveEducation}? 'in active'">
+
 							<form th:action="@{/jobSeeker/updateEducationInfo}" method="post">
 								<!-- updateinfo @p -->
 								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="educationId" th:value="${educationProfile.educationId}" />
+								<input type="hidden" name="seekerProfileId"
+									th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
-								<div class="bg-info" th:if="${updateEducationInfo}">User info
+								<div class="bg-info" th:if="${updateEducationInfo}">User Education info
 									updated.</div>
 								<!-- updateinfo @p -->
 
 
-									<div class="row mt-5 align-items-center">
+								<div class="row mt-5 align-items-center">
 									<!-- prorfile image is removed in this area -->
-									
-									</div>
+
+								</div>
 								<hr class="my-4" />
-								
-									<div class="form-group">
-										<label for="certificateName">Certificate Name</label>
-										<input type="text" id="certificateName" class="form-control" name="certificateName"
-											th:placeholder="${educationProfile.certificateName}"
-											th:value="${educationProfile.certificateName}" />
-									</div>
-									<div class="form-group">
-										<label for="major">Major</label>
-										<input type="text" id="major" class="form-control" name="major"
-											th:placeholder="${educationProfile.major}"
-											th:value="${educationProfile.major}" />
-									</div>
-								
+
+								<div class="form-group">
+									<label for="certificateName">Certificate Name</label>
+									<input type="text" id="certificateName" class="form-control" name="certificateName"
+										th:placeholder="${educationProfile.certificateName}"
+										th:value="${educationProfile.certificateName}" />
+								</div>
+								<div class="form-group">
+									<label for="major">Major</label>
+									<input type="text" id="major" class="form-control" name="major"
+										th:placeholder="${educationProfile.major}"
+										th:value="${educationProfile.major}" />
+								</div>
+
 								<div class="form-group">
 									<label for="inputEmail4">University Name</label>
-									<input type="text" class="form-control" id="inputEmail4" name="email"
-										th:placeholder="${educationProfile.universityName}" th:value="${educationProfile.universityName}" />
+									<input type="text" class="form-control" id="inputEmail4" name="universityName"
+										th:placeholder="${educationProfile.universityName}"
+										th:value="${educationProfile.universityName}" />
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="inputCompany5">Start Date</label>
 										<input type="date" class="form-control" id="startDate" name="startDate"
-											th:placeholder="${educationProfile.startDate}" th:value="${educationProfile.startDate}" />
+											th:placeholder="${educationProfile.startDate}"
+											th:value="${educationProfile.startDate}" />
 									</div>
 									<div class="form-group col-md-6">
 										<label for="inputCompany5">Complete Date</label>
 										<input type="date" class="form-control" id="completeDate" name="completeDate"
-											th:placeholder="${educationProfile.completeDate}" th:value="${educationProfile.completeDate}" />
+											th:placeholder="${educationProfile.completeDate}"
+											th:value="${educationProfile.completeDate}" />
 									</div>
-									
+
 								</div>
-											
-																
+
+
 								<button type="submit" id="updateEducationInfo" class="btn btn-primary">Save
 									Change</button>
 								<a class="btn btn-danger" th:href="@{/}">Cancel</a>
 							</form>
-						</div>
-						
-						<!-- List -->
-						<hr class="my-4" />
-								<div class="row mb-4">
-									<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Education List</p>
-									<div class="col-md-6" data-th-each="education : ${educationList}">
-										
-										<div class="form-group">
-											<label for="inputEmail4">Certificate Name ~~~</label>
-											<label th:text="${education.certificateName}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Major ~~~</label>
-											<label th:text="${education.major}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">University Name ~~~</label>
-											<label th:text="${education.universityName}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Start Date ~~~</label>
-											<label th:text="${education.startDate}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Complete Date ~~~</label>
-											<label th:text="${education.completeDate}"></label>
-										</div>
-										<br />
-										<hr style="color: thistle;" />
-										
-									</div>
 
-								</div>
-						
-						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
+							<hr class="my-4" />
+							<div class="row mb-4">
+								<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Education List</p>
+								<table id="bookListTable" class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+											<th>Certificate Name</th>
+											<th>Major</th>
+											<th>University Name</th>
+											<th>Start Date</th>
+											<th>Complete Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-th-each="education : ${jobSeekerProfile.educationProfileList}">
+											
+											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
+											<td th:text="${education.certificateName}"></td>
+											<td th:text="${education.major}"></td>
+											<td th:text="${education.universityName}"></td>
+											<td th:text="${education.startDate}"></td>
+											<td th:text="${education.completeDate}"></td>
+											<td>
+												 <a th:href="@{/jobSeeker/removeEducationProfile?educationProfileId=}+${education.educationId}">
+                                                	<span class="fa fa-times" th:text="Delete"></span>
+                                            	</a>
+											</td>
+										</tr>
+									</tbody>
+			
+								</table>
+								<!--<div class="col-md-6" data-th-each="education : ${jobSeekerProfile.educationProfileList}">
+
+									<div class="form-group">
+										<label for="inputEmail4">Certificate Name ~~~</label>
+										<label th:text="${education.certificateName}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Major ~~~</label>
+										<label th:text="${education.major}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">University Name ~~~</label>
+										<label th:text="${education.universityName}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Start Date ~~~</label>
+										<label th:text="${education.startDate}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Complete Date ~~~</label>
+										<label th:text="${education.completeDate}"></label>
+									</div>
+									<br />
+									<hr style="color: thistle;" />
+
+								</div>-->
+
+							</div>
 						</div>
-						<div class="tab-pane fade" id="experience" th:classappend="${classActiveExperience}? 'in active'">
-						</div>
+///////
 						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
 						</div>
 						
@@ -424,108 +461,147 @@
 					
 					
 					
-					<!-- Experience -->
-						<div class="tab-content">
-						<div  role="tabpanel" class="tab-pane" id="experience" th:classappend="${classActiveProfilExperience}? 'in active'">
+
+
+
+
+
+
+
+
+						<!-- Experience -->
+						<div class="tab-pane" id="experience"
+							th:classappend="${classActiveExperience}? 'in active'">
+////// main
 							<form th:action="@{/jobSeeker/updateExperienceInfo}" method="post">
 								<!-- updateinfo @p -->
-									<input type="hidden" name="userId" th:value="${user.userId}" />
+								<input type="hidden" name="userId" th:value="${user.userId}" />
 								<input type="hidden" name="experienceId" th:value="${experienceProfile.experienceId}" />
+								<input type="hidden" name="seekerProfileId" th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
-								<div class="bg-info" th:if="${updateExperienceInfo}">User info
+								<div class="bg-info" th:if="${updateExperienceInfo}">User Experience info
 									updated.</div>
 								<!-- updateinfo @p -->
 
 
-									<div class="row mt-5 align-items-center">
+								<div class="row mt-5 align-items-center">
 									<!-- prorfile image is removed in this area -->
-									
-									</div>
+
+								</div>
 								<hr class="my-4" />
-								
-									<div class="form-group">
-										<label for="jobTitle">Job Title</label>
-										<input type="text" id="jobTitle" class="form-control" name="jobTitle"
-											th:placeholder="${experienceProfile.jobTitle}"
-											th:value="${experienceProfile.jobTitle}" />
-									</div>
-									<div class="form-group">
-										<label for="companyName">Company Name</label>
-										<input type="text" id="companyName" class="form-control" name="companyName"
-											th:placeholder="${experienceProfile.companyName}"
-											th:value="${experienceProfile.companyName}" />
-									</div>
-								
+
+								<div class="form-group">
+									<label for="jobTitle">Job Title</label>
+									<input type="text" id="jobTitle" class="form-control" name="jobTitle"
+										th:placeholder="${experienceProfile.jobTitle}"
+										th:value="${experienceProfile.jobTitle}" />
+								</div>
+								<div class="form-group">
+									<label for="companyName">Company Name</label>
+									<input type="text" id="companyName" class="form-control" name="companyName"
+										th:placeholder="${experienceProfile.companyName}"
+										th:value="${experienceProfile.companyName}" />
+								</div>
+
 								<div class="form-group">
 									<label for="jobAddress">Job Address</label>
 									<input type="text" class="form-control" id="inputEmail4" name="jobAddress"
-										th:placeholder="${experienceProfile.jobAddress}" th:value="${experienceProfile.jobAddress}" />
+										th:placeholder="${experienceProfile.jobAddress}"
+										th:value="${experienceProfile.jobAddress}" />
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="startDate">Start Date</label>
 										<input type="date" class="form-control" id="startDate" name="startDate"
-											th:placeholder="${experienceProfile.startDate}" th:value="${experienceProfile.startDate}" />
+											th:placeholder="${experienceProfile.startDate}"
+											th:value="${experienceProfile.startDate}" />
 									</div>
 									<div class="form-group col-md-6">
 										<label for="completeDate">Complete Date</label>
 										<input type="date" class="form-control" id="completeDate" name="completeDate"
-											th:placeholder="${experienceProfile.completeDate}" th:value="${experienceProfile.completeDate}" />
+											th:placeholder="${experienceProfile.completeDate}"
+											th:value="${experienceProfile.completeDate}" />
 									</div>
 									<div class="form-group">
-									<label for="inputEmail4">Description</label>
-									<textarea name="description" rows="5" class="form-control" id="description"
-										th:value="${experienceProfile.description}" th:text="${experienceProfile.description}"
-										placeholder="Description"></textarea>
+										<label for="inputEmail4">Description</label>
+										<textarea name="description" rows="5" class="form-control" id="description"
+											th:value="${experienceProfile.description}" 
+											th:text="${experienceProfile.description}"
+											placeholder="Description"></textarea>
+									</div>
+
 								</div>
-									
-								</div>
-											
-																
+
+
 								<button type="submit" id="updateExperienceInfo" class="btn btn-primary">Save
 									Change</button>
 								<a class="btn btn-danger" th:href="@{/}">Cancel</a>
 							</form>
-						</div>
-						
-						<!-- List -->
-						<hr class="my-4" />
-								<div class="row mb-4">
-									<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Experience List</p>
-									<div class="col-md-6" data-th-each="experience : ${experienceList}">
-										
-										<div class="form-group">
-											<label for="inputEmail4">Job Title ~~~</label>
-											<label th:text="${experience.jobTitle}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Company Name ~~~</label>
-											<label th:text="${experience.companyName}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Job Address ~~~</label>
-											<label th:text="${experience.jobAddress}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Start Date ~~~</label>
-											<label th:text="${experience.startDate}"></label>
-										</div>
-										<div class="form-group">
-											<label for="inputEmail4">Complete Date ~~~</label>
-											<label th:text="${experience.completeDate}"></label>
-										</div>
-										<br />
-										<hr style="color: thistle;">
-										
-									</div>
+							<hr class="my-4" />
+							<div class="row mb-4">
+								<p class="mb-2" style="color: deepskyblue;font-size: x-large;">Your Experience List</p>
+								<table id="bookListTable" class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+											<th>Job Title</th>
+											<th>Company Name</th>
+											<th>Job Address</th>
+											<th>Start Date</th>
+											<th>Complete Date</th>
+											<th>Description</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-th-each="experience : ${jobSeekerProfile.experienceProfileList}">
+											
+											<!--<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>-->
+											<td th:text="${experience.jobTitle}"></td>
+											<td th:text="${experience.companyName}"></td>
+											<td th:text="${experience.jobAddress}"></td>
+											<td th:text="${experience.startDate}"></td>
+											<td th:text="${experience.completeDate}"></td>
+											<td th:text="${experience.description}"></td>
+											<td>
+												 <a th:href="@{/jobSeeker/removeExperienceProfile?experienceProfileId=}+${experience.experienceId}">
+                                                	<span class="fa fa-times" th:text="Delete"></span>
+                                            	</a>
+											</td>
+										</tr>
+									</tbody>
+			
+								</table>
+								<!--<div class="col-md-6" data-th-each="experience : ${experienceList}">
 
-								</div>
-								
-						<div class="tab-pane fade" id="home" th:classappend="${classActiveProfile}? 'in active'">
+									<div class="form-group">
+										<label for="inputEmail4">Job Title ~~~</label>
+										<label th:text="${experience.jobTitle}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Company Name ~~~</label>
+										<label th:text="${experience.companyName}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Job Address ~~~</label>
+										<label th:text="${experience.jobAddress}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Start Date ~~~</label>
+										<label th:text="${experience.startDate}"></label>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail4">Complete Date ~~~</label>
+										<label th:text="${experience.completeDate}"></label>
+									</div>
+									<br />
+									<hr style="color: thistle;">
+
+								</div>-->
+
+							</div>
 						</div>
-						<div class="tab-pane fade" id="education" th:classappend="${classActiveEducation}? 'in active'">
-						</div>
+/////// AungPaing
 						<div class="tab-pane fade" id="postedjob" th:classappend="${classActivePostedJob}? 'in active'">
 						</div>
 						
@@ -573,6 +649,12 @@
 						
 					</div> 
 					
+///////
+
+					</div>
+
+
+>///////main
 				</div>
 			</div>
 		</div>
