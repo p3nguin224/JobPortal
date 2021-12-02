@@ -423,6 +423,17 @@ public class HomeController {
 //			return "newJob";  
 //		}
 		
+		// should be in company controller
+		@RequestMapping("/jobSeekerDetail")
+		private String jobSeekerDetail(@RequestParam("seekerProfileId") Long seekerProfileId, Model model) {
+			JobSeekerProfile jobSeekerProfile = jobSeekerService.findById(seekerProfileId);
+			User user = jobSeekerProfile.getUser();
+			
+			model.addAttribute("user", user);
+			model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+			return "jobSeekerDetail";
+		}
+		
 
 		
 		

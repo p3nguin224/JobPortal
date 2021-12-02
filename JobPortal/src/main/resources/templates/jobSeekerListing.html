@@ -258,8 +258,8 @@ small, time, .small {
                 <span th:text="${jobSeeker.status}"></span>
             </div>
             <div class="card-hover-show">
-                <a class="btn btn-xs fs-10 btn-bold btn-info" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}">Seeker's CV</a>
-                <a class="btn btn-xs fs-10 btn-bold btn-primary" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}" data-toggle="modal" data-target="#modal-contact">Contact</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-info" th:href="@{/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}">Job Seeker Info</a>
+               <!-- <a class="btn btn-xs fs-10 btn-bold btn-primary" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}" data-toggle="modal" data-target="#modal-contact">Contact</a>-->
                 
             </div>
         </footer>
