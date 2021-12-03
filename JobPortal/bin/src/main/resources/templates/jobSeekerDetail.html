@@ -1,0 +1,131 @@
+<!doctype html>
+
+
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="common/companyHeader :: common-header" />
+
+   <body>
+    <div th:replace="common/companyHeader :: navbar" />
+    <main>
+
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>Job Seeker Detail</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Hero Area End -->
+        <!-- job post company Start -->
+        <div class="job-post-company pt-120 pb-120">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <!-- Left Content -->
+                    <div class="col-xl-7 col-lg-8">
+                        <!-- job single -->
+                        <div class="single-job-items mb-50">
+                            <div class="job-items">
+                                <div class="company-img company-img-details">
+                                   <img class="img-responsive shelf-job" th:src="@{/image/jobSeeker/}+'jobSeekerProfile'+${jobSeekerProfile.seekerProfileId}+'.png'" />
+                                </div>
+                                <div class="job-tittle">
+                                   
+
+                                    <h5><strong>Name: </strong><span th:text="${jobSeekerProfile.firstName}+' '+${jobSeekerProfile.lastName}"></span></h5>
+    								<p><strong>Job Type: </strong><span th:text="${jobSeekerProfile.category}"></span></p>
+
+    								<p><strong>Date of Birth: </strong><span th:text="${user.dob}"></span></p>
+    								<p><strong>Gender: </strong><span th:text="${user.gender}"></span></p>
+    								<p><strong>Email: </strong><span th:text="${user.email}"></span></p>
+    					
+                                </div>
+                            </div>
+                        </div>
+                          <!-- job single End -->
+                       
+                        <div class="job-post-details">
+                            <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Description</h4>
+                                </div>
+							<p><span th:text="${jobSeekerProfile.description}"></span></p>                            
+							</div>
+							
+							<!--skill not complete-->
+							<!--<h4>Skill</h4>
+                            <div class="post-details2  mb-50" data-th-each="skill : ${skillList}">
+                                 
+                               <ul>
+                                   <li th:text="${skill.skillName}"></li>
+                                   
+                               </ul>
+                            </div>-->
+                
+
+                        </div>
+
+                    </div>
+                    <!-- Right Content -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="post-details3  mb-50">
+                            <!-- Small Section Tittle -->
+                           
+                          
+                         <div class="apply-btn2">
+
+                            <a th:href="@{/jobSeeker/hireJobConfirmation(seekerProfileId=${jobSeekerProfile.seekerProfileId})}" class="btn">Hire</a>
+
+                         </div>
+                       </div>
+                        <!-- Small Section Tittle -->
+                           <div class="small-section-tittle">
+                               <h4>Education </h4>
+                           </div>
+                        <div class="post-details4  mb-50" data-th-each="educationProfile : ${jobSeekerProfile.educationProfileList}">
+          
+                              <span th:text="${educationProfile.certificateName}"></span>
+                             
+                            <ul>  
+                                <li>Major : <span th:text="${educationProfile.major}"></span></li>
+                                <li>University Name: <span th:text="${educationProfile.universityName}"></span></li>
+                                <li>Start Date: <span th:text="${educationProfile.startDate}"></span></li>
+                                <li>Complete Date: <span th:text="${educationProfile.completeDate}"></span></li>
+                            </ul>
+                       </div>
+                       
+                       <div class="small-section-tittle">
+                               <h4>Experiecnce </h4>
+                           </div>
+                        <div class="post-details4  mb-50" data-th-each="experienceProfile : ${jobSeekerProfile.experienceProfileList}">
+                            <!-- Small Section Tittle -->
+                           
+                              <span th:text="${experienceProfile.jobTitle}"></span>
+                              <p th:text="${experienceProfile.description}"></p>
+                            <ul>                               
+                                <li>Company Name : <span th:text="${experienceProfile.companyName}"></span></li>
+                                <li>Job Address: <span th:text="${experienceProfile.jobAddress}"></span></li>
+                                <li>Start Date: <span th:text="${experienceProfile.startDate}"></span></li>
+                                <li>Complete Date: <span th:text="${experienceProfile.completeDate}"></span></li>
+                            </ul>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- job post company End -->
+
+    </main>
+     <div th:replace="common/header :: footer"/>
+
+  <div th:replace="common/header :: body-bottom-scripts" />
+        
+    </body>
+</html>
