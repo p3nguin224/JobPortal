@@ -32,6 +32,7 @@ import com.jobportal.user.domain.EducationProfile;
 import com.jobportal.user.domain.ExperienceProfile;
 import com.jobportal.user.domain.Job;
 import com.jobportal.user.domain.JobSeekerProfile;
+import com.jobportal.user.domain.SeekerJobActivity;
 import com.jobportal.user.domain.Skill;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.domain.security.PasswordResetToken;
@@ -388,6 +389,11 @@ public class HomeController {
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 
 		model.addAttribute("classActiveProfile", true);
+		EducationProfile educationProfile = new EducationProfile();
+		ExperienceProfile experienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", educationProfile);
+		model.addAttribute("experienceProfile", experienceProfile);
 		return "jobSeekerProfile";
 	}
 	
@@ -395,11 +401,11 @@ public class HomeController {
 		// have to move to jobSeeker Controller
 		@RequestMapping("/jobDetail")
 		public String jobDetail(@RequestParam("jobId") Long jobId,Model model,Principal principal) {
-			if (principal != null) {
-				String username = principal.getName();
-				User user = userService.findByUsername(username);
-				model.addAttribute("user", user);
-			}
+			Boolean applyable = true;
+			String username = principal.getName();
+			User user = userService.findByUsername(username);
+			model.addAttribute("user", user);
+			JobSeekerProfile seekerProfile = jobSeekerService.findByUser(user);
 			
 			Job job = jobService.findById(jobId);
 			CompanyProfile company = job.getCompanyProfile();
@@ -409,8 +415,15 @@ public class HomeController {
 			model.addAttribute("company", company);
 			model.addAttribute("skillList", jobSkillList);
 			
-			
+			List<SeekerJobActivity> seekerJobList = seekerProfile.getSeekerJobActivityList();
+			for (SeekerJobActivity seekerJobs : seekerJobList) {
+				if (seekerJobs.getJob().getJobId() == job.getJobId()) {
+					applyable = false;
+				}
+			}
 			List<Integer> qtyList = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+			
+			model.addAttribute("applyable", applyable);
 			model.addAttribute("qtyList", qtyList);
 			model.addAttribute("qty", 1);
 			

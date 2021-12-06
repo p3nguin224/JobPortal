@@ -38,7 +38,6 @@
                                 <div class="job-tittle">
                                    
 
-                                    <h5><strong>Title: </strong><span th:text="${job.jobTitle}"></span></h5>
     					<p><strong>Number of Required: </strong><span th:text="${job.requiredMember}"></span></p>
 
     					<p><strong>Last Applied Date: </strong><span th:text="${job.lastAppliedDate}"></span></p>
@@ -83,8 +82,8 @@
                             <!-- Small Section Tittle -->
                            
                           
-                         <div class="apply-btn2">
-
+                         <div class="apply-btn2" th:if=${applyable}>
+								
                             <a th:href="@{/jobSeeker/applyJobConfirmation(jobId=${job.jobId}, companyId=${company.companyId})}" class="btn">Apply Now</a>
 
                          </div>
