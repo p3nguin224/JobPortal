@@ -114,10 +114,6 @@
 						password for the current user.
 					</div>
 
-					<div class="alert alert-danger" th:if="${incorrectPassword}">
-						<strong>Incorrect Password!</strong> Pleae enter the correct
-						password for the current user.
-					</div>
 
 					<div class="alert alert-succss" th:if="${updateSuccess}">
 						<strong>Update Success!</strong>
@@ -136,8 +132,11 @@
 									th:value="${jobSeekerProfile.seekerProfileId}" />
 
 
-								<div class="bg-info" th:if="${updateUserInfo}">User info
+								<div class="bg-info text-light" th:if="${updateUserInfo}">User info
 									updated.</div>
+								<div class="bg-danger text-light" th:if="${usernameExists}">Username already Exists</div>
+								<div class="bg-danger text-light" th:if="${emailExists}">Email already Exists</div>
+								<!--<div class="bg-danger text-light" th:if="${incorrectPassword}">Incorrect password</div>-->
 								<!-- updateinfo @p -->
 
 

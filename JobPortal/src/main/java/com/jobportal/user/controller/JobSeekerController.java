@@ -132,16 +132,36 @@ public class JobSeekerController {
 		}
 		
 		if ((userService.findByEmail(user.getEmail()))!= null ) {
-			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()) {
-				model.addAttribute("usernameExists", true);
-				return "redirect:/jobSeeker/profile";
+			if ((userService.findByEmail(user.getEmail())).getUserId() != currentUser.getUserId()) {
+				LOG.info("Email exists");
+				model.addAttribute("emailExists", true);
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
 		if (userService.findByUsername(user.getUsername()) != null) {
 			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()){
+				LOG.info("Username exists");
 				model.addAttribute("usernameExists", true);
-				return "redirect:/jobSeeker/profile";
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
@@ -160,7 +180,16 @@ public class JobSeekerController {
 				LOG.info("current password : {}",currentPassword);
 				LOG.info("db password : {}",dbPassword);
 				model.addAttribute("incorrectPassword", true);
-				return "redirect:/jobSeeker/profile";
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
@@ -205,7 +234,16 @@ public class JobSeekerController {
 		
 		
 		model.addAttribute("updateUserInfo", true);
-		return "forward:/jobSeeker/profile";   
+		model.addAttribute("user", user);
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		model.addAttribute("classActiveProfile", true);
+		
+		EducationProfile educationProfile = new EducationProfile();
+		ExperienceProfile experienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", educationProfile);
+		model.addAttribute("experienceProfile", experienceProfile);
+		return "jobSeekerProfile";   
 	}
 	
 	
