@@ -373,7 +373,7 @@ public class HomeController {
 		
 		User user = passwordResetToken.getUser();
 		String username = user.getUsername();
-		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
+		
 		
 		// auto-Login 
 		UserDetails userDetails = userSecurityService.loadUserByUsername(username);
@@ -381,10 +381,14 @@ public class HomeController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		if (request.isUserInRole("ROLE_COMPANY")) {
+			CompanyProfile companyProfile = companyProfileService.findByUser(user);
+			
 			model.addAttribute("user", user);
+			model.addAttribute("companyProfile", companyProfile);
 			model.addAttribute("classActiveEdit", true);
-			return "myProfile";
+			return "companyProfile";
 		}
+		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		model.addAttribute("user", user);                      
 		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
 

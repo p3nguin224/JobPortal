@@ -68,17 +68,24 @@ public class CompanyController {
 			throw new Exception("User not Found");
 		}
 		
+		
 		if ((userService.findByEmail(user.getEmail()))!= null ) {
-			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()) {
+			if ((userService.findByEmail(user.getEmail())).getUserId() != currentUser.getUserId()) {
 				model.addAttribute("usernameExists", true);
-				return "forward:/company/profile";
+				model.addAttribute("user", user);                      
+				model.addAttribute("companyProfile", companyProfile);		
+
+				return "companyProfile";
 			}
 		}
 		
 		if (userService.findByUsername(user.getUsername()) != null) {
 			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()){
 				model.addAttribute("usernameExists", true);
-				return "forward:/company/profile";
+				model.addAttribute("user", user);                      
+				model.addAttribute("companyProfile", companyProfile);		
+
+				return "companyProfile";
 			}
 		}
 		
@@ -97,7 +104,10 @@ public class CompanyController {
 				LOG.info("current password : {}",currentPassword);
 				LOG.info("db password : {}",dbPassword);
 				model.addAttribute("incorrectPassword", true);
-				return "forward:/company/profile";
+				model.addAttribute("user", user);                      
+				model.addAttribute("companyProfile", companyProfile);		
+
+				return "companyProfile";
 			}
 		}
 		
@@ -154,7 +164,10 @@ public class CompanyController {
 		
 		model.addAttribute("updateUserInfo", true);
 		
-		return "forward:/company/profile";  // temp return mapping 
+		model.addAttribute("user", user);                      
+		model.addAttribute("companyProfile", companyProfile);		
+
+		return "companyProfile";
 	}
 	
 	 

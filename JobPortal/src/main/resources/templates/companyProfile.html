@@ -427,8 +427,12 @@
 										<input type="hidden" name="companyId" th:value="${companyProfile.companyId}" />
 
 
-										<div class="bg-info" th:if="${updateUserInfo}">User info
+										<div class="bg-info text-light" th:if="${updateUserInfo}">User info
 											updated.</div>
+										<div class="bg-danger text-light" th:if="${usernameExists}">Username already Exists</div>
+										<div class="bg-danger text-light" th:if="${emailExists}">Email already Exists</div>
+										<div class="bg-danger text-light" th:if="${incorrectPassword}">Incorrect Password</div>
+										
 										<br />
 										<label for="inputEmail4">User Name</label>
 										<input type="text" class="form-control" id="inputEmail4" name="username"
