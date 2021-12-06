@@ -1,0 +1,353 @@
+<!doctype html>
+
+<!--
+	jobSeekerListing (line 237)
+	skillList (line 249)
+	
+	-->
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+         <title>Job board HTML-5 Template </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+		<!-- CSS here -->
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/bootstrap-theme.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/price_rangs.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+            <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
+            <link rel="stylesheet" href="assets/css/style.css">
+            
+            <style>
+            body{
+    background:#FCFCFC;    
+}
+.pr-12 {
+    padding-right: 12px !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.b-1 {
+    border: 1px solid #ebebeb !important;
+}
+
+.card {
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 30px;
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.media {
+    padding: 16px 12px;
+    -webkit-transition: background-color .2s linear;
+    transition: background-color .2s linear;
+}
+
+.media {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.media .avatar {
+    flex-shrink: 0;
+}
+
+.no-radius {
+    border-radius: 0 !important;
+}
+
+.avatar-xl {
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
+    font-size: 1.25rem;
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 100%;
+    background-color: #f5f6f7;
+    color: #8b95a5;
+    text-transform: uppercase;
+}
+
+img {
+    max-width: 100%;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.mb-2 {
+    margin-bottom: .5rem!important;
+}
+
+.fs-20 {
+    font-size: 20px !important;
+}
+
+.pr-16 {
+    padding-right: 16px !important;
+}
+
+.ls-1 {
+    letter-spacing: 1px !important;
+}
+
+.fw-300 {
+    font-weight: 300 !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.media-body>* {
+    margin-bottom: 0;
+}
+
+small, time, .small {
+    font-family: Roboto,sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #8b95a5;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.mb-12 {
+    margin-bottom: 12px !important;
+}
+
+.text-fade {
+    color: rgba(77,82,89,0.7) !important;
+}
+
+.card-footer:last-child {
+    border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
+}
+
+.card-footer {
+    background-color: #fcfdfe;
+    border-top: 1px solid rgba(77,82,89,0.07);
+    color: #8b95a5;
+    padding: 10px 20px;
+}
+
+.flexbox {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.align-items-center {
+    -ms-flex-align: center!important;
+    align-items: center!important;
+}
+
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color: rgba(0,0,0,.03);
+    border-top: 1px solid rgba(0,0,0,.125);
+}
+
+
+.card-footer {
+    background-color: #fcfdfe;
+    border-top: 1px solid rgba(77, 82, 89, 0.07);
+    color: #8b95a5;
+    padding: 10px 20px
+}
+
+.card-footer>*:last-child {
+    margin-bottom: 0
+}
+
+.hover-shadow {
+    -webkit-box-shadow: 0 0 35px rgba(0, 0, 0, 0.11);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.11)
+}
+
+.fs-10 {
+    font-size: 10px !important;
+}
+            </style>
+   </head>
+
+
+<body>
+<div th:replace="common/companyHeader :: navbar" />
+
+
+<br>
+<br>
+<br>
+<div class="container" >
+<div class="col-md-12" > 
+    <div class="card b-1 hover-shadow mb-20" data-th-each="jobSeeker : ${jobSeekerListing}">
+        <div class="media card-body">
+            <div class="media-left pr-12">
+                <img class="avatar avatar-xl no-radius" 
+                th:src="@{/image/jobSeeker/}+'jobSeekerProfile'+${jobSeeker.seekerProfileId}+'.png'" alt="...">
+            </div>
+            <div class="media-body">
+                <div class="mb-2">
+                    <span class="fs-20 pr-16" th:text="${jobSeeker.firstName}"></span>
+                    <span class="fs-20 pr-16" th:text="${jobSeeker.lastName}"></span>
+                </div>
+                <small class="fs-16 fw-300 ls-1" th:text="${jobSeeker.category}"></small>
+            </div>
+            <div class="media-right text-right d-none d-md-block" data-th-each="skill : ${skillList}">
+                <p class="fs-14 text-fade mb-12" ><i class="fa fa-map-marker pr-1" th:text="${skill.skillName}"></i></p>
+                <span class="text-fade" ><i class="fa fa-money pr-1"></i> </span>
+            </div>
+        </div>
+        <footer class="card-footer flexbox align-items-center">
+            <div>
+                <strong>Status :</strong>
+                <span th:text="${jobSeeker.status}"></span>
+            </div>
+            <div class="card-hover-show">
+                <a class="btn btn-xs fs-10 btn-bold btn-info" th:href="@{/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}">Job Seeker Info</a>
+               <!-- <a class="btn btn-xs fs-10 btn-bold btn-primary" th:href="@{/company/jobSeekerDetail?seekerProfileId=}+${jobSeeker.seekerProfileId}" data-toggle="modal" data-target="#modal-contact">Contact</a>-->
+                
+            </div>
+        </footer>
+    </div>
+
+   <!--
+    <div class="card b-1 hover-shadow mb-20">
+        <div class="media card-body">
+            <div class="media-left pr-12">
+                <img class="avatar avatar-xl no-radius" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="...">
+            </div>
+            <div class="media-body">
+                <div class="mb-2">
+                    <span class="fs-20 pr-16">Maryam Amiri</span>
+                </div>
+                <small class="fs-16 fw-300 ls-1">Designer</small>
+            </div>
+            <div class="media-right text-right d-none d-md-block">
+                <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Fairfield, IA</p>
+                <span class="text-fade"><i class="fa fa-money pr-1"></i> $45 per hour</span>
+            </div>
+        </div>
+
+        <footer class="card-footer flexbox align-items-center">
+            <div>
+                <strong>Applied on:</strong>
+                <span>17 Jan, 2017</span>
+            </div>
+            <div class="card-hover-show">
+                <a class="btn btn-xs fs-10 btn-bold btn-info" href="#">Download CV</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-primary" href="#" data-toggle="modal" data-target="#modal-contact">Contact</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-warning" href="#">Delete</a>
+            </div>
+        </footer>
+    </div>
+
+    <div class="card b-1 hover-shadow mb-20">
+        <div class="media card-body">
+            <div class="media-left pr-12">
+                <img class="avatar avatar-xl no-radius" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="...">
+            </div>
+            <div class="media-body">
+                <div class="mb-2">
+                    <span class="fs-20 pr-16">Frank Camly</span>
+                </div>
+                <small class="fs-16 fw-300 ls-1">Front end developer</small>
+            </div>
+            <div class="media-right text-right d-none d-md-block">
+                <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Seattle, WA</p>
+                <span class="text-fade"><i class="fa fa-money pr-1"></i> $40 per hour</span>
+            </div>
+        </div>
+
+        <footer class="card-footer flexbox align-items-center">
+            <div>
+                <strong>Applied on:</strong>
+                <span>15 Jan, 2017</span>
+            </div>
+            <div class="card-hover-show">
+                <a class="btn btn-xs fs-10 btn-bold btn-info" href="#">Download CV</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-primary" href="#" data-toggle="modal" data-target="#modal-contact">Contact</a>
+                <a class="btn btn-xs fs-10 btn-bold btn-warning" href="#">Delete</a>
+            </div>
+        </footer>
+    </div> -->
+
+   
+
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+        </ul>
+    </nav>
+    <br>
+</div>
+</div>
+
+<!-- ================ JobSeekerList section end ================= -->
+    
+         <div th:replace="common/header :: footer"/>
+
+  <div th:replace="common/header :: body-bottom-scripts" />
+    </body>
+    
+    </html>
