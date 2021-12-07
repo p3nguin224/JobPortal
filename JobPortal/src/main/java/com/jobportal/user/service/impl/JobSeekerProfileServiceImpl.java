@@ -131,6 +131,16 @@ public class JobSeekerProfileServiceImpl implements JobSeekerProfileService{
 		return jobSeekerProfile;
 	}
 
+	@Override
+	public List<JobSeekerProfile> findAllJobSeekerByUserame(String name) {
+		// TODO Auto-generated method stub
+		return ((List<JobSeekerProfile>)jobSeekerDAO.findAll()).stream().filter(seeker -> seeker.getStatus().equals("available") && 
+				((seeker.getFirstName()+seeker.getLastName()).toLowerCase().contains(name.toLowerCase()))).collect(Collectors.toList());
+	}
+
+
+	
+
 
 
 

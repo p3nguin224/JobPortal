@@ -54,6 +54,12 @@ public class JobServiceImpl implements JobService{
 		return ((List<Job>) jobDAO.findAll()).stream().filter(job -> job.getStatus().equals("available") && job.getCategory().equals(category)).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Job> findAllJobsByName(String name) {
+		// TODO Auto-generated method stub
+		return ((List<Job>) jobDAO.findAll()).stream().filter(job -> job.getStatus().equals("available") && (job.getJobTitle()).toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
+	}
+
 	
 
 }

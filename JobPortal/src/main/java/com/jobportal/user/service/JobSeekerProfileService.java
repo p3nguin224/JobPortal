@@ -19,6 +19,8 @@ public interface JobSeekerProfileService {
 	
 	List<JobSeekerProfile> findByCategory(String category);
 	
+	List<JobSeekerProfile> findAllJobSeekerByUserame(String name);
+	
 	JobSeekerProfile createJobSeekerSkillList(JobSeekerProfile jobSeekerProfile, List<Skill> skillList);
 	
 	JobSeekerProfile createJobSeekerSkill(JobSeekerProfile jobSeekerProfile, Skill skill);

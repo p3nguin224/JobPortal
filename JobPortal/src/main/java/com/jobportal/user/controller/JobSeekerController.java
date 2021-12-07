@@ -132,16 +132,36 @@ public class JobSeekerController {
 		}
 		
 		if ((userService.findByEmail(user.getEmail()))!= null ) {
-			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()) {
-				model.addAttribute("usernameExists", true);
-				return "redirect:/jobSeeker/profile";
+			if ((userService.findByEmail(user.getEmail())).getUserId() != currentUser.getUserId()) {
+				LOG.info("Email exists");
+				model.addAttribute("emailExists", true);
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
 		if (userService.findByUsername(user.getUsername()) != null) {
 			if ((userService.findByUsername(user.getUsername())).getUserId() != currentUser.getUserId()){
+				LOG.info("Username exists");
 				model.addAttribute("usernameExists", true);
-				return "redirect:/jobSeeker/profile";
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
@@ -160,7 +180,16 @@ public class JobSeekerController {
 				LOG.info("current password : {}",currentPassword);
 				LOG.info("db password : {}",dbPassword);
 				model.addAttribute("incorrectPassword", true);
-				return "redirect:/jobSeeker/profile";
+				model.addAttribute("user", user);
+				model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+				model.addAttribute("classActiveProfile", true);
+				
+				EducationProfile educationProfile = new EducationProfile();
+				ExperienceProfile experienceProfile = new ExperienceProfile();
+				
+				model.addAttribute("educationProfile", educationProfile);
+				model.addAttribute("experienceProfile", experienceProfile);
+				return "jobSeekerProfile";
 			}
 		}
 		
@@ -205,7 +234,16 @@ public class JobSeekerController {
 		
 		
 		model.addAttribute("updateUserInfo", true);
-		return "forward:/jobSeeker/profile";   
+		model.addAttribute("user", user);
+		model.addAttribute("jobSeekerProfile", jobSeekerProfile);
+		model.addAttribute("classActiveProfile", true);
+		
+		EducationProfile educationProfile = new EducationProfile();
+		ExperienceProfile experienceProfile = new ExperienceProfile();
+		
+		model.addAttribute("educationProfile", educationProfile);
+		model.addAttribute("experienceProfile", experienceProfile);
+		return "jobSeekerProfile";   
 	}
 	
 	
@@ -268,11 +306,16 @@ public class JobSeekerController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		for (EducationProfile edu : jobSeekerProfile.getEducationProfileList()) {
-			if (edu.getEducationId() == educationId) {
+			
+			if (edu.getEducationId().equals(educationId)) {
+				LOG.info("exp id will be null : "+edu.getEducationId());
 				edu.setJobSeekerProfile(null);
 			}
 		}
+		
+		LOG.info("exp id removed : "+educationId);
 		educationProfileService.removeById(educationId);
+
 		jobSeekerService.save(jobSeekerProfile);
 		
 		model.addAttribute("user", user);                      
@@ -326,10 +369,13 @@ public class JobSeekerController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		for (ExperienceProfile exp : jobSeekerProfile.getExperienceProfileList()) {
-			if (exp.getExperienceId() == experienceId) {
+			
+			if (exp.getExperienceId().equals(experienceId)) {
+				LOG.info("exp id matched and will be null : "+exp.getExperienceId());
 				exp.setJobSeekerProfile(null);
 			}
 		}
+		
 		experienceProfileService.removeById(experienceId);
 		jobSeekerService.save(jobSeekerProfile);
 		
