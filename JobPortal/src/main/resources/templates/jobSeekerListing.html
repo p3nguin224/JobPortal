@@ -29,7 +29,7 @@
             <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
             <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
             <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">
-            <link rel="stylesheet" href="assets/css/style.css">
+            <link rel="stylesheet" th:href="@{/assets/css/style.css}">
             
             <style>
             body{
@@ -225,13 +225,21 @@ small, time, .small {
    </head>
 
 
-<body>
+<body style="width: 100%;">
 <div th:replace="common/companyHeader :: navbar" />
 
+<div>
+<form class="form-inline float-right d-block mr-170" method="post" th:action="@{/company/searchJobSeeker}">
+			 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+			 <button id="search-button" type="submit" class="btn-sm">
+    			<i class="fas fa-search"></i>
+  			</button>
+</form>
+</div>
+<br/>
+<br/>
+<br/>
 
-<br>
-<br>
-<br>
 <div class="container" >
 <div class="col-md-12" > 
     <div class="card b-1 hover-shadow mb-20" data-th-each="jobSeeker : ${jobSeekerListing}">

@@ -9,6 +9,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +26,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.user.domain.CompanyProfile;
 import com.jobportal.user.domain.Job;
+import com.jobportal.user.domain.JobSeekerProfile;
 import com.jobportal.user.domain.User;
 import com.jobportal.user.service.CompanyProfileService;
+import com.jobportal.user.service.JobSeekerProfileService;
 import com.jobportal.user.service.JobService;
 import com.jobportal.user.service.UserService;
 import com.jobportal.user.utility.SecurityUtility;
@@ -44,6 +48,9 @@ public class CompanyController {
 	
 	@Autowired
 	private JobService jobService;
+	
+	@Autowired
+	private JobSeekerProfileService jobSeekerService;
 	
 	@RequestMapping("/profile")
 	private String companyProfile(Principal principal, Model model){
@@ -226,6 +233,22 @@ public class CompanyController {
 		companyProfileService.save(companyProfile);
 		
 		return "redirect:/success"; // must be sent to company profile
+	}
+	
+	@RequestMapping("/searchJobSeeker")
+	private String searchJobSeeker(Model model, @ModelAttribute("query") String query) {
+		List<JobSeekerProfile> jobSeekerList = new ArrayList<>();
+		if (query==null || query.equals("") || query.isEmpty() ) {
+			jobSeekerList = jobSeekerService.findAll();
+		}else {		
+			LOG.info("keyword : "+query);
+			jobSeekerList = jobSeekerService.findAllJobSeekerByUserame(query);		
+		}
+		if(jobSeekerList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+		}
+		model.addAttribute("jobSeekerListing", jobSeekerList);		
+		return "jobSeekerListing"; // change here to companyHomePage
 	}
 
 }

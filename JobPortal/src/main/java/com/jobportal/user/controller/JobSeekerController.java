@@ -306,11 +306,16 @@ public class JobSeekerController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		for (EducationProfile edu : jobSeekerProfile.getEducationProfileList()) {
-			if (edu.getEducationId() == educationId) {
+			
+			if (edu.getEducationId().equals(educationId)) {
+				LOG.info("exp id will be null : "+edu.getEducationId());
 				edu.setJobSeekerProfile(null);
 			}
 		}
+		
+		LOG.info("exp id removed : "+educationId);
 		educationProfileService.removeById(educationId);
+
 		jobSeekerService.save(jobSeekerProfile);
 		
 		model.addAttribute("user", user);                      
@@ -364,10 +369,13 @@ public class JobSeekerController {
 		JobSeekerProfile jobSeekerProfile = jobSeekerService.findByUser(user);
 		
 		for (ExperienceProfile exp : jobSeekerProfile.getExperienceProfileList()) {
-			if (exp.getExperienceId() == experienceId) {
+			
+			if (exp.getExperienceId().equals(experienceId)) {
+				LOG.info("exp id matched and will be null : "+exp.getExperienceId());
 				exp.setJobSeekerProfile(null);
 			}
 		}
+		
 		experienceProfileService.removeById(experienceId);
 		jobSeekerService.save(jobSeekerProfile);
 		
