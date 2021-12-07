@@ -17,5 +17,7 @@ public interface JobService {
 	List<Job> findAllJobs();
 	
 	List<Job> findAllJobsByCategory(String category);
+	
+	List<Job> findAllJobsByName(String name);
 
 }

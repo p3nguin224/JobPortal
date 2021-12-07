@@ -6,6 +6,12 @@
     <div th:replace="common/header :: navbar" />
     
     <main>
+    	<form class="form-inline float-right d-lg-block mr-170" method="post" th:action="@{/searchJob}">
+			 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+			 <button id="search-button" type="submit" class="btn-sm">
+    			<i class="fas fa-search"></i>
+  			</button>
+		</form>
 
         <!-- Hero Area Start-->
  <!--       <div class="slider-area ">
@@ -22,6 +28,7 @@
             </div>
         </div> -->
         <!-- Hero Area End -->
+			
         <!-- Job List Area Start -->
         <div class="job-listing-area pt-120 pb-120">
             <div class="container">

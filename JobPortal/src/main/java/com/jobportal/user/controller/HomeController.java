@@ -112,6 +112,25 @@ public class HomeController {
 		return "jobListing";
 	}
 	
+	@RequestMapping("/searchJob")
+	private String searchJob(Model model, @ModelAttribute("query") String query) {
+		List<Job> jobList = new ArrayList<>();
+		if (query==null || query.equals("") || query.isEmpty() ) {
+			LOG.info("keyword : "+query);
+			jobList = jobService.findAllJobs();
+		}else {
+			
+			jobList = jobService.findAllJobsByName(query);		
+		}
+		
+		if(jobList.size() == 0 ) {
+			model.addAttribute("emptyList", true);
+			model.addAttribute("activeAll", true);  //
+		}
+		model.addAttribute("jobList", jobList);
+		return "jobListing";
+	}
+	
 	
 	
 	
